@@ -21,12 +21,12 @@
         
         <!-- Search Filter -->
         <div class="row filter-row">
-            <!--<div class="col-sm-6 col-md-3">  
+            <div class="col-sm-6 col-md-3">  
                 <div class="form-group form-focus">
                     <input type="text" class="form-control floating">
                     <label class="focus-label">Employee ID</label>
                 </div>
-            </div>-->
+            </div>
             <div class="col-sm-6 col-md-3">  
                 <div class="form-group form-focus">
                     <input type="text" class="form-control floating">
@@ -133,26 +133,37 @@
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <label class="col-form-label">Nom <span class="text-danger">*</span></label>
-                                    <input class="form-control" type="text" formControlName="nom">
-                                    <span></span>
+                                    <input class="form-control" type="text" formControlName="nom" placeholder="Nom">
+                                    <span class="text-danger" *ngIf="formEmploye.get('nom')?.hasError('required') && formEmploye.get('nom')?.touched">
+                                        <p>Le nom est obligatoire</p>
+                                      </span>
                                 </div>
                             </div>
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <label class="col-form-label">Prénom</label>
-                                    <input class="form-control" type="text" formControlName="prenom">
+                                    <input class="form-control" type="text" formControlName="prenom" placeholder="Prenom">
+                                    <span class="text-danger" *ngIf="formEmploye.get('prenom')?.hasError('required') && formEmploye.get('prenom')?.touched">
+                                        <p>Le prenom est obligatoire</p>
+                                      </span>
                                 </div>
                             </div>
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <label class="col-form-label">Login <span class="text-danger">*</span></label>
-                                    <input class="form-control" type="text" formControlName="login">
+                                    <input class="form-control" type="text" formControlName="login" placeholder="Login">
+                                    <span class="text-danger" *ngIf="formEmploye.get('login')?.hasError('required') && formEmploye.get('login')?.touched">
+                                        <p>Le Login est obligatoire</p>
+                                      </span>
                                 </div>
                             </div>
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <label class="col-form-label">Mot de passe <span class="text-danger">*</span></label>
-                                    <input class="form-control" type="password" formControlName="password">
+                                    <input class="form-control" type="password" formControlName="password" placeholder="Mot de passe">
+                                    <span class="text-danger" *ngIf="formEmploye.get('password')?.hasError('minLength') && formEmploye.get('password')?.touched">
+                                        <p>Le mot de passe est obligatoire et de minimum longueur 4</p>
+                                       </span>
                                 </div>
                             </div>
                     
@@ -171,31 +182,46 @@
                             <div class="col-sm-6">  
                                 <div class="form-group">
                                     <label class="col-form-label">Cin <span class="text-danger">*</span></label>
-                                    <input class="form-control" type="text" formControlName="cin">
+                                    <input class="form-control" type="text" formControlName="cin" placeholder="Cin">
+                                    <span class="text-danger" *ngIf="formEmploye.get('cin')?.hasError('minLength') && formEmploye.get('cin')?.touched">
+                                        <p>Le cin est obligatoire et doit comporter 8 caractères</p>
+                                      </span>
                                 </div>
                             </div>
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <label class="col-form-label">Téléphone </label>
-                                    <input class="form-control" type="text" formControlName="telephone">
+                                    <input class="form-control" type="text" formControlName="telephone" placeholder="Téléphone">
+                                    <span class="text-danger" *ngIf="formEmploye.get('telephone')?.hasError('minLength') && formEmploye.get('telephone')?.touched">
+                                        <p>Le telephone est obligatoire et doit comporter 8 caractères</p>
+                                      </span>
                                 </div>
                             </div>
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <label class="col-form-label">Email </label>
-                                    <input class="form-control" type="email" formControlName="email">
+                                    <input class="form-control" type="email" formControlName="email" placeholder="Email">
+                                    <span class="text-danger" *ngIf="formEmploye.get('email')?.hasError('required') && formEmploye.get('email')?.touched">
+                                        <p>L'email est obligatoire </p>
+                                      </span>
                                 </div>
                             </div>
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <label class="col-form-label">Adresse </label>
-                                    <textarea class="form-control" formControlName="adresse"></textarea>
+                                    <textarea class="form-control" formControlName="adresse" placeholder="Adresse"></textarea>
+                                    <span class="text-danger" *ngIf="formEmploye.get('adresse')?.hasError('required') && formEmploye.get('adresse')?.touched">
+                                        <p>L'adresse est obligatoire </p>
+                                      </span>
                                 </div>
                             </div>
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <label class="col-form-label">Poste </label>
-                                    <input class="form-control" type="text" formControlName="poste">
+                                    <input class="form-control" type="text" formControlName="poste" placeholder="Poste">
+                                    <span class="text-danger" *ngIf="formEmploye.get('poste')?.hasError('required') && formEmploye.get('poste')?.touched">
+                                        <p>Le poste est obligatoire </p>
+                                      </span>
                                 </div>
                             </div>
                             <div class="col-sm-6">
@@ -216,9 +242,10 @@
                                 <div class="col-md-6">
                                   <input class="form-control" width="400"
                                   height="341" formControlName="image" type="file" name="file" (change)="onFileChanged($event)">
-                                  <span class="text-danger">
-                                   <p> </p>
-                                  </span>
+                                  <span class="text-danger" *ngIf="formEmploye.get('image')?.hasError('required') && formEmploye.get('image')?.touched"
+        >
+       <p> image is required</p>
+      </span>
                                 </div>
                               </div>
                             <!--<div class="col-md-6">
@@ -400,10 +427,10 @@
                     <div class="modal-btn delete-action">
                         <div class="row">
                             <div class="col-6">
-                                <a href="javascript:void(0);" (click) = "deleteEmp()" class="btn btn-primary continue-btn" >Delete</a>
+                                <a  (click) = "deleteEmp()" class="btn btn-primary continue-btn" >Delete</a>
                             </div>
                             <div class="col-6">
-                                <a href="javascript:void(0);" data-dismiss="modal" value="del_emp_close" class="btn btn-primary cancel-btn">Cancel</a>
+                                <a  data-dismiss="modal" id="del_emp_close" class="btn btn-primary cancel-btn">Cancel</a>
                             </div>
                         </div>
                     </div>

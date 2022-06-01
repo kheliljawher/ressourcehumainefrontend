@@ -15,6 +15,7 @@ import { UtilisateurComponent } from './components/home/utilisateur/utilisateur.
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { AuthGuard } from './gards/auth.guard';
+import { LogoutGuard } from './gards/logout.guard';
 
 const routes: Routes = [
   {path:"home",component:HomeComponent, canActivate:[AuthGuard], children:[
@@ -31,7 +32,7 @@ const routes: Routes = [
     {path:"profile",component:ProfileComponent}
 
   ]},
-  {path:"login",component:LoginComponent},
+  {path:"login",component:LoginComponent, canActivate:[LogoutGuard]},
   {path:"register",component:RegisterComponent},
 
 

@@ -3,6 +3,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { EmployeService } from 'src/app/services/employe.service';
 import { PlanningService } from 'src/app/services/planning.service';
+import {formatDate} from '@angular/common';
+
 
 @Component({
   selector: 'app-planning',
@@ -36,7 +38,7 @@ export class PlanningComponent implements OnInit {
       nom:['',Validators.required],
       date_debut:['',Validators.required],
       date_fin:['',Validators.required],
-      employe:['',Validators.required]
+      employeID:['',Validators.required]
     })
   }
 
@@ -60,6 +62,8 @@ export class PlanningComponent implements OnInit {
     this.planningsService.deletePlan(this.idToDelete).subscribe( data => {
       console.log(data);
       this.getPlannings();
+      document.getElementById("del_plan_close").click();
+
     })
   }
 
@@ -71,12 +75,20 @@ export class PlanningComponent implements OnInit {
       return ;
     }
 
-    console.log("formulaire", this.formPlanning.value.employe)
-    
+    console.log("formulaire", this.formPlanning.value)
 
-    this.planningsService.createPlan(this.formPlanning.value,this.formPlanning.value.employe).subscribe( data =>{
+    console.log("formulaire2", {
+      "nom": "test3 createddddd",
+      "date_debut": "2022-05-26",
+      "date_fin": "2022-05-28"
+})
+
+
+    this.planningsService.createPlan(this.formPlanning.value,this.formPlanning.value.employeID).subscribe( data =>{
       console.log(data);
       this.getPlannings();
+      document.getElementById("add_plan_close").click();
+
     })
   }
 
@@ -86,14 +98,18 @@ export class PlanningComponent implements OnInit {
 
   updatePlanning(){
     console.log("onSubmit")
+    console.log("this id ",this.id);
+    
     console.log(this.formUpdatePlanning.value);
     this.planningsService.updatePlan(this.formUpdatePlanning.value,this.id).subscribe(
       (res:any) => {
         console.log("planning",res);
-        this.router.navigateByUrl("home/planning")
-
+        //this.router.navigateByUrl("home/planning")
+        this.getPlannings();
       }
     )
+    document.getElementById("edit_plan_close").click();
+
   }
 
   geneForm(){
@@ -101,7 +117,7 @@ export class PlanningComponent implements OnInit {
       nom:"",
       date_debut:"",
       date_fin:"",
-      employe : ""
+      employeID : ""
 
     })
   }
@@ -111,12 +127,13 @@ export class PlanningComponent implements OnInit {
       nom:"",
       date_debut:"",
       date_fin:"",
-      employe : ""
+      employeID : ""
 
     })
   }
 
   patchValue(id:any){
+    this.id=id;
     console.log("planning id is : ",id)
     this.planningsService.getPlanById(id).subscribe(
       (res:any)=> {
@@ -126,7 +143,7 @@ export class PlanningComponent implements OnInit {
       nom:res.nom,
       date_debut:res.date_debut,
       date_fin:res.date_fin,
-      employe : res.employe
+      employeID : res.employeID
 
     })
 

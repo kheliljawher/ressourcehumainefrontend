@@ -20,8 +20,8 @@ export class PlanningService {
     return this.http.post(`http://localhost:9190/api/planning/create/${id_employe}/1`,planning);
   }
 
-  updatePlan(planning:any, id:any){
-    return this.http.put(`http://localhost:9190/api/planning/${id}`,planning);
+  updatePlan(planning:any, id_planning:any){
+    return this.http.put(`http://localhost:9190/api/planning/${id_planning}`,planning);
   }
 
   deletePlan(id:any) {

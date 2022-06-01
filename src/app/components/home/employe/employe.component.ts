@@ -37,10 +37,10 @@ export class EmployeComponent implements OnInit {
       nom:['',Validators.required],
       prenom:['',Validators.required],
       login:['',Validators.required],
-      password:['',Validators.required],
-      cin:['',Validators.required],
-      telephone:['',Validators.required],
-      email:['',Validators.required],
+      password:['', Validators.minLength(4)],
+      cin:['',Validators.minLength(8)],
+      telephone:['',Validators.minLength(8)],
+      email:['',Validators.email],
       adresse:['',Validators.required],
       poste:['',Validators.required],
       date_Embauche:['',Validators.required],
@@ -79,9 +79,10 @@ export class EmployeComponent implements OnInit {
     this.employeesService.deleteEmp(this.idToDelete).subscribe( data => {
       console.log(data);
       this.getEmployees();
+      document.getElementById("del_emp_close").click();
 
     })
-          document.getElementById("del_emp_close").click();
+          
 
   }
   
@@ -156,7 +157,7 @@ export class EmployeComponent implements OnInit {
     
     console.log("onSubmit")
     console.log(this.formUpdateEmploye.value);
-    this.employeesService.updateEmp(this.formUpdateEmploye.value,this.id).subscribe(
+    this.employeesService.updateEmp(formData,this.id).subscribe(
       (res:any) => {
         console.log("employe",res);
        // this.router.navigateByUrl("home/employe")
