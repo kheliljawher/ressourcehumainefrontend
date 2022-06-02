@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ContratService } from 'src/app/services/contrat.service';
+import {formatDate} from '@angular/common';
+import { EmployeService } from 'src/app/services/employe.service';
 
 @Component({
   selector: 'app-contrat',
@@ -10,7 +12,10 @@ import { ContratService } from 'src/app/services/contrat.service';
 })
 export class ContratComponent implements OnInit {
 
+  testEmploye:any;
+
   contrats:any;
+  employees:any;
   idToDelete:any;
   id: any;
   formContrat:FormGroup; 
@@ -24,18 +29,21 @@ export class ContratComponent implements OnInit {
   test:boolean=false
 
   constructor(private contratsService:ContratService,
+    private employeesService:EmployeService,
     private router: Router,
     private formBuilder:FormBuilder) { }
 
   ngOnInit(): void {
     this.getContrats();
+    this.getEmployees();
     this.geneFormUpdate();
 
     this.formContrat = this.formBuilder.group({
       type_contrat:['',Validators.required],
       date_debut:['',Validators.required],
       date_fin:['',Validators.required],
-      saaire:['',Validators.required]
+      salaire:['',Validators.required],
+//employeID:['',Validators.required]
     
     })
   }
@@ -48,10 +56,20 @@ export class ContratComponent implements OnInit {
     )
   }
 
+  getEmployees(){
+    this.employeesService.getEmployees().subscribe(
+      (res:any) => {
+        this.employees = res
+        this.testEmploye=res;
+        console.log("employes get : ",this.employees)}
+    )
+  }
+
   deleteCont(){
     this.contratsService.deleteCont(this.idToDelete).subscribe( data => {
       console.log(data);
       this.getContrats();
+      document.getElementById("del_cont_close").click();
     })
   }
 
@@ -62,27 +80,19 @@ export class ContratComponent implements OnInit {
       console.table(this.formContrat.value);
       return ;
     }
-    let formData = new FormData();
-    formData.append("type_contrat",this.formContrat.value.type_contrat);
-    formData.append("date_debut",this.formContrat.value.date_debut);
-    formData.append("date_fin",this.formContrat.value.date_fin);
-    formData.append("salaire",this.formContrat.value.saaire);
 
-    this.contratsService.createCont(formData).subscribe( data =>{
+    
+
+    this.contratsService.createCont(this.formContrat.value,/*this.formContrat.value.employeID*/2).subscribe( data =>{
       console.log(data);
       this.getContrats();
+      document.getElementById("add_cont_close").click();
+
     })
   }
 
   goToContratList(){
     this.router.navigateByUrl('/home/contrat');
-  }
-
-  public onFileChanged(event:any) {
-    //Select File
-//        console.log("formGroup : ",this.formContrat.value)
-    this.selectedFile = <Array<File>>event.target.files
-    console.log('image : ',this.selectedFile)
   }
 
   updateContrat(){
@@ -91,10 +101,12 @@ export class ContratComponent implements OnInit {
     this.contratsService.updateCont(this.formUpdateContrat.value,this.id).subscribe(
       (res:any) => {
         console.log("contrat",res);
-        this.router.navigateByUrl("home/contrat")
-
+        //this.router.navigateByUrl("home/contrat")
+        this.getContrats();
       }
     )
+    document.getElementById("edit_cont_close").click();
+
   }
 
   geneForm(){
@@ -103,7 +115,8 @@ export class ContratComponent implements OnInit {
       type_contrat:"",
       date_debut:"",
       date_fin:"",
-      salaire:""
+      salaire:"",
+      //employeID : ""
 
     })
   }
@@ -115,7 +128,8 @@ export class ContratComponent implements OnInit {
       type_contrat:"",
       date_debut:"",
       date_fin:"",
-      salaire:""
+      salaire:"",
+      //employeID : ""
 
     })
   }
@@ -132,7 +146,8 @@ export class ContratComponent implements OnInit {
       type_contrat:res.type_contrat,
       date_debut:res.date_debut,
       date_fin:res.date_fin,
-      salaire:res.salaire
+      salaire:res.salaire,
+      //employeID : res.employeID
 
     })
 

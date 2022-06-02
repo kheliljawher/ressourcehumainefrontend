@@ -77,11 +77,11 @@ export class PlanningComponent implements OnInit {
 
     console.log("formulaire", this.formPlanning.value)
 
-    console.log("formulaire2", {
+    /*console.log("formulaire2", {
       "nom": "test3 createddddd",
       "date_debut": "2022-05-26",
       "date_fin": "2022-05-28"
-})
+})*/
 
 
     this.planningsService.createPlan(this.formPlanning.value,this.formPlanning.value.employeID).subscribe( data =>{
@@ -143,7 +143,7 @@ export class PlanningComponent implements OnInit {
       nom:res.nom,
       date_debut:res.date_debut,
       date_fin:res.date_fin,
-      employeID : res.employeID
+      employeID : res.employe.id
 
     })
 
