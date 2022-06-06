@@ -8,15 +8,19 @@ import { Router } from '@angular/router';
 })
 export class SidebarComponent implements OnInit {
 
+  user_connect:any;
+  role:any;
+
   constructor(private router: Router) { }
 
   ngOnInit(): void {
+    this.user_connect = JSON.parse(localStorage.getItem("user"))
+    this.role=this.user_connect.role;
   }
 
   logout(){
     localStorage.setItem('state',"0");
     this.router.navigateByUrl('login');
-
   }
 
 }

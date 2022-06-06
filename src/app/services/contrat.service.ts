@@ -13,7 +13,7 @@ export class ContratService {
   }
 
   getContById(id:any){
-    return this.http.get(`http://localhost:9190/api/v1/contrat/${id}`);
+    return this.http.get(`http://localhost:9190/api/contrat/${id}`);
   }
 
   createCont(contrat:any, id_employe:any){

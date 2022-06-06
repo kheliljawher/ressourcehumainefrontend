@@ -43,7 +43,7 @@ export class ContratComponent implements OnInit {
       date_debut:['',Validators.required],
       date_fin:['',Validators.required],
       salaire:['',Validators.required],
-//employeID:['',Validators.required]
+      ID_Employe:['',Validators.required]
     
     })
   }
@@ -59,7 +59,7 @@ export class ContratComponent implements OnInit {
   getEmployees(){
     this.employeesService.getEmployees().subscribe(
       (res:any) => {
-        this.employees = res
+        this.employees = res;
         this.testEmploye=res;
         console.log("employes get : ",this.employees)}
     )
@@ -80,10 +80,11 @@ export class ContratComponent implements OnInit {
       console.table(this.formContrat.value);
       return ;
     }
+    console.table(this.formContrat.value);
 
     
 
-    this.contratsService.createCont(this.formContrat.value,/*this.formContrat.value.employeID*/2).subscribe( data =>{
+    this.contratsService.createCont(this.formContrat.value,this.formContrat.value.ID_Employe).subscribe( data =>{
       console.log(data);
       this.getContrats();
       document.getElementById("add_cont_close").click();
@@ -101,7 +102,7 @@ export class ContratComponent implements OnInit {
     this.contratsService.updateCont(this.formUpdateContrat.value,this.id).subscribe(
       (res:any) => {
         console.log("contrat",res);
-        //this.router.navigateByUrl("home/contrat")
+        this.router.navigateByUrl("home/contrat")
         this.getContrats();
       }
     )
@@ -111,12 +112,11 @@ export class ContratComponent implements OnInit {
 
   geneForm(){
     this.formContrat = this.formBuilder.group({
-      id:"",
       type_contrat:"",
       date_debut:"",
       date_fin:"",
       salaire:"",
-      //employeID : ""
+      ID_Employe:""
 
     })
   }
@@ -124,12 +124,11 @@ export class ContratComponent implements OnInit {
 
   geneFormUpdate(){
     this.formUpdateContrat = this.formBuilder.group({
-      id:"",
       type_contrat:"",
       date_debut:"",
       date_fin:"",
       salaire:"",
-      //employeID : ""
+      ID_Employe : ""
 
     })
   }
@@ -142,12 +141,11 @@ export class ContratComponent implements OnInit {
         this.id=id;
 
       this.formUpdateContrat.patchValue({
-      id:res.id,
       type_contrat:res.type_contrat,
       date_debut:res.date_debut,
       date_fin:res.date_fin,
       salaire:res.salaire,
-      //employeID : res.employeID
+      ID_Employe : res.ID_Employe
 
     })
 

@@ -37,7 +37,7 @@
                 <tbody>
                     <tr *ngFor="let contrat of contrats">
                         <td>{{contrat.id}}</td>
-                        <td>{{contrat.employe.nom}}</td>
+                        <td>{{contrat.employe?.nom}}</td>
 
                         <!--<td><a href="job-details.html">Web Developer</a></td>
                         <td>Development</td>-->
@@ -75,17 +75,12 @@
                 </button>
             </div>
             <div class="modal-body">
-                <div class="form-group col-sm-6">
-                    <label>Employe <span class="text-danger">*</span></label>
-                    <select class="select">
-                        <option *ngFor='let employe of testEmploye' value="{{employe.id}}" >{{employe.nom}}</option>                               
-                    </select>
-                </div>
+                
                 <form [formGroup]="formContrat" (ngSubmit)="saveContrat()">
                     <div class="row">
                             <div class="form-group col-sm-6">
                                 <label>Employe <span class="text-danger">*</span></label>
-                                <select class="select">
+                                <select class="select" formControlName="ID_Employe">
                                     <option *ngFor='let employe of employees' value="{{employe.id}}" >{{employe.nom}}</option>                               
                                 </select>
                             </div>
@@ -95,7 +90,7 @@
                             <div class="form-group">
                                 <label>Job Type</label>
                                 <select class="select" formControlName="type_contrat">
-                                    <option value="Full Time" >Full Time</option>
+                                    <option value="Full Time">Full Time</option>
                                     <option value="Part Time">Part Time</option>
                                     <option value="Internship">Internship</option>
                                     <option value="Temporary">Temporary</option>
@@ -153,7 +148,7 @@
                     <div class="row">
                         <div class="form-group col-sm-6">
                             <label>Employe <span class="text-danger">*</span></label>
-                            <select class="select">
+                            <select class="select" formControlName="ID_Employe">
                                 <option *ngFor='let employe of employees' value="{{employe.id}}">{{employe.nom}}</option>
                            
                             </select>

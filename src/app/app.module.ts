@@ -7,7 +7,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
-import { NavbarComponent } from './components/home/navbar/navbar.component';
 import { HomeComponent } from './components/home/home/home.component';
 import { SidebarComponent } from './components/home/sidebar/sidebar.component';
 import { HeaderComponent } from './components/home/header/header.component';
@@ -30,7 +29,6 @@ import { DatePipe } from '@angular/common';
     AppComponent,
     LoginComponent,
     RegisterComponent,
-    NavbarComponent,
     HomeComponent,
     SidebarComponent,
     HeaderComponent,

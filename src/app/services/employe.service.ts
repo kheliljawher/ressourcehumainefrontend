@@ -28,7 +28,7 @@ export class EmployeService {
     return this.http.post(`http://localhost:9190/api/employe/create`,employe);
   }
 
-  updateEmp(employee:any,id:any){
+  updateEmp(employee:any, id:any){
     return this.http.put(`http://localhost:9190/api/employe/${id}`,employee);
   }
 

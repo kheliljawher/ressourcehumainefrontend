@@ -20,7 +20,7 @@ export class ChefDepartementService {
     return this.http.post(`http://localhost:9190/api/chefDepartement/`,chefDepartement);
   }
 
-  updateChefDept(chefDepartement:any,id:any){
+  updateChefDept(chefDepartement:any, id:any){
     return this.http.put(`http://localhost:9190/api/chefDepartement/${id}`,chefDepartement);
   }
 

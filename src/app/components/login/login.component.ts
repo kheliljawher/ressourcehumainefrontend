@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
+import { LoginService } from 'src/app/services/login.service';
 
 @Component({
   selector: 'app-login',
@@ -10,7 +11,7 @@ import { Router } from '@angular/router';
 export class LoginComponent implements OnInit {
 
   formLogin:FormGroup
-  constructor(private fb:FormBuilder,private router:Router) { }
+  constructor(private fb:FormBuilder,private router:Router,private loginService:LoginService) { }
 
   ngOnInit(): void {
     this.geneFormLogin();
@@ -18,16 +19,24 @@ export class LoginComponent implements OnInit {
 
   geneFormLogin(){
     this.formLogin = this.fb.group({
-      email : '',
+      login : '',
       password : ''
     })
   }
 
   login(){
-    if(this.formLogin.value.email == "admin"  && this.formLogin.value.password == "admin" ){
-      localStorage.setItem('state','1')
-      this.router.navigateByUrl('home');
-    }
+    console.log("login is :",this.formLogin.value);
+    
+    this.loginService.login(this.formLogin.value).subscribe((res:any)=> {
+      if(res != null)
+      {
+        localStorage.setItem('state','1');
+        localStorage.setItem('user',JSON.stringify(res))
+        console.log("user in local storage is like :",JSON.stringify(res));        
+        this.router.navigateByUrl('home');
+      }
+    })
+
   }
 
   logout(){

@@ -12,6 +12,8 @@ import {formatDate} from '@angular/common';
   styleUrls: ['./planning.component.css']
 })
 export class PlanningComponent implements OnInit {
+
+  user_connect:any;
   plannings:any;
   employees:any;
   idToDelete:any;
@@ -40,6 +42,12 @@ export class PlanningComponent implements OnInit {
       date_fin:['',Validators.required],
       employeID:['',Validators.required]
     })
+    console.log("with out parse : ",localStorage.getItem("user"));
+    console.log("with parse : ",JSON.parse(localStorage.getItem("user")));
+    
+    
+    this.user_connect = JSON.parse(localStorage.getItem("user"))
+
   }
 
   getPlannings(){
@@ -84,7 +92,7 @@ export class PlanningComponent implements OnInit {
 })*/
 
 
-    this.planningsService.createPlan(this.formPlanning.value,this.formPlanning.value.employeID).subscribe( data =>{
+    this.planningsService.createPlan(this.formPlanning.value,this.formPlanning.value.employeID,this.user_connect.id).subscribe( data =>{
       console.log(data);
       this.getPlannings();
       document.getElementById("add_plan_close").click();

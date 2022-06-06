@@ -2,14 +2,15 @@
 <div class="page-header">
     <div class="row align-items-center">
         <div class="col">
-            <h3 class="page-title">Leaves</h3>
+            <h3 class="page-title">Conges</h3>
             <ul class="breadcrumb">
                 <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
-                <li class="breadcrumb-item active">Leaves</li>
+                <li class="breadcrumb-item active">Conges</li>
             </ul>
         </div>
         <div class="col-auto float-right ml-auto">
-            <a href="#" class="btn add-btn" data-toggle="modal" data-target="#add_leave"><i class="fa fa-plus"></i> Add Leave</a>
+            <a href="#" class="btn add-btn" data-toggle="modal" data-target="#add_leave"><i class="fa fa-plus"></i> Add
+                Conge</a>
         </div>
     </div>
 </div>
@@ -44,12 +45,14 @@
 </div>
 <!-- /Leave Statistics -->
 
+
 <div class="row">
     <div class="col-md-12">
         <div class="table-responsive">
             <table class="table table-striped custom-table mb-0 datatable">
                 <thead>
                     <tr>
+                        <th>Nom Employe</th>
                         <th>Leave Type</th>
                         <th>Date Debut</th>
                         <th>Date Fin</th>
@@ -59,11 +62,14 @@
                 </thead>
                 <tbody>
                     <tr *ngFor="let conge of conges">
+                        <td>{{conge.employe?.nom}}</td>
                         <td>{{conge.type_conge}}</td>
-                        <td>{{conge.date_debut}}</td>
-                        <td>{{conge.date_fin}}</td>
+                        <td>{{conge.date_debut | date: "dd-MM-yyyy"}}</td>
+                        <td>{{conge.date_fin | date: "dd-MM-yyyy"}}</td>
+                        <td>{{conge.chefDepartement?.nom}}</td>
+
                         <!--<td>{{chefDepartement.nom}}</td>-->
-                       <!-- <td>
+                        <!-- <td>
                             <h2 class="table-avatar">
                                 <a href="profile.html" class="avatar avatar-xs"><img src="http://localhost:9190/api/employe/files/{{employe.image}}" alt=""></a>
                                 <a href="#">{{employe.nom}}</a>
@@ -71,14 +77,19 @@
                         </td>-->
                         <td class="text-right">
                             <div class="dropdown dropdown-action">
-                                <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
+                                <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown"
+                                    aria-expanded="false"><i class="material-icons">more_vert</i></a>
                                 <div class="dropdown-menu dropdown-menu-right">
-                                    <a class="dropdown-item" href="#" data-toggle="modal" data-target="#edit_leave" (click)= "patchValue(conge.id)"><i class="fa fa-pencil m-r-5"></i> Edit</a>
-                                    <a class="dropdown-item" href="#" data-toggle="modal" data-target="#delete_approve" (click)="sendIdToDelete(conge.id)"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
+                                    <a class="dropdown-item" href="#" data-toggle="modal" id="edit_cong_close"
+                                        data-target="#edit_leave" (click)="patchValue(conge.id)"><i
+                                            class="fa fa-pencil m-r-5"></i> Edit</a>
+                                    <a class="dropdown-item" href="#" data-toggle="modal" data-target="#delete_approve"
+                                        (click)="sendIdToDelete(conge.id)"><i class="fa fa-trash-o m-r-5"></i>
+                                        Delete</a>
                                 </div>
                             </div>
                         </td>
-                    
+
                 </tbody>
             </table>
         </div>
@@ -89,22 +100,28 @@
 <div id="add_leave" class="modal custom-modal fade" role="dialog">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
-                
+
             <div class="modal-header">
-                <h5 class="modal-title">Add Leave</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <h5 class="modal-title">Add Conge</h5>
+                <button type="button" class="close" data-dismiss="modal" id="add_cong_close" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
                 <form [formGroup]="formConge" (ngSubmit)="saveConge()">
                     <div class="col-sm-6">
+                        <label>Employe <span class="text-danger">*</span></label>
+                        <select class="select">
+                            <option *ngFor='let employe of employees' value="{{employe.id}}">{{employe.nom}}</option>
+                        </select>
+                    </div>
+                    <div class="col-sm-6">
                         <label>Leave Type <span class="text-danger">*</span></label>
                         <select class="select" formControlName="type_conge">
-                            <option>Select Leave Type</option>
-                            <option>Casual Leave 12 Days</option>
-                            <option>Medical Leave</option>
-                            <option>Loss of Pay</option>
+                            <option>Select Conge Type</option>
+                            <option value="Congé Occasionnel 12 jours">Congé Occasionnel 12 jours</option>
+                            <option value="Congé de Maladie">Congé de Maladie</option>
+                            <option value="Perte de Salaire">Perte de Salaire</option>
                         </select>
                     </div>
                     <div class="col-sm-6">
@@ -121,9 +138,11 @@
                     </div>
                     <div class="col-sm-6">
                         <label>Aprouve par <span class="text-danger">*</span></label>
-                        <select class="select" formControlName="chefDepartement">
-                            <option *ngFor='let chefDepartement of chefDepartements' value="{{chefDepartement.id}}" >{{chefDepartement.nom}}>Select chef departement</option>
-                            
+                        <select class="select" formControlName="ID_ChefDept">
+                            <option>Select Chef Departement</option>
+                            <option *ngFor='let chefDepartement of chefDepartements' value="{{chefDepartement.id}}">
+                                {{chefDepartement.nom}}</option>
+
                         </select>
                     </div>
                     <div class="submit-section">
@@ -141,7 +160,7 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Edit Leave</h5>
+                <h5 class="modal-title">Edit Conge</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -149,10 +168,20 @@
             <div class="modal-body">
                 <form [formGroup]="formUpdateConge" (ngSubmit)="updateConge()">
                     <div class="col-sm-6">
+
+                        <select class="select" formControlName="ID_Employe">
+                            <option>Select employe</option>
+                            <option *ngFor='let employe of employees' value="{{employe.id}}">{{employe.nom}}</option>
+                        </select>
+                    </div>
+
+                    <div class="col-sm-6">
                         <label>Leave Type <span class="text-danger">*</span></label>
                         <select class="select" formControlName="type_conge">
-                            <option>Select Leave Type</option>
-                            <option></option>
+                            <option>Select Conge Type</option>
+                            <option value="Congé Occasionnel 12 jours">Congé Occasionnel 12 jours</option>
+                            <option value="Congé de Maladie">Congé de Maladie</option>
+                            <option value="Perte de Salaire">Perte de Salaire</option>
                         </select>
                     </div>
                     <div class="col-sm-6">
@@ -167,9 +196,10 @@
                             <input class="form-control" value="" type="date" formControlName="date_fin">
                         </div>
                     </div>
-                    <select class="select" formControlName="type_conge">
-                        <option>Select chef departement</option>
-                        <option *ngFor='let chefDepartement of chefDepartements' value="{{chefDepartement.id}}" >{{chefDepartement.nom}}></option>
+                    <select class="select" formControlName="ID_ChefDept">
+                        <option>Select Chef Departement</option>
+                        <option *ngFor='let chefDepartement of chefDepartements' value="{{chefDepartement.id}}">
+                            {{chefDepartement.nom}}</option>
                     </select>
                     <!--<div class="form-group">
                         <label>Leave Reason <span class="text-danger">*</span></label>
@@ -197,10 +227,10 @@
                 <div class="modal-btn delete-action">
                     <div class="row">
                         <div class="col-6">
-                            <a href="javascript:void(0);" (click) = "deleteCong()" class="btn btn-primary continue-btn">Delete</a>
+                            <a (click)="deleteCong()" class="btn btn-primary continue-btn">Delete</a>
                         </div>
                         <div class="col-6">
-                            <a href="javascript:void(0);" data-dismiss="modal" class="btn btn-primary cancel-btn">Cancel</a>
+                            <a id="del_cong_close" data-dismiss="modal" class="btn btn-primary cancel-btn">Cancel</a>
                         </div>
                     </div>
                 </div>

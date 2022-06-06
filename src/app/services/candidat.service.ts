@@ -9,7 +9,7 @@ export class CandidatService {
   constructor(private http:HttpClient) { }
 
   getCandidats(){
-    return this.http.get(`http://localhost:9190/api/candidat/`);
+    return this.http.get(`http://localhost:9190/api/candidat/getAll`);
   }
 
   getCandidatById(id:any){
@@ -21,10 +21,10 @@ export class CandidatService {
   }*/
 
   createCandidat(candidat:any){
-    return this.http.post(`http://localhost:9190/api/candidat/`,candidat);
+    return this.http.post(`http://localhost:9190/api/candidat/create`,candidat);
   }
 
-  updateCandidat(candidat:any,id:any){
+  updateCandidat(candidat:any, id:any){
     return this.http.put(`http://localhost:9190/api/candidat/${id}`,candidat);
   }
 

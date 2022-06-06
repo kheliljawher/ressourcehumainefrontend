@@ -21,7 +21,7 @@
                         <th>#</th>
                         <th>Name</th>
                         <th>Email</th>
-                        <th>Phone</th>
+                        <th>Téléphone</th>
                         <th>Apply Date</th>
                         <th class="text-center">Status</th>
                         <th>Resume</th>
@@ -34,17 +34,17 @@
                         <td>{{candidat.nom}}</td>
                         <td>{{candidat.email}</td>
                         <td>{{candidat.telephone}</td>
-                        <td>{{candidat.date_Embauche}</td>
+                        <td>{{candidat.date_Naissance}</td>
                         <td class="text-center">
                             <div class="dropdown action-label">
                                 <a class="btn btn-white btn-sm btn-rounded dropdown-toggle" href="#" data-toggle="dropdown" aria-expanded="false">
                                     <i class="fa fa-dot-circle-o text-info"></i> New
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-right">
-                                    <a class="dropdown-item" href="#"><i class="fa fa-dot-circle-o text-info"></i> New</a>
-                                    <a class="dropdown-item" href="#"><i class="fa fa-dot-circle-o text-success"></i> Hired</a>
-                                    <a class="dropdown-item" href="#"><i class="fa fa-dot-circle-o text-danger"></i> Rejected</a>
-                                    <a class="dropdown-item" href="#"><i class="fa fa-dot-circle-o text-danger"></i> Interviewed</a>
+                                    <a class="dropdown-item" href="#" value="New"><i class="fa fa-dot-circle-o text-info"></i> New</a>
+                                    <a class="dropdown-item" href="#" value="Hired"><i class="fa fa-dot-circle-o text-success"></i> Hired</a>
+                                    <a class="dropdown-item" href="#" value="Rejected"><i class="fa fa-dot-circle-o text-danger"></i> Rejected</a>
+                                    <a class="dropdown-item" href="#" value="Interviewed"><i class="fa fa-dot-circle-o text-danger"></i> Interviewed</a>
                                 </div>
                             </div>
                         </td>

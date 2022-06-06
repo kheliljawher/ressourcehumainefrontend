@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { ChefDepartementService } from 'src/app/services/chef-departement.service';
 import { CongeService } from 'src/app/services/conge.service';
+import { EmployeService } from 'src/app/services/employe.service';
 
 @Component({
   selector: 'app-conge',
@@ -10,6 +10,9 @@ import { CongeService } from 'src/app/services/conge.service';
   styleUrls: ['./conge.component.css']
 })
 export class CongeComponent implements OnInit {
+  testEmploye:any;
+
+  employees:any;
   chefDepartements:any;
   conges:any;
   idToDelete:any;
@@ -25,13 +28,14 @@ export class CongeComponent implements OnInit {
   test:boolean=false
 
   constructor(private congesService:CongeService,
-    private chefsDepartementService:ChefDepartementService,
+    private employeesService:EmployeService,
     private router: Router,
     private formBuilder:FormBuilder) { }
 
   ngOnInit(): void {
 
     this.getConges();
+    this.getEmployees();
     this.getChefDepartements();
     this.geneFormUpdate();
 
@@ -39,7 +43,7 @@ export class CongeComponent implements OnInit {
       date_debut:['',Validators.required],
       date_fin:['',Validators.required],
       type_conge:['',Validators.required],
-      chefDepartement:['',Validators.required]
+      ID_Employe:['',Validators.required]
       
     })
 
@@ -53,11 +57,25 @@ export class CongeComponent implements OnInit {
     )
   }
 
-  getChefDepartements(){
-    this.congesService.getConges().subscribe(
+  getEmployees(){
+    this.employeesService.getEmployees().subscribe(
       (res:any) => {
-        this.conges = res
-        console.log("conges : ",this.conges)}
+        this.employees = res
+        this.testEmploye=res;
+        console.log("employes get : ",this.employees)}
+    )
+  }
+  console(event:any){
+    console.log("event here is : ",event.target.value);
+    
+  }
+
+
+  getChefDepartements(){
+    this.chefDepartements.getChefDepartements().subscribe(
+      (res:any) => {
+        this.chefDepartements = res
+        console.log("chef departements get : ",this.chefDepartements)}
     )
   }
 
@@ -65,6 +83,8 @@ export class CongeComponent implements OnInit {
     this.congesService.deleteCong(this.idToDelete).subscribe( data => {
       console.log(data);
       this.getConges();
+      document.getElementById("del_cong_close").click();
+
     })
   }
 
@@ -75,16 +95,11 @@ export class CongeComponent implements OnInit {
       console.table(this.formConge.value);
       return ;
     }
-    let formData = new FormData();
-    formData.append("date_debut",this.formConge.value.date_debut);
-    formData.append("date_fin",this.formConge.value.date_fin);
-    formData.append("type_conge",this.formConge.value.type_conge);
-
-    formData.append("chefDepartement",this.formConge.value.chefDepartement);
-
-    this.congesService.createCong(formData).subscribe( data =>{
+    
+    this.congesService.createCong(this.formConge.value,this.formConge.value.ID_Employe).subscribe( data =>{
       console.log(data);
       this.getConges();
+      document.getElementById("add_cong_close").click();
     })
   }
 
@@ -99,9 +114,12 @@ export class CongeComponent implements OnInit {
       (res:any) => {
         console.log("conge",res);
         this.router.navigateByUrl("home/conge")
+        this.getConges();
 
       }
     )
+    document.getElementById("edit_cong_close").click();
+
   }
 
   geneForm(){
@@ -109,7 +127,7 @@ export class CongeComponent implements OnInit {
       date_debut:"",
       date_fin:"",
       type_conge:"",
-      chefDepartement:""
+      ID_Employe : ""
 
     })
   }
@@ -120,7 +138,7 @@ export class CongeComponent implements OnInit {
       date_debut:"",
       date_fin:"",
       type_conge:"",
-      chefDepartement:""
+      ID_Employe : ""
 
     })
   }
@@ -136,8 +154,8 @@ export class CongeComponent implements OnInit {
       id:res.id,
       date_debut:res.date_debut,
       date_fin:res.date_fin,
-      type_cong:res.type_cong,
-      chefDepartement:res.chefDepartement
+      type_conge:res.type_conge,
+      ID_Employe : res.ID_Employe
       
     })
 

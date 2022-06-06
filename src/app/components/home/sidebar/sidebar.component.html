@@ -38,7 +38,7 @@
                 <li class="submenu">
                     <a href="#" class="noti-dot"><i class="la la-user"></i> <span> Employees</span> <span class="menu-arrow"></span></a>
                     <ul style="display: none;">
-                        <li><a routerLink="../home/employe">All Employees</a></li>
+                        <li><a routerLink="employe">All Employees</a></li>
                         <li><a href="holidays.html">Holidays</a></li>
                         <li><a href="leaves.html">Leaves (Admin) <span class="badge badge-pill bg-primary float-right">1</span></a></li>
                         <li><a href="leaves-employee.html">Leaves (Employee)</a></li>
@@ -52,14 +52,14 @@
                     </ul>
                 </li>
                 <li> 
-                    <a href="home/planning"><i class="la la-users"></i> <span>Planning</span></a>
+                    <a routerLink="planning"  ><i class="la la-users"></i> <span>Planning</span></a>
                 </li>
-               
+               <!--*ngIf="role == 'EMPLOYE'"-->
                 <li> 
-                    <a href="home/conge"><i class="la la-user-secret"></i> <span>Congé</span></a>
+                    <a routerLink="conge"><i class="la la-user-secret"></i> <span>Congé</span></a>
                 </li>
                 <li> 
-                    <a href="home/contrat"><i class="la la-ticket"></i> <span>Contrat</span></a>
+                    <a routerLink="contrat"><i class="la la-ticket"></i> <span>Contrat</span></a>
                 </li>
                 <!--<li class="menu-title"> 
                     <span>HR</span>
@@ -131,8 +131,8 @@
                 <li class="submenu">
                     <a href="#"><i class="la la-briefcase"></i> <span> Candidatures </span> <span class="menu-arrow"></span></a>
                     <ul style="display: none;">
-                        <li><a href="home/candidature"> Manage Jobs </a></li>
-                        <li><a href="home/candidat"> Applied Candidates </a></li>
+                        <li><a routerLink="candidature"> Manage Jobs </a></li>
+                        <li><a routerLink="candidat"> Applied Candidates </a></li>
                     </ul>
                 </li>
                 <li class="submenu">
@@ -144,10 +144,10 @@
                     </ul>
                 </li>
                 <li> 
-                    <a href="home/profile"><i class="la la-ticket"></i> <span>Profile</span></a>
+                    <a routerLink="profile"><i class="la la-ticket"></i> <span>Profile</span></a>
                 </li>
                 <li> 
-                    <a href="/login"><i class="la la-ticket"></i> <span>Sign out</span></a>
+                    <a (click)="logout()"><i class="la la-ticket"></i> <span>Sign out</span></a>
                 </li>
                 <!--<li> 
                     <a href="knowledgebase.html"><i class="la la-question"></i> <span>Knowledgebase</span></a>
