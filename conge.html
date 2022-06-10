@@ -61,12 +61,12 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let conge of conges | paginate: { itemsPerPage: 2, currentPage: p}">
+                    <tr *ngFor="let conge of conges">
                         <td>{{conge.employe?.nom}}</td>
                         <td>{{conge.type_conge}}</td>
                         <td>{{conge.date_debut | date: "dd-MM-yyyy"}}</td>
                         <td>{{conge.date_fin | date: "dd-MM-yyyy"}}</td>
-                        <td>{{conge?.chef_departement?.login}}</td>
+                        <td>{{conge.chefDepartement?.nom}}</td>
 
                         <!--<td>{{chefDepartement.nom}}</td>-->
                         <!-- <td>
@@ -92,8 +92,6 @@
 
                 </tbody>
             </table>
-            <pagination-controls class="my-pagination" (pageChange)="p = $event"   previousLabel="Précédent"
-                    nextLabel="Suivant " ></pagination-controls>
         </div>
     </div>
 </div>
@@ -113,7 +111,7 @@
                 <form [formGroup]="formConge" (ngSubmit)="saveConge()">
                     <div class="col-sm-6">
                         <label>Employe <span class="text-danger">*</span></label>
-                        <select class="select" formControlName="ID_Employe">
+                        <select class="select">
                             <option *ngFor='let employe of employees' value="{{employe.id}}">{{employe.nom}}</option>
                         </select>
                     </div>
@@ -140,7 +138,12 @@
                     </div>
                     <div class="col-sm-6">
                         <label>Aprouve par <span class="text-danger">*</span></label>
-                        
+                        <select class="select" formControlName="ID_ChefDept">
+                            <option>Select Chef Departement</option>
+                            <option *ngFor='let chefDepartement of chefDepartements' value="{{chefDepartement.id}}">
+                                {{chefDepartement.nom}}</option>
+
+                        </select>
                     </div>
                     <div class="submit-section">
                         <button class="btn btn-primary submit-btn">Submit</button>
@@ -193,7 +196,11 @@
                             <input class="form-control" value="" type="date" formControlName="date_fin">
                         </div>
                     </div>
-                    
+                    <select class="select" formControlName="ID_ChefDept">
+                        <option>Select Chef Departement</option>
+                        <option *ngFor='let chefDepartement of chefDepartements' value="{{chefDepartement.id}}">
+                            {{chefDepartement.nom}}</option>
+                    </select>
                     <!--<div class="form-group">
                         <label>Leave Reason <span class="text-danger">*</span></label>
                         <textarea rows="4" class="form-control">Going to hospital</textarea>

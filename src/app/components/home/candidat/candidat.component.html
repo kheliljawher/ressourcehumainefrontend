@@ -19,9 +19,10 @@
                 <thead>
                     <tr>
                         <th>#</th>
-                        <th>Name</th>
-                        <th>Email</th>
+                        <th>Nom</th>
+                        <th>prenom</th>
                         <th>Téléphone</th>
+                        <th>Email</th>
                         <th>Apply Date</th>
                         <th class="text-center">Status</th>
                         <th>Resume</th>
@@ -32,10 +33,11 @@
                     <tr *ngFor="let candidat of candidats">
                         <td>{{candidat.id}}</td>
                         <td>{{candidat.nom}}</td>
-                        <td>{{candidat.email}</td>
-                        <td>{{candidat.telephone}</td>
-                        <td>{{candidat.date_Naissance}</td>
-                        <td class="text-center">
+                        <td>{{candidat.prenom}}</td>
+                        <td>{{candidat.telephone}}</td>
+                        <td>{{candidat.email}}</td>
+                        <td>{{candidat.date_naissance}}</td>
+                        <td class="text-center" formControlName="status">
                             <div class="dropdown action-label">
                                 <a class="btn btn-white btn-sm btn-rounded dropdown-toggle" href="#" data-toggle="dropdown" aria-expanded="false">
                                     <i class="fa fa-dot-circle-o text-info"></i> New

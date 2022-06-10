@@ -27,6 +27,7 @@ export class ContratComponent implements OnInit {
   imageName: any;
   submitted = false;
   test:boolean=false
+  p:number=1;
 
   constructor(private contratsService:ContratService,
     private employeesService:EmployeService,
@@ -87,9 +88,10 @@ export class ContratComponent implements OnInit {
     this.contratsService.createCont(this.formContrat.value,this.formContrat.value.ID_Employe).subscribe( data =>{
       console.log(data);
       this.getContrats();
-      document.getElementById("add_cont_close").click();
+    document.getElementById("add_cont_close").click();
 
     })
+
   }
 
   goToContratList(){
@@ -98,11 +100,14 @@ export class ContratComponent implements OnInit {
 
   updateContrat(){
     console.log("onSubmit")
+    console.log("this id ",this.id);
+
     console.log(this.formUpdateContrat.value);
-    this.contratsService.updateCont(this.formUpdateContrat.value,this.id).subscribe(
+
+    this.contratsService.updateCont(this.formUpdateContrat.value,this.id,this.formContrat.value.ID_Employe).subscribe(
       (res:any) => {
         console.log("contrat",res);
-        this.router.navigateByUrl("home/contrat")
+        //this.router.navigateByUrl("home/contrat")
         this.getContrats();
       }
     )
@@ -145,7 +150,7 @@ export class ContratComponent implements OnInit {
       date_debut:res.date_debut,
       date_fin:res.date_fin,
       salaire:res.salaire,
-      ID_Employe : res.ID_Employe
+      ID_Employe : res.employe.id
 
     })
 

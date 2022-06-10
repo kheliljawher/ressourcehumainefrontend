@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { EmployeService } from 'src/app/services/employe.service';
-import {formatDate} from '@angular/common';
+import { formatDate } from '@angular/common';
+import { ChefDepartementService } from 'src/app/services/chef-departement.service';
 
 @Component({
   selector: 'app-employe',
@@ -10,51 +11,94 @@ import {formatDate} from '@angular/common';
   styleUrls: ['./employe.component.css']
 })
 export class EmployeComponent implements OnInit {
-  employees:any;
-  idToDelete:any;
+
+  roleToDelete: any;
+  employees: any[] = []
+  chefDepartements: any[] = []
+  idToDelete: any;
   id: any;
-  formEmploye:FormGroup; 
-  formUpdateEmploye:FormGroup;
-  selectedFile:  Array<File> = [];
+  formEmploye: FormGroup;
+  formUpdateEmploye: FormGroup;
+  selectedFile: Array<File> = [];
   retrievedImage: any;
   base64Data: any;
   retrieveResonse: any;
   imageName: any;
   submitted = false;
-  test:boolean=false
+  test: boolean = false;
+  nomEmploye: string = "";
+  prenomEmploye: string = "";
+  idEmploye: string = "";
+  p: number = 1;
+  utilisateurs: any[] = []
 
-  constructor(private employeesService:EmployeService,
+  constructor(private employeesService: EmployeService,
+    private chefDepartementsService: ChefDepartementService,
     private router: Router,
-    private formBuilder:FormBuilder,
-    ) { }
-  
+    private formBuilder: FormBuilder,
+  ) { }
+
 
   ngOnInit(): void {
     this.getEmployees();
+    this.getChefDepartements();
     this.geneFormUpdate();
 
     this.formEmploye = this.formBuilder.group({
-      nom:['',Validators.required],
-      prenom:['',Validators.required],
-      login:['',Validators.required],
-      password:['', Validators.minLength(4)],
-      cin:['',Validators.minLength(8)],
-      telephone:['',Validators.minLength(8)],
-      email:['',Validators.email],
-      adresse:['',Validators.required],
-      poste:['',Validators.required],
-      date_Embauche:['',Validators.required],
-      date_Naissance:['',Validators.required],
+      nom: ['', Validators.required],
+      prenom: ['', Validators.required],
+      login: ['', Validators.required],
+      password: ['', Validators.minLength(4)],
+      cin: ['', Validators.minLength(8)],
+      telephone: ['', Validators.minLength(8)],
+      email: ['', Validators.email],
+      adresse: ['', Validators.required],
+      poste: ['', Validators.required],
+      date_Embauche: ['', Validators.required],
+      date_Naissance: ['', Validators.required],
+      image: ['', Validators.required],
+      role: ['', Validators.required],
+      sexs: ['', Validators.required],
+      confirmPassword: ['', Validators.required]
 
-      image:['',Validators.required]
+
     })
   }
 
-  getEmployees(){
+  getEmployees() {
     this.employeesService.getEmployees().subscribe(
-      (res:any) => {
+      (res: any) => {
         this.employees = res
-        console.log("employees : ",this.employees)}
+        console.log("employees : ", this.employees)
+        this.utilisateurs = [];
+
+        this.chefDepartements.forEach(element => {
+          this.utilisateurs.push(element)
+        });
+        this.employees.forEach(element => {
+          this.utilisateurs.push(element)
+        });
+      }
+    )
+  }
+
+  getChefDepartements() {
+    this.chefDepartementsService.getChefDepartements().subscribe(
+      (res: any) => {
+        this.chefDepartements = res
+        console.log("chef departements : ", this.chefDepartements)
+        this.utilisateurs = [];
+        this.chefDepartements.forEach(element => {
+          this.utilisateurs.push(element)
+        });
+        this.employees.forEach(element => {
+          this.utilisateurs.push(element)
+        });
+
+
+        //this.utilisateurs.push(this.employees[0])
+
+      }
     )
   }
 
@@ -74,60 +118,115 @@ export class EmployeComponent implements OnInit {
      )
    }*/
 
-  deleteEmp(){
-    
-    this.employeesService.deleteEmp(this.idToDelete).subscribe( data => {
-      console.log(data);
-      this.getEmployees();
-      document.getElementById("del_emp_close").click();
+  deleteEmp() {
 
-    })
-          
+    if (this.roleToDelete == "EMPLOYE") {
+      this.employeesService.deleteEmp(this.idToDelete).subscribe(data => {
+        console.log(data);
+        this.getEmployees();
+
+      })
+    } else {
+      if (this.roleToDelete == "CHEFDEPARTEMENT") {
+        this.chefDepartementsService.deleteChefDept(this.idToDelete).subscribe(data => {
+          console.log(data);
+          this.getChefDepartements();
+        })
+      } else {
+        // service RH to delete
+      }
+    }
+
+    document.getElementById("del_emp_close").click();
 
   }
-  
 
-  saveEmployee(){
-    // if(this.formEmploye.invalid){
-    //   this.submitted=true;
-    //   console.log("invalid")
-    //   console.table(this.formEmploye.value);
-    //   return ;
-    // }
+  changeSex(event: any) {
+    this.formEmploye.patchValue({
+      sexs: event.target.value
+    })
+  }
+
+  changeUser(event: any) {
+    this.formEmploye.patchValue({
+      role: event.target.value
+    })
+  }
+
+  changeSexUpdate(event: any) {
+    this.formUpdateEmploye.patchValue({
+      sexs: event.target.value
+    })
+  }
+
+  // changeUserUpdate(event:any){
+  //   this.formUpdateEmploye.patchValue({
+  //     role : event.target.value
+  //   })
+  // }
+
+  saveEmployee() {
+
+    if (this.formEmploye.invalid) {
+      this.submitted = true;
+      console.log("invalid")
+      console.table(this.formEmploye.value);
+      //return ;
+    }
+
+
+    console.log("role is : ", this.formEmploye.value.role);
+
+    console.log('form is', this.formEmploye.value);
+
 
     let formData = new FormData();
-    formData.append("nom",this.formEmploye.value.nom);
-    formData.append("prenom",this.formEmploye.value.prenom);
-    formData.append("login",this.formEmploye.value.login);
-    formData.append("password",this.formEmploye.value.password);
-    formData.append("cin",this.formEmploye.value.cin);
-    formData.append("telephone",this.formEmploye.value.telephone);
-    formData.append("email",this.formEmploye.value.email);
-    formData.append("adresse",this.formEmploye.value.adresse);
-    formData.append("poste",this.formEmploye.value.poste);
-    formData.append("date_Embauche",this.formEmploye.value.date_Embauche);
-    formData.append("date_Naissance",this.formEmploye.value.date_Naissance);
-    formData.append("file",this.selectedFile[0]);
+    formData.append("nom", this.formEmploye.value.nom);
+    formData.append("prenom", this.formEmploye.value.prenom);
+    formData.append("login", this.formEmploye.value.login);
+    formData.append("password", this.formEmploye.value.password);
+    formData.append("cin", this.formEmploye.value.cin);
+    formData.append("telephone", this.formEmploye.value.telephone);
+    formData.append("email", this.formEmploye.value.email);
+    formData.append("adresse", this.formEmploye.value.adresse);
+    formData.append("poste", this.formEmploye.value.poste);
+    formData.append("date_Embauche", this.formEmploye.value.date_Embauche);
+    formData.append("date_Naissance", this.formEmploye.value.date_Naissance);
+    formData.append("file", this.selectedFile[0]);
+    formData.append("role", this.formEmploye.value.role);
+    formData.append("sexs", this.formEmploye.value.sexs);
+    formData.append("confirmPassword", this.formEmploye.value.confirmPassword);
 
     console.log("formulaire", this.formEmploye.value)
 
-    this.employeesService.createEmp(formData).subscribe( data =>{
-      console.log(data);
-      this.getEmployees();
-      document.getElementById("add_emp_close").click();
-    })
+
+
+    if (this.formEmploye.value.role == "EMPLOYE") {
+      this.employeesService.createEmp(formData).subscribe(data => {
+        console.log(data);
+        this.getEmployees();
+      })
+
+    } else {
+      this.chefDepartementsService.createChefDept(formData).subscribe(data => {
+        console.log(data);
+        this.getChefDepartements();
+      })
+    }
+
+    document.getElementById("add_emp_close").click();
 
   }
 
-  goToEmployeeList(){
+  goToEmployeeList() {
     this.router.navigateByUrl('/home/employe');
   }
 
-  public onFileChanged(event:any) {
+  public onFileChanged(event: any) {
     //Select File
-//        console.log("formGroup : ",this.formEmploye.value)
+    //        console.log("formGroup : ",this.formEmploye.value)
     this.selectedFile = <Array<File>>event.target.files
-    console.log('image : ',this.selectedFile)
+    console.log('image : ', this.selectedFile)
   }
 
   // updateEmployee(id: any){
@@ -139,109 +238,140 @@ export class EmployeComponent implements OnInit {
   //   error => console.log(error));
   // }
 
-   updateEmploye(){
+  updateEmploye() {
 
     let formData = new FormData();
-    formData.append("nom",this.formUpdateEmploye.value.nom);
-    formData.append("prenom",this.formUpdateEmploye.value.prenom);
-    formData.append("login",this.formUpdateEmploye.value.login);
-    formData.append("password",this.formUpdateEmploye.value.password);
-    formData.append("cin",this.formUpdateEmploye.value.cin);
-    formData.append("telephone",this.formUpdateEmploye.value.telephone);
-    formData.append("email",this.formUpdateEmploye.value.email);
-    formData.append("adresse",this.formUpdateEmploye.value.adresse);
-    formData.append("poste",this.formUpdateEmploye.value.poste);
-    formData.append("date_Embauche",this.formUpdateEmploye.value.date_Embauche);
-    formData.append("date_Naissance",this.formUpdateEmploye.value.date_Naissance);
-    formData.append("file",this.selectedFile[0]);
-    
+    formData.append("nom", this.formUpdateEmploye.value.nom);
+    formData.append("prenom", this.formUpdateEmploye.value.prenom);
+    formData.append("login", this.formUpdateEmploye.value.login);
+    formData.append("password", this.formUpdateEmploye.value.password);
+    formData.append("cin", this.formUpdateEmploye.value.cin);
+    formData.append("telephone", this.formUpdateEmploye.value.telephone);
+    formData.append("email", this.formUpdateEmploye.value.email);
+    formData.append("adresse", this.formUpdateEmploye.value.adresse);
+    formData.append("poste", this.formUpdateEmploye.value.poste);
+    formData.append("date_Embauche", this.formUpdateEmploye.value.date_Embauche);
+    formData.append("date_Naissance", this.formUpdateEmploye.value.date_Naissance);
+    formData.append("file", this.selectedFile[0]);
+    //formData.append("role",this.formUpdateEmploye.value.role);
+    formData.append("sexs", this.formUpdateEmploye.value.sexs);
+    //formData.append("confirmPassword",this.formUpdateEmploye.value.confirmPassword);
+
     console.log("onSubmit")
     console.log(this.formUpdateEmploye.value);
-    this.employeesService.updateEmp(formData,this.id).subscribe(
-      (res:any) => {
-        console.log("employe",res);
-       // this.router.navigateByUrl("home/employe")
+
+    if (this.formEmploye.value.role == "EMPLOYE") {
+      this.employeesService.updateEmp(formData, this.id).subscribe(data => {
+        console.log(data);
         this.getEmployees();
-      }
-      
-    )
-    
+      })
+
+    } else {
+      this.chefDepartementsService.updateChefDept(formData, this.id).subscribe(data => {
+        console.log(data);
+        this.getChefDepartements();
+      })
+    }
+
+    // this.employeesService.updateEmp(formData,this.id).subscribe(
+    //   (res:any) => {
+    //     console.log("employe",res);
+    //    // this.router.navigateByUrl("home/employe")
+    //     this.getEmployees();
+    //   }
+
+    // )
+
 
     document.getElementById("edit_emp_close").click();
 
   }
 
-  geneForm(){
+  geneForm() {
     this.formEmploye = this.formBuilder.group({
-      id:"",
-      nom:"",
-      prenom:"",
-      login:"",
-      password:"",
-      cin:"",
-      telephone:"",
-      email:"",
-      adresse:"",
-      poste:"",
-      date_Embauche:"",
-      date_Naissance:"",
-      image:""
+      id: "",
+      nom: "",
+      prenom: "",
+      login: "",
+      password: "",
+      cin: "",
+      telephone: "",
+      email: "",
+      adresse: "",
+      poste: "",
+      date_Embauche: "",
+      date_Naissance: "",
+      image: "",
+      role: "",
+      sexs: "",
+      confirmPassword: ""
 
     })
   }
 
 
-  geneFormUpdate(){
+  geneFormUpdate() {
     this.formUpdateEmploye = this.formBuilder.group({
-      id:"",
-      nom:"",
-      prenom:"",
-      login:"",
-      password:"",
-      cin:"",
-      telephone:"",
-      email:"",
-      adresse:"",
-      poste:"",
-      date_Embauche:"",
-      date_Naissance:"",
-      image:""
+      id: "",
+      nom: "",
+      prenom: "",
+      login: "",
+      password: "",
+      cin: "",
+      telephone: "",
+      email: "",
+      adresse: "",
+      poste: "",
+      date_Embauche: "",
+      date_Naissance: "",
+      image: "",
+      //role:"",
+      sexs: "",
+      confirmPassword: ""
 
     })
   }
 
-  patchValue(id:any){
-    console.log("emplyee id is : ",id)
-    this.employeesService.getEmpById(id).subscribe(
-      (res:any)=> {
-        console.log("emplyee is :",res);
-        this.id=id;
+  patchValue(res: any) {
+    console.log("utilisateur is : ", res)
 
-      this.formUpdateEmploye.patchValue({
-      id:res.id,
-      nom:res.nom,
-      prenom:res.prenom,
-      login:res.login,
-      password:res.password,
-      cin:res.cin,
-      telephone:res.telephone,
-      email:res.email,
-      adresse:res.adresse,
-      poste:res.poste,
-      date_Embauche:res.date_Embauche,
-      date_Naissance:res.date_Naissance,
-      image:res.image
+    this.id = res.id;
 
+    this.formUpdateEmploye.patchValue({
+      id: res.id,
+      nom: res.nom,
+      prenom: res.prenom,
+      login: res.login,
+      password: res.password,
+      cin: res.cin,
+      telephone: res.telephone,
+      email: res.email,
+      adresse: res.adresse,
+      poste: res.poste,
+      date_Embauche: res.date_Embauche,
+      date_Naissance: res.date_Naissance,
+      image: res.image,
+      role: res.role,
+      sexs: res.sexs,
+      confirmPassword: res.confirmPassword
     })
 
-      }
-    )
-    this.test=true;
+    this.test = true;
   }
 
-  sendIdToDelete(id:any){
-    this.idToDelete=id;
-    console.log("id to delete : ",id);
+  sendIdToDelete(utilisateur: any) {
+
+    this.idToDelete = utilisateur.id;
+    console.log("id to delete : ", utilisateur.id);
+    console.log("utilisateur is  : ", utilisateur);
+
+
+
+    this.roleToDelete = utilisateur.role
+
+
   }
+
+
 
 }

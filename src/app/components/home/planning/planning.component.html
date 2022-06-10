@@ -25,13 +25,15 @@
                         <th>Nom</th>
                         <th>Date Debut</th>
                         <th>Date Fin</th>
+                        <th>Ajouter Par</th>
+
                         <!--<th class="text-center">Hours</th>
                         <th class="d-none d-sm-table-cell">Description</th>-->
                         <th class="text-right">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let planning of plannings">
+                    <tr *ngFor="let planning of plannings | paginate: { itemsPerPage: 2, currentPage: p}">
                         <td >
                             <h2 class="table-avatar">
                                 <!--<a href="#" class="avatar"><img alt="" src="http://localhost:9190/api/employe/files/{{employe.image}}"></a>
@@ -42,7 +44,7 @@
                         <td>{{planning.nom}}</td>
                         <td>{{planning.date_debut | date: "dd-MM-yyyy"}}</td>
                         <td>{{planning.date_fin | date: "dd-MM-yyyy"}}</td>
-                        
+                        <td>{{planning?.chef_departement?.login}}</td>
                         <!--<td class="text-center"></td>
                         <td class="d-none d-sm-table-cell col-md-4">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vel elit neque.</td>-->
                         <td class="text-right">
@@ -58,6 +60,8 @@
                     
                 </tbody>
             </table>
+            <pagination-controls class="my-pagination" (pageChange)="p = $event"   previousLabel="Précédent"
+                    nextLabel="Suivant " ></pagination-controls>
         </div>
     </div>
 </div>
@@ -117,7 +121,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">Edit Planning Details</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <button type="button" class="close" data-dismiss="modal" id="edit_plan_close" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>

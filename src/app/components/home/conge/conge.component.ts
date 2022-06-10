@@ -11,9 +11,8 @@ import { EmployeService } from 'src/app/services/employe.service';
 })
 export class CongeComponent implements OnInit {
   testEmploye:any;
-
+  user_connect:any;
   employees:any;
-  chefDepartements:any;
   conges:any;
   idToDelete:any;
   id: any;
@@ -25,7 +24,9 @@ export class CongeComponent implements OnInit {
   retrieveResonse: any;
   imageName: any;
   submitted = false;
-  test:boolean=false
+  test:boolean=false;
+  p:number=1;
+  user:any;
 
   constructor(private congesService:CongeService,
     private employeesService:EmployeService,
@@ -34,20 +35,36 @@ export class CongeComponent implements OnInit {
 
   ngOnInit(): void {
 
+    this.user=JSON.parse(localStorage.getItem('user'))
+
     this.getConges();
     this.getEmployees();
-    this.getChefDepartements();
     this.geneFormUpdate();
+    this.geneFormConge()
+    
+    console.log("with out parse : ",localStorage.getItem("user"));
+    console.log("with parse : ",JSON.parse(localStorage.getItem("user")));
+    
+    
+    this.user_connect = JSON.parse(localStorage.getItem("user"))
+  }
 
+
+
+  geneFormConge(){
     this.formConge = this.formBuilder.group({
       date_debut:['',Validators.required],
       date_fin:['',Validators.required],
       type_conge:['',Validators.required],
-      ID_Employe:['',Validators.required]
-      
+      ID_Employe:['',Validators.required]      
     })
-
   }
+
+  emp(){
+       console.log("here form ", this.formConge.value)
+  }
+
+  
 
   getConges(){
     this.congesService.getConges().subscribe(
@@ -62,7 +79,7 @@ export class CongeComponent implements OnInit {
       (res:any) => {
         this.employees = res
         this.testEmploye=res;
-        console.log("employes get : ",this.employees)}
+        console.log("employes get okkk : ",this.employees)}
     )
   }
   console(event:any){
@@ -71,13 +88,13 @@ export class CongeComponent implements OnInit {
   }
 
 
-  getChefDepartements(){
-    this.chefDepartements.getChefDepartements().subscribe(
-      (res:any) => {
-        this.chefDepartements = res
-        console.log("chef departements get : ",this.chefDepartements)}
-    )
-  }
+  // getChefDepartements(){
+  //   this.chefDepartements.getChefDepartements().subscribe(
+  //     (res:any) => {
+  //       this.chefDepartements = res
+  //       console.log("chef departements get : ",this.chefDepartements)}
+  //   )
+  // }
 
   deleteCong(){
     this.congesService.deleteCong(this.idToDelete).subscribe( data => {
@@ -94,9 +111,8 @@ export class CongeComponent implements OnInit {
       console.log("invalid")
       console.table(this.formConge.value);
       return ;
-    }
-    
-    this.congesService.createCong(this.formConge.value,this.formConge.value.ID_Employe).subscribe( data =>{
+    }    
+    this.congesService.createCong(this.formConge.value,this.formConge.value.ID_Employe,this.user_connect.id).subscribe( data =>{
       console.log(data);
       this.getConges();
       document.getElementById("add_cong_close").click();
@@ -110,7 +126,7 @@ export class CongeComponent implements OnInit {
   updateConge(){
     console.log("onSubmit")
     console.log(this.formUpdateConge.value);
-    this.congesService.updateCong(this.formUpdateConge.value,this.id).subscribe(
+    this.congesService.updateCong(this.formUpdateConge.value,this.id,this.formUpdateConge.value.ID_Employe).subscribe(
       (res:any) => {
         console.log("conge",res);
         this.router.navigateByUrl("home/conge")
@@ -119,7 +135,6 @@ export class CongeComponent implements OnInit {
       }
     )
     document.getElementById("edit_cong_close").click();
-
   }
 
   geneForm(){

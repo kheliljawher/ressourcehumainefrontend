@@ -9,15 +9,15 @@ export class ChefDepartementService {
   constructor(private http:HttpClient) { }
 
   getChefDepartements(){
-    return this.http.get(`http://localhost:9190/api/chefDepartement/`);
-  }
+    return this.http.get(`http://localhost:9190/api/chefDepartement/getAll`);
+  } 
 
   getChefDeptById(id:any){
     return this.http.get(`http://localhost:9190/api/chefDepartement/${id}`);
   }
 
   createChefDept(chefDepartement:any){
-    return this.http.post(`http://localhost:9190/api/chefDepartement/`,chefDepartement);
+    return this.http.post(`http://localhost:9190/api/chefDepartement/create`,chefDepartement);
   }
 
   updateChefDept(chefDepartement:any, id:any){
@@ -25,6 +25,6 @@ export class ChefDepartementService {
   }
 
   deleteChefDept(id:any) {
-    return this.http.delete(`http://localhost:9190/v1/chefDepartement/${id}`);
+    return this.http.delete(`http://localhost:9190/api/chefDepartement/${id}`);
   }
 }

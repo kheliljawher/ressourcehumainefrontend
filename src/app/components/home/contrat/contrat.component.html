@@ -35,7 +35,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let contrat of contrats">
+                    <tr *ngFor="let contrat of contrats | paginate: { itemsPerPage: 2, currentPage: p}">
                         <td>{{contrat.id}}</td>
                         <td>{{contrat.employe?.nom}}</td>
 
@@ -60,6 +60,8 @@
                    
                 </tbody>
             </table>
+            <pagination-controls class="my-pagination" (pageChange)="p = $event"   previousLabel="Précédent"
+                    nextLabel="Suivant " ></pagination-controls>
         </div>
     </div>
 </div>

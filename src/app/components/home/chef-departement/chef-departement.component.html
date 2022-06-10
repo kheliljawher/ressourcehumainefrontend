@@ -1,1 +1,454 @@
-<p>chef-departement works!</p>
+        <!-- Page Header -->
+        <div class="page-header">
+            <div class="row align-items-center">
+                <div class="col">
+                    <h3 class="page-title">Chef de Departement</h3>
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item"><a routerLink="../home">Dashboard</a></li>
+                        <li class="breadcrumb-item active">Chef de Departement</li>
+                    </ul>
+                </div>
+                <div class="col-auto float-right ml-auto">
+                    <a href="#" class="btn add-btn" data-toggle="modal" data-target="#add_employee"><i class="fa fa-plus"></i> Add Chef de Departement</a>
+                    <div class="view-icons">
+                        <!--<a href="employees.html" class="grid-view btn btn-link"><i class="fa fa-th"></i></a>-->
+                        <!--<a href="employees-list.html" class="list-view btn btn-link active"><i class="fa fa-bars"></i></a>-->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /Page Header -->
+        
+        <!-- Search Filter -->
+        <div class="row filter-row">
+            <div class="col-sm-6 col-md-3">  
+                <div class="form-group form-focus">
+                    <input type="text" class="form-control floating">
+                    <label class="focus-label">Chef Departement ID</label>
+                </div>
+            </div>
+            <div class="col-sm-6 col-md-3">  
+                <div class="form-group form-focus">
+                    <input type="text" class="form-control floating" [(ngModel)]="nomChefDepartement">
+                    <label class="focus-label">Chef Departement Name</label>
+                </div>
+            </div>
+            <div class="col-sm-6 col-md-3">  
+                <div class="form-group form-focus">
+                    <input type="text" class="form-control floating" [(ngModel)]="prenomChefDepartement">
+                    <label class="focus-label">Chef Departement Prenom</label>
+                </div>
+            </div>
+           <!-- <div class="col-sm-6 col-md-3"> 
+                <div class="form-group form-focus select-focus">
+                    <select class="select floating"> 
+                        <option>Select Designation</option>
+                        <option>Web Developer</option>
+                        <option>Web Designer</option>
+                        <option>Android Developer</option>
+                        <option>Ios Developer</option>
+                    </select>
+                    <label class="focus-label">Designation</label>
+                </div>
+            </div>-->
+            <div class="col-sm-6 col-md-3">  
+                <a href="#" class="btn btn-success btn-block"> Search </a>  
+            </div>     
+        </div>
+        <!-- /Search Filter -->
+        
+        <div class="row">
+            <div class="col-md-12">
+                <div class="table-responsive">
+                    <table class="table table-striped custom-table datatable">
+                        <thead>
+                            <tr>
+                                <th>Nom</th>
+                                <th>Chef Departement ID</th>
+                                <th>Prénom</th>
+                                <th>Login</th>
+                                <th>Mot de passe</th>
+                                <th>Cin</th>
+                                <th>Téléphone</th>
+                                <th>Email</th>
+                                <th>Adresse</th>
+                                <th>Poste</th>
+                                <th>Date Embauche</th>
+                                <th>Date Naissance</th>
+
+                                <!--<th class="text-nowrap">Join Date</th>
+                                <th>Role</th>-->
+                                <th class="text-right no-sort">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let chefDepartement of chefDepartements | rechercheChefDeptNom: nomChefDepartement ">
+                                <td>
+                                    <h2 class="table-avatar">
+                                        <a class="avatar"><img alt="" src="http://localhost:9190/api/employe/files/{{chefDepartement.image}}"></a>
+                                        <a>{{chefDepartement.nom}} <span></span></a>
+                                    </h2>
+                                </td>       
+                                <td>{{chefDepartement.id}}</td>
+                                <td>{{chefDepartement.prenom}}</td>
+                                <td>{{chefDepartement.login}}</td>
+                                <td>{{chefDepartement.password}}</td>
+                                <td>{{chefDepartement.cin}}</td>
+                                <td>{{chefDepartement.telephone}}</td>
+                                <td>{{chefDepartement.email}}</td>
+                                <td>{{chefDepartement.adresse}}</td>
+                                <td>{{chefDepartement.poste}}</td>
+                                <td>{{chefDepartement.date_Embauche | date: "dd-MM-yyyy"}}</td>
+                                <td>{{chefDepartement.date_Naissance | date: "dd-MM-yyyy"}}</td>
+
+                                <td class="text-right">
+                                    <div class="dropdown dropdown-action">
+                                        <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
+                                        <div class="dropdown-menu dropdown-menu-right">
+                                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#edit_employee" (click)= "patchValue(chefDepartement.id)"><i class="fa fa-pencil m-r-5"></i> Edit</a>
+                                            <a class="dropdown-item" data-toggle="modal" data-target="#delete_employee"  (click)="sendIdToDelete(chefDepartement.id)"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    
+    <!-- Add Employee Modal -->
+    <div id="add_employee" class="modal custom-modal fade" role="dialog">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Add Chef Departement</h5>
+                    <button type="button" class="close" data-dismiss="modal" id="add_chef_close" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form [formGroup]="formChefDepartement" (ngSubmit)="saveChefDepartement()">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label class="col-form-label">Nom <span class="text-danger">*</span></label>
+                                    <input class="form-control" type="text" formControlName="nom" placeholder="Nom">
+                                    <span class="text-danger" *ngIf="formChefDepartement.get('nom')?.hasError('required') && formChefDepartement.get('nom')?.touched">
+                                        <p>Le nom est obligatoire</p>
+                                      </span>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label class="col-form-label">Prénom</label>
+                                    <input class="form-control" type="text" formControlName="prenom" placeholder="Prenom">
+                                    <span class="text-danger" *ngIf="formChefDepartement.get('prenom')?.hasError('required') && formChefDepartement.get('prenom')?.touched">
+                                        <p>Le prenom est obligatoire</p>
+                                      </span>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label class="col-form-label">Login <span class="text-danger">*</span></label>
+                                    <input class="form-control" type="text" formControlName="login" placeholder="Login">
+                                    <span class="text-danger" *ngIf="formChefDepartement.get('login')?.hasError('required') && formChefDepartement.get('login')?.touched">
+                                        <p>Le Login est obligatoire</p>
+                                      </span>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label class="col-form-label">Mot de passe <span class="text-danger">*</span></label>
+                                    <input class="form-control" type="password" formControlName="password" placeholder="Mot de passe">
+                                    <span class="text-danger" *ngIf="formChefDepartement.get('password')?.hasError('minLength') && formChefDepartement.get('password')?.touched">
+                                        <p>Le mot de passe est obligatoire et de minimum longueur 4</p>
+                                       </span>
+                                </div>
+                            </div>
+                    
+                           <!-- <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label class="col-form-label">Confirm Password</label>
+                                    <input class="form-control" type="password">
+                                </div>
+                            </div>-->
+                           <!-- <div class="col-sm-6">  
+                                <div class="form-group">
+                                    <label class="col-form-label">Employee ID <span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" readonly formControlName="id">
+                                </div>
+                            </div>-->
+                            <div class="col-sm-6">  
+                                <div class="form-group">
+                                    <label class="col-form-label">Cin <span class="text-danger">*</span></label>
+                                    <input class="form-control" type="text" formControlName="cin" placeholder="Cin">
+                                    <span class="text-danger" *ngIf="formChefDepartement.get('cin')?.hasError('minLength') && formChefDepartement.get('cin')?.touched">
+                                        <p>Le cin est obligatoire et doit comporter 8 caractères</p>
+                                      </span>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label class="col-form-label">Téléphone </label>
+                                    <input class="form-control" type="text" formControlName="telephone" placeholder="Téléphone">
+                                    <span class="text-danger" *ngIf="formChefDepartement.get('telephone')?.hasError('minLength') && formChefDepartement.get('telephone')?.touched">
+                                        <p>Le telephone est obligatoire et doit comporter 8 caractères</p>
+                                      </span>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label class="col-form-label">Email </label>
+                                    <input class="form-control" type="email" formControlName="email" placeholder="Email">
+                                    <span class="text-danger" *ngIf="formChefDepartement.get('email')?.hasError('required') && formChefDepartement.get('email')?.touched">
+                                        <p>L'email est obligatoire </p>
+                                      </span>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label class="col-form-label">Adresse </label>
+                                    <textarea class="form-control" formControlName="adresse" placeholder="Adresse"></textarea>
+                                    <span class="text-danger" *ngIf="formChefDepartement.get('adresse')?.hasError('required') && formChefDepartement.get('adresse')?.touched">
+                                        <p>L'adresse est obligatoire </p>
+                                      </span>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label class="col-form-label">Poste </label>
+                                    <input class="form-control" type="text" formControlName="poste" placeholder="Poste">
+                                    <span class="text-danger" *ngIf="formChefDepartement.get('poste')?.hasError('required') && formChefDepartement.get('poste')?.touched">
+                                        <p>Le poste est obligatoire </p>
+                                      </span>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label class="col-form-label">Date Embauche </label>
+                                    <input class="form-control" type="date" formControlName="date_Embauche">
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label class="col-form-label">Date Naissance </label>
+                                    <input class="form-control" type="date" formControlName="date_Naissance">
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label>Image</label>
+                                <div class="col-md-6">
+                                  <input class="form-control" width="400"
+                                  height="341" formControlName="image" type="file" name="file" (change)="onFileChanged($event)">
+                                  <span class="text-danger" *ngIf="formChefDepartement.get('image')?.hasError('required') && formChefDepartement.get('image')?.touched"
+        >
+       <p> image is required</p>
+      </span>
+                                </div>
+                              </div>
+                            <!--<div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Department <span class="text-danger">*</span></label>
+                                    <select class="select">
+                                        <option>Select Department</option>
+                                        <option>Web Development</option>
+                                        <option>IT Management</option>
+                                        <option>Marketing</option>
+                                    </select>
+                                </div>
+                            </div>-->
+                            <!--<div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Designation <span class="text-danger">*</span></label>
+                                    <select class="select">
+                                        <option>Select Designation</option>
+                                        <option>Web Designer</option>
+                                        <option>Web Developer</option>
+                                        <option>Android Developer</option>
+                                    </select>
+                                </div>
+                            </div>-->
+                        </div>
+                        
+                        <div class="submit-section">
+                            <button class="btn btn-primary submit-btn">Submit</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /Add Employee Modal -->
+    
+    <!-- Edit Employee Modal -->
+    <div id="edit_employee" class="modal custom-modal fade" role="dialog">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Edit Chef de Departement</h5>
+                    <button type="button" class="close" data-dismiss="modal" id="edit_chef_close" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form [formGroup]="formUpdateChefDepartement">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label class="col-form-label">Nom <span class="text-danger">*</span></label>
+                                    <input class="form-control" type="text" formControlName="nom">
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label class="col-form-label">Prénom</label>
+                                    <input class="form-control" value="" type="text" formControlName="prenom">
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label class="col-form-label">Login <span class="text-danger">*</span></label>
+                                    <input class="form-control" value="" type="text" formControlName="login">
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label class="col-form-label">Mot de passe</label>
+                                    <input class="form-control" value="" type="password" formControlName="password">
+                                </div>
+                            </div>
+                            <!--<div class="col-sm-6">
+                                <div class="form-group">
+                                    <label class="col-form-label">Confirm Password</label>
+                                    <input class="form-control" value="" type="password">
+                                </div>
+                            </div>
+                            <div class="col-sm-6">  
+                                <div class="form-group">
+                                    <label class="col-form-label">Employee ID <span class="text-danger">*</span></label>
+                                    <input type="text" value="" class="form-control floating" formControlName="id">
+                                </div>
+                            </div>-->
+                            <div class="col-sm-6">  
+                                <div class="form-group">
+                                    <label class="col-form-label">Cin <span class="text-danger">*</span></label>
+                                    <input class="form-control datetimepicker" type="text" formControlName="cin">
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label class="col-form-label">Téléphone </label>
+                                    <input class="form-control" value="" type="text" formControlName="telephone">
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label class="col-form-label">Email </label>
+                                    <input class="form-control" value="" type="email" formControlName="email">
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label class="col-form-label">Adresse </label>
+                                    <textarea class="form-control" value="" formControlName="adresse"></textarea>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label class="col-form-label">Poste </label>
+                                    <input class="form-control" value="" type="text" formControlName="poste">
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label class="col-form-label">Date Embauche </label>
+                                    <input class="form-control" value="" type="date" formControlName="date_Embauche">
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label class="col-form-label">Date Naissance </label>
+                                    <input class="form-control" value="" type="date" formControlName="date_Naissance">
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label class="col-form-label">Image </label>
+                                  <input class="form-control" width="400"
+                                  height="341" formControlName="image" type="file" name="file" (change)="onFileChanged($event)">
+                                  
+                                </div>
+                              </div>
+                            <!--<div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Department <span class="text-danger">*</span></label>
+                                    <select class="select">
+                                        <option>Select Department</option>
+                                        <option>Web Development</option>
+                                        <option>IT Management</option>
+                                        <option>Marketing</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Designation <span class="text-danger">*</span></label>
+                                    <select class="select">
+                                        <option>Select Designation</option>
+                                        <option>Web Designer</option>
+                                        <option>Web Developer</option>
+                                        <option>Android Developer</option>
+                                    </select>
+                                </div>
+                            </div>-->
+                        </div>
+                        
+                        <div class="submit-section">
+                            <button class="btn btn-primary submit-btn">Save</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /Edit Employee Modal -->
+    
+    <!-- Delete Employee Modal -->
+    <div  class="modal custom-modal fade" id="delete_employee" role="dialog">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="form-header">
+                        <h3>Delete Chef de Departement</h3>
+                        <p>Are you sure want to delete?</p>
+                    </div>
+                    <div class="modal-btn delete-action">
+                        <div class="row">
+                            <div class="col-6">
+                                <a  (click) = "deleteChefDept()" class="btn btn-primary continue-btn" >Delete</a>
+                            </div>
+                            <div class="col-6">
+                                <a  data-dismiss="modal" id="del_emp_close" class="btn btn-primary cancel-btn">Cancel</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /Delete Employee Modal -->
+
+
+
+   <!-- <div class="col-sm-6 col-md-3" data-select2-id="18"> 
+        <div class="form-group form-focus select-focus" data-select2-id="17">
+            <select class="select floating select2-hidden-accessible" data-select2-id="1" tabindex="-1" aria-hidden="true" formControlName="employe"> 
+                <option value="" data-select2-id="3"> -- Select -- </option>
+                <option value="id" data-select2-id="24" *ngFor > nom employe </option>
+
+            </select><span class="select2 select2-container select2-container--default select2-container--open select2-container--focus select2-container--above" dir="ltr" data-select2-id="2" style="width: 100%;"><span class="selection"><span class="select2-selection select2-selection--single" role="combobox" aria-haspopup="true" aria-expanded="true" tabindex="0" aria-labelledby="select2-wbgl-container" aria-owns="select2-wbgl-results"><span class="select2-selection__rendered" id="select2-wbgl-container" role="textbox" aria-readonly="true" title=" -- Select -- "> -- Select -- </span><span class="select2-selection__arrow" role="presentation"><b role="presentation"></b></span></span></span><span class="dropdown-wrapper" aria-hidden="true"></span></span>
+            <label class="focus-label">Status</label>
+        </div>
+    </div>-->

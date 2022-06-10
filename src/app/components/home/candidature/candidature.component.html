@@ -20,58 +20,40 @@
         <div class="table-responsive">
             <table class="table table-striped custom-table mb-0 datatable">
                 <thead>
-                    <tr>
+                    <tr >
                         <th>#</th>
-                        <th>Job Title</th>
-                        <th>Department</th>
-                        <th>Start Date</th>
-                        <th>Expire Date</th>
+                        <th>Titre</th>
+                        <th>Date Debut</th>
+                        <th>Date Fin</th>
+						<th>Salaire</th>
                         <th class="text-center">Job Type</th>
+						<th class="text-center">Expérience</th>
+                        <th class="text-center">Description</th>
                         <th class="text-center">Status</th>
                         <th>Applicants</th>
                         <th class="text-right">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td><a href="job-details.html">Web Developer</a></td>
-                        <td>Development</td>
-                        <td>3 Mar 2019</td>
-                        <td>31 May 2019</td>
-                        <td class="text-center">
-                            <div class="dropdown action-label">
-                                <a class="btn btn-white btn-sm btn-rounded dropdown-toggle" href="#" data-toggle="dropdown" aria-expanded="false">
-                                    <i class="fa fa-dot-circle-o text-danger"></i> Full Time
-                                </a>
-                                <div class="dropdown-menu dropdown-menu-right">
-                                    <a class="dropdown-item" href="#"><i class="fa fa-dot-circle-o text-info"></i> Full Time</a>
-                                    <a class="dropdown-item" href="#"><i class="fa fa-dot-circle-o text-success"></i> Part Time</a>
-                                    <a class="dropdown-item" href="#"><i class="fa fa-dot-circle-o text-danger"></i> Internship</a>
-                                    <a class="dropdown-item" href="#"><i class="fa fa-dot-circle-o text-warning"></i> Temporary</a>
-                                    <a class="dropdown-item" href="#"><i class="fa fa-dot-circle-o text-warning"></i> Other</a>
-                                </div>
-                            </div>
-                        </td>
-                        <td class="text-center">
-                            <div class="dropdown action-label">
-                                <a class="btn btn-white btn-sm btn-rounded dropdown-toggle" href="#" data-toggle="dropdown" aria-expanded="false">
-                                    <i class="fa fa-dot-circle-o text-danger"></i> Open
-                                </a>
-                                <div class="dropdown-menu dropdown-menu-right">
-                                    <a class="dropdown-item" href="#"><i class="fa fa-dot-circle-o text-info"></i> Open</a>
-                                    <a class="dropdown-item" href="#"><i class="fa fa-dot-circle-o text-success"></i> Closed</a>
-                                    <a class="dropdown-item" href="#"><i class="fa fa-dot-circle-o text-danger"></i> Cancelled</a>
-                                </div>
-                            </div>
-                        </td>
-                        <td><a href="job-applicants.html" class="btn btn-sm btn-primary">3 Candidates</a></td>
+                    <tr *ngFor="let candidature of candidatures | paginate: { itemsPerPage: 2, currentPage: p}">
+                        <td>{{candidature.id}}</td>
+						<td>{{candidature.titre}}</td>
+						<td>{{candidature.date_debut}}</td>
+						<td>{{candidature.date_fin}}</td>
+						<td>{{candidature.salaire}}</td>
+						<td>{{candidature.type}}</td>
+						<td>{{candidature.experience}}</td>
+						<td>{{candidature.description}}</td>
+						<td>{{candidature.status}}</td>
+
+                        
+                        <td><a class="btn btn-sm btn-primary">3 Candidates</a></td>
                         <td class="text-right">
                             <div class="dropdown dropdown-action">
                                 <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
                                 <div class="dropdown-menu dropdown-menu-right">
-                                    <a href="#" class="dropdown-item" data-toggle="modal" data-target="#edit_job"><i class="fa fa-pencil m-r-5"></i> Edit</a>
-                                    <a href="#" class="dropdown-item" data-toggle="modal" data-target="#delete_job"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
+                                    <a href="#" class="dropdown-item" data-toggle="modal" data-target="#edit_job" (click)="patchValue(candidature.id)"><i class="fa fa-pencil m-r-5"></i> Edit</a>
+                                    <a href="#" class="dropdown-item" data-toggle="modal" data-target="#delete_job" (click)="sendIdToDelete(candidature.id)"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
                                 </div>
                             </div>
                         </td>
@@ -79,6 +61,8 @@
                     
                 </tbody>
             </table>
+			<pagination-controls class="my-pagination" (pageChange)="p = $event"   previousLabel="Précédent"
+                    nextLabel="Suivant " ></pagination-controls>
         </div>
     </div>
 </div>
@@ -90,123 +74,95 @@
 						<div class="modal-content">
 							<div class="modal-header">
 								<h5 class="modal-title">Add Job</h5>
-								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								<button type="button" class="close" data-dismiss="modal" id="add_candidature_close" aria-label="Close">
 									<span aria-hidden="true">&times;</span>
 								</button>
 							</div>
 							<div class="modal-body">
-								<form>
+								<form [formGroup]="formCandidature" (ngSubmit)="saveCandidature()">
 									<div class="row">
 										<div class="col-md-6">
 											<div class="form-group">
-												<label>Job Title</label>
-												<input class="form-control" type="text">
+												<label>Titre</label>
+												<input class="form-control" type="text" formControlName="titre">
 											</div>
 										</div>
-										<div class="col-md-6">
-											<div class="form-group">
-												<label>Department</label>
-												<select class="select">
-													<option>-</option>
-													<option>Web Development</option>
-													<option>Application Development</option>
-													<option>IT Management</option>
-													<option>Accounts Management</option>
-													<option>Support Management</option>
-													<option>Marketing</option>
-												</select>
-											</div>
-										</div>
+										
 									</div>
 									<div class="row">
 										<div class="col-md-6">
 											<div class="form-group">
-												<label>Job Location</label>
-												<input class="form-control" type="text">
+												<label>Date Debut</label>
+												<input class="form-control" value="" type="date" formControlName="date_debut">
 											</div>
 										</div>
 										<div class="col-md-6">
 											<div class="form-group">
-												<label>No of Vacancies</label>
-												<input class="form-control" type="text">
+												<label>Date Fin</label>
+												<input class="form-control" value="" type="date" formControlName="date_fin">
 											</div>
 										</div>
 									</div>
 									<div class="row">
+										
 										<div class="col-md-6">
 											<div class="form-group">
-												<label>Experience</label>
-												<input class="form-control" type="text">
-											</div>
-										</div>
-										<div class="col-md-6">
-											<div class="form-group">
-												<label>Age</label>
-												<input class="form-control" type="text">
+												<label>Salaire</label>
+												<input type="text" class="form-control" formControlName="salaire">
 											</div>
 										</div>
 									</div>
-									<div class="row">
-										<div class="col-md-6">
-											<div class="form-group">
-												<label>Salary From</label>
-												<input type="text" class="form-control">
-											</div>
-										</div>
-										<div class="col-md-6">
-											<div class="form-group">
-												<label>Salary To</label>
-												<input type="text" class="form-control">
-											</div>
-										</div>
-									</div>
+
 									<div class="row">
 										<div class="col-md-6">
 											<div class="form-group">
 												<label>Job Type</label>
-												<select class="select">
-													<option>Full Time</option>
-													<option>Part Time</option>
-													<option>Internship</option>
-													<option>Temporary</option>
-													<option>Remote</option>
-													<option>Others</option>
+												<select class="select" formControlName="type">
+													<option value="Full Time">Full Time</option>
+													<option value="Part Time">Part Time</option>
+													<option value="Internship">Internship</option>
+													<option value="Temporary">Temporary</option>
+													<option value="Remote">Remote</option>
+													<option value="Others">Others</option>
 												</select>
 											</div>
 										</div>
+										</div>
+									<div class="row">
+										<div class="col-md-6">
+											<div class="form-group">
+												<label>Experience</label>
+												<input class="form-control" type="text" formControlName="experience">
+											</div>
+										</div>
+										
+									</div>
+									<div class="row">
+										<div class="col-md-6">
+											<div class="form-group">
+												<label>Description</label>
+												<textarea class="form-control" type="text" formControlName="description"></textarea>
+											</div>
+										</div>
+										
+									</div>
+									<div class="row">
+
 										<div class="col-md-6">
 											<div class="form-group">
 												<label>Status</label>
-												<select class="select">
-													<option>Open</option>
-													<option>Closed</option>
-													<option>Cancelled</option>
+												<select class="select" formControlName="status">
+													<option value="Open">Open</option>
+													<option value="Closed">Closed</option>
+													<option value="Cancelled">Cancelled</option>
 												</select>
 											</div>
 										</div>
 									</div>
-									<div class="row">
-										<div class="col-md-6">
-											<div class="form-group">
-												<label>Start Date</label>
-												<input type="text" class="form-control datetimepicker">
-											</div>
-										</div>
-										<div class="col-md-6">
-											<div class="form-group">
-												<label>Expired Date</label>
-												<input type="text" class="form-control datetimepicker">
-											</div>
-										</div>
-									</div>
-									<div class="row">
-										<div class="col-md-12">
-											<div class="form-group">
-												<label>Description</label>
-												<textarea class="form-control"></textarea>
-											</div>
-										</div>
-									</div>
+
+									
+									
+									
 									<div class="submit-section">
 										<button class="btn btn-primary submit-btn">Submit</button>
 									</div>
@@ -220,127 +176,96 @@
 				<!-- Edit Job Modal -->
 				<div id="edit_job" class="modal custom-modal fade" role="dialog">
 					<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-						<button type="button" class="close" data-dismiss="modal">&times;</button>
+						<button type="button" class="close" data-dismiss="modal" >&times;</button>
 						<div class="modal-content">
 							<div class="modal-header">
 								<h5 class="modal-title">Edit Job</h5>
-								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								<button type="button" class="close" data-dismiss="modal" id="edit_candidature_close" aria-label="Close">
 									<span aria-hidden="true">&times;</span>
 								</button>
 							</div>
 							<div class="modal-body">
-								<form>
+								<form [formGroup]="formUpdateCandidature" (ngSubmit)="updateCandidature()">
 									<div class="row">
 										<div class="col-md-6">
 											<div class="form-group">
-												<label>Job Title</label>
-												<input class="form-control" type="text" value="Web Developer">
+												<label>Titre</label>
+												<input class="form-control" type="text" formControlName="titre">
 											</div>
 										</div>
-										<div class="col-md-6">
-											<div class="form-group">
-												<label>Department</label>
-												<select class="select">
-													<option>-</option>
-													<option selected>Web Development</option>
-													<option>Application Development</option>
-													<option>IT Management</option>
-													<option>Accounts Management</option>
-													<option>Support Management</option>
-													<option>Marketing</option>
-												</select>
-											</div>
-										</div>
+										
 									</div>
 									<div class="row">
 										<div class="col-md-6">
 											<div class="form-group">
-												<label>Job Location</label>
-												<input class="form-control" type="text" value="California">
+												<label>Date Debut</label>
+												<input class="form-control" value="" type="date" formControlName="date_debut">
 											</div>
 										</div>
 										<div class="col-md-6">
 											<div class="form-group">
-												<label>No of Vacancies</label>
-												<input class="form-control" type="text" value="5">
+												<label>Date Fin</label>
+												<input class="form-control" value="" type="date" formControlName="date_fin">
 											</div>
 										</div>
 									</div>
 									<div class="row">
+										
 										<div class="col-md-6">
 											<div class="form-group">
-												<label>Experience</label>
-												<input class="form-control" type="text" value="2 Years">
-											</div>
-										</div>
-										<div class="col-md-6">
-											<div class="form-group">
-												<label>Age</label>
-												<input class="form-control" type="text" value="-">
+												<label>Salaire</label>
+												<input type="text" class="form-control" formControlName="salaire">
 											</div>
 										</div>
 									</div>
-									<div class="row">
-										<div class="col-md-6">
-											<div class="form-group">
-												<label>Salary From</label>
-												<input type="text" class="form-control" value="32k">
-											</div>
-										</div>
-										<div class="col-md-6">
-											<div class="form-group">
-												<label>Salary To</label>
-												<input type="text" class="form-control" value="38k">
-											</div>
-										</div>
-									</div>
+
 									<div class="row">
 										<div class="col-md-6">
 											<div class="form-group">
 												<label>Job Type</label>
-												<select class="select">
-													<option selected>Full Time</option>
-													<option>Part Time</option>
-													<option>Internship</option>
-													<option>Temporary</option>
-													<option>Remote</option>
-													<option>Others</option>
+												<select class="select" formControlName="type">
+													<option value="Full Time">Full Time</option>
+													<option value="Part Time">Part Time</option>
+													<option value="Internship">Internship</option>
+													<option value="Temporary">Temporary</option>
+													<option value="Remote">Remote</option>
+													<option value="Others">Others</option>
 												</select>
 											</div>
 										</div>
+										</div>
+									<div class="row">
+										<div class="col-md-6">
+											<div class="form-group">
+												<label>Experience</label>
+												<input class="form-control" type="text" formControlName="experience">
+											</div>
+										</div>
+										
+									</div>
+									<div class="row">
+										<div class="col-md-6">
+											<div class="form-group">
+												<label>Description</label>
+												<textarea class="form-control" type="text" formControlName="description"></textarea>
+											</div>
+										</div>
+										
+									</div>
+									<div class="row">
+
 										<div class="col-md-6">
 											<div class="form-group">
 												<label>Status</label>
-												<select class="select">
-													<option selected>Open</option>
-													<option>Closed</option>
-													<option>Cancelled</option>
+												<select class="select" formControlName="status">
+													<option value="Open">Open</option>
+													<option value="Closed">Closed</option>
+													<option value="Cancelled">Cancelled</option>
 												</select>
 											</div>
 										</div>
 									</div>
-									<div class="row">
-										<div class="col-md-6">
-											<div class="form-group">
-												<label>Start Date</label>
-												<input type="text" class="form-control datetimepicker" value="3 Mar 2019">
-											</div>
-										</div>
-										<div class="col-md-6">
-											<div class="form-group">
-												<label>Expired Date</label>
-												<input type="text" class="form-control datetimepicker" value="31 May 2019">
-											</div>
-										</div>
-									</div>
-									<div class="row">
-										<div class="col-md-12">
-											<div class="form-group">
-												<label>Description</label>
-												<textarea class="form-control"></textarea>
-											</div>
-										</div>
-									</div>
+
 									<div class="submit-section">
 										<button class="btn btn-primary submit-btn">Save</button>
 									</div>
@@ -363,10 +288,10 @@
 								<div class="modal-btn delete-action">
 									<div class="row">
 										<div class="col-6">
-											<a href="javascript:void(0);" class="btn btn-primary continue-btn">Delete</a>
+											<a (click)="deleteCandidature()" class="btn btn-primary continue-btn">Delete</a>
 										</div>
 										<div class="col-6">
-											<a href="javascript:void(0);" data-dismiss="modal" class="btn btn-primary cancel-btn">Cancel</a>
+											<a id="del_candidature_close" data-dismiss="modal" class="btn btn-primary cancel-btn">Cancel</a>
 										</div>
 									</div>
 								</div>

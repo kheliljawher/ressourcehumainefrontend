@@ -23,6 +23,13 @@ import { ChefDepartementComponent } from './components/home/chef-departement/che
 import { ResponableRHComponent } from './components/home/responable-rh/responable-rh.component';
 import { ProfileComponent } from './components/home/profile/profile.component';
 import { DatePipe } from '@angular/common';
+import { RechercheEmployeNamePipe } from './pipes/recherche-employe-name.pipe';
+import { RechercheEmployePrenomPipe } from './pipes/recherche-employe-prenom.pipe';
+import { RechercheEmployeIdPipe } from './pipes/recherche-employe-id.pipe';
+import { RechercheChefDeptIdPipe } from './pipes/recherche-chef-dept-id.pipe';
+import { RechercheChefDeptNomPipe } from './pipes/recherche-chef-dept-nom.pipe';
+import { RechercheChefDeptPrenomPipe } from './pipes/recherche-chef-dept-prenom.pipe';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 @NgModule({
   declarations: [
@@ -42,14 +49,21 @@ import { DatePipe } from '@angular/common';
     UtilisateurComponent,
     ChefDepartementComponent,
     ResponableRHComponent,
-    ProfileComponent
+    ProfileComponent,
+    RechercheEmployeNamePipe,
+    RechercheEmployePrenomPipe,
+    RechercheEmployeIdPipe,
+    RechercheChefDeptIdPipe,
+    RechercheChefDeptNomPipe,
+    RechercheChefDeptPrenomPipe
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgxPaginationModule
 
   ],
   providers: [DatePipe],

@@ -33,7 +33,7 @@ const routes: Routes = [
 
   ]},
   {path:"login",component:LoginComponent, canActivate:[LogoutGuard]},
-  {path:"register",component:RegisterComponent},
+  {path:"register",component:RegisterComponent}
 
 
 ];

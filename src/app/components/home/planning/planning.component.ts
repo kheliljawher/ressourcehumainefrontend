@@ -26,6 +26,8 @@ export class PlanningComponent implements OnInit {
   retrieveResonse: any;
   submitted = false;
   test:boolean=false
+  p:number=1;
+
   constructor(private planningsService:PlanningService,
     private employeesService:EmployeService,
     private router: Router,
@@ -109,7 +111,7 @@ export class PlanningComponent implements OnInit {
     console.log("this id ",this.id);
     
     console.log(this.formUpdatePlanning.value);
-    this.planningsService.updatePlan(this.formUpdatePlanning.value,this.id).subscribe(
+    this.planningsService.updatePlan(this.formUpdatePlanning.value,this.id,this.formUpdatePlanning.value.employeID).subscribe(
       (res:any) => {
         console.log("planning",res);
         //this.router.navigateByUrl("home/planning")
