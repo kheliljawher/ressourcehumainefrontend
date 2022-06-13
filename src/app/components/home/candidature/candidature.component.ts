@@ -25,6 +25,7 @@ export class CandidatureComponent implements OnInit {
   submitted = false;
   test:boolean=false
   p:number=1;
+  
   constructor(private candidaturesService:CandidatureService,
     /*private candidatsService:CandidatService,*/
     private router: Router,

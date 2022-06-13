@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { DepartementComponent } from './components/departement/departement.component';
 import { CandidatComponent } from './components/home/candidat/candidat.component';
 import { CandidatureComponent } from './components/home/candidature/candidature.component';
 import { ChefDepartementComponent } from './components/home/chef-departement/chef-departement.component';
@@ -18,6 +19,10 @@ import { AuthGuard } from './gards/auth.guard';
 import { LogoutGuard } from './gards/logout.guard';
 
 const routes: Routes = [
+
+
+
+  
   {path:"home",component:HomeComponent, canActivate:[AuthGuard], children:[
     {path:"layout",component:LayoutComponent},
     {path:"employe",component:EmployeComponent},
@@ -29,7 +34,8 @@ const routes: Routes = [
     {path:"utilisateur",component:UtilisateurComponent},
     {path:"responsableRH",component:ResponableRHComponent},
     {path:"chefDepartement",component:ChefDepartementComponent},
-    {path:"profile",component:ProfileComponent}
+    {path:"profile",component:ProfileComponent},
+    {path:"departement",component:DepartementComponent}
 
   ]},
   {path:"login",component:LoginComponent, canActivate:[LogoutGuard]},

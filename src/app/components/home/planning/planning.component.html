@@ -22,9 +22,9 @@
                 <thead>
                     <tr>
                         <th>Employee</th>
-                        <th>Nom</th>
-                        <th>Date Debut</th>
-                        <th>Date Fin</th>
+                        <th>Nom poste de travail</th>
+                        <th>De</th>
+                        <th>À</th>
                         <th>Ajouter Par</th>
 
                         <!--<th class="text-center">Hours</th>
@@ -38,12 +38,12 @@
                             <h2 class="table-avatar">
                                 <!--<a href="#" class="avatar"><img alt="" src="http://localhost:9190/api/employe/files/{{employe.image}}"></a>
                                 <a href="#">{{employe.nom}} <span>Web Designer</span></a>-->
-                                {{planning.employe.nom}}
+                               <!-- {{planning.employe.nom}}-->
                             </h2>
                         </td>
                         <td>{{planning.nom}}</td>
-                        <td>{{planning.date_debut | date: "dd-MM-yyyy"}}</td>
-                        <td>{{planning.date_fin | date: "dd-MM-yyyy"}}</td>
+                        <td>{{planning.date_debut | date: "HH:mm"}}</td>
+                        <td>{{planning.date_fin | date: "HH:mm"}}</td>
                         <td>{{planning?.chef_departement?.login}}</td>
                         <!--<td class="text-center"></td>
                         <td class="d-none d-sm-table-cell col-md-4">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vel elit neque.</td>-->
@@ -56,6 +56,7 @@
                                 </div>
                             </div>
                         </td>
+                        
                     </tr>
                     
                 </tbody>
@@ -80,19 +81,19 @@
                     
                     <div class="row">
                         <div class="form-group col-sm-4">
-                            <label>Nom<span class="text-danger">*</span></label>
+                            <label>Nom poste de travail<span class="text-danger">*</span></label>
                                 <input class="form-control" type="text" value="" formControlName="nom">
                         </div>
                         <div class="form-group col-sm-4">
-                            <label>Date Debut <span class="text-danger">*</span></label>
-                            <input class="form-control" type="date" value="" formControlName="date_debut">
+                            <label>De <span class="text-danger">*</span></label>
+                            <input class="form-control" type="datetime-local" value="" formControlName="date_debut">
                         </div>
                         <div class="form-group col-sm-4">
-                            <label>Date Fin <span class="text-danger">*</span></label>
-                            <input class="form-control" type="date" value="" formControlName="date_fin">
+                            <label>À <span class="text-danger">*</span></label>
+                            <input class="form-control" type="datetime-local" value="" formControlName="date_fin">
                         </div>
                     </div>
-                    <div class="row">
+                    <!--<div class="row">
                         <div class="form-group col-sm-6">
                             <label>Employe <span class="text-danger">*</span></label>
                             <select class="select" formControlName="employeID">
@@ -100,7 +101,8 @@
                            
                             </select>
                         </div>
-                    </div>
+                    </div>-->
+                    
                     <!--<div class="form-group">
                         <label>Description <span class="text-danger">*</span></label>
                         <textarea rows="4" class="form-control"></textarea>
@@ -130,19 +132,19 @@
                     
                     <div class="row">
                         <div class="form-group col-sm-4">
-                            <label>Nom <span class="text-danger">*</span></label>
+                            <label>Nom poste de travail<span class="text-danger">*</span></label>
                                 <input class="form-control" type="text" value="" formControlName="nom">
                         </div>
                         <div class="form-group col-sm-4">
-                            <label>Date Debut <span class="text-danger">*</span></label>
-                            <input class="form-control" type="date" value="" formControlName="date_debut">
+                            <label>De <span class="text-danger">*</span></label>
+                            <input class="form-control" type="datetime-local" value="" formControlName="date_debut">
                         </div>
                         <div class="form-group col-sm-4">
-                            <label>Date Fin <span class="text-danger">*</span></label>
-                            <input class="form-control" type="date" value="" formControlName="date_fin">
+                            <label>À <span class="text-danger">*</span></label>
+                            <input class="form-control" type="datetime-local" value="" formControlName="date_fin">
                         </div>
                     </div>
-                    <div class="row">
+                    <!--<div class="row">
                         <div class="form-group col-sm-6">
                             <label>Employe <span class="text-danger">*</span></label>
                             <select class="select" formControlName="employeID">
@@ -150,7 +152,7 @@
                            
                             </select>
                         </div>
-                    </div>
+                    </div>-->
                     <!--<div class="form-group">
                         <label>Description <span class="text-danger">*</span></label>
                         <textarea rows="4" class="form-control"></textarea>

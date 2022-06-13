@@ -42,13 +42,13 @@ export class PlanningComponent implements OnInit {
       nom:['',Validators.required],
       date_debut:['',Validators.required],
       date_fin:['',Validators.required],
-      employeID:['',Validators.required]
+      //employeID:['',Validators.required]
     })
-    console.log("with out parse : ",localStorage.getItem("user"));
-    console.log("with parse : ",JSON.parse(localStorage.getItem("user")));
+    //console.log("with out parse : ",localStorage.getItem("user"));
+    //console.log("with parse : ",JSON.parse(localStorage.getItem("user")));
     
     
-    this.user_connect = JSON.parse(localStorage.getItem("user"))
+    //this.user_connect = JSON.parse(localStorage.getItem("user"))
 
   }
 
@@ -93,8 +93,8 @@ export class PlanningComponent implements OnInit {
       "date_fin": "2022-05-28"
 })*/
 
-
-    this.planningsService.createPlan(this.formPlanning.value,this.formPlanning.value.employeID,this.user_connect.id).subscribe( data =>{
+//this.user_connect.id
+    this.planningsService.createPlan(this.formPlanning.value).subscribe( data =>{
       console.log(data);
       this.getPlannings();
       document.getElementById("add_plan_close").click();
@@ -111,7 +111,7 @@ export class PlanningComponent implements OnInit {
     console.log("this id ",this.id);
     
     console.log(this.formUpdatePlanning.value);
-    this.planningsService.updatePlan(this.formUpdatePlanning.value,this.id,this.formUpdatePlanning.value.employeID).subscribe(
+    this.planningsService.updatePlan(this.formUpdatePlanning.value,this.id).subscribe(
       (res:any) => {
         console.log("planning",res);
         //this.router.navigateByUrl("home/planning")
@@ -127,7 +127,7 @@ export class PlanningComponent implements OnInit {
       nom:"",
       date_debut:"",
       date_fin:"",
-      employeID : ""
+      //employeID : ""
 
     })
   }
@@ -137,7 +137,7 @@ export class PlanningComponent implements OnInit {
       nom:"",
       date_debut:"",
       date_fin:"",
-      employeID : ""
+      //employeID : ""
 
     })
   }
@@ -153,7 +153,7 @@ export class PlanningComponent implements OnInit {
       nom:res.nom,
       date_debut:res.date_debut,
       date_fin:res.date_fin,
-      employeID : res.employe.id
+      //employeID : res.employe.id
 
     })
 

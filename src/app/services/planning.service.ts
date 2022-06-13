@@ -15,13 +15,13 @@ export class PlanningService {
   getPlanById(id:any){
     return this.http.get(`http://localhost:9190/api/planning/${id}`);
   }
-
-  createPlan(planning:any, id_employe:any, id_chef_departement:any){
-    return this.http.post(`http://localhost:9190/api/planning/create/${id_employe}/${id_chef_departement}`,planning);
+//, id_chef_departement:any
+  createPlan(planning:any){///${id_chef_departement}
+    return this.http.post(`http://localhost:9190/api/planning/create`,planning);
   }
 
-  updatePlan(planning:any, id_planning:any, id_employe:any){
-    return this.http.put(`http://localhost:9190/api/planning/${id_planning}/${id_employe}`,planning);
+  updatePlan(planning:any, id_planning:any){
+    return this.http.put(`http://localhost:9190/api/planning/${id_planning}`,planning);
   }
 
   deletePlan(id:any) {

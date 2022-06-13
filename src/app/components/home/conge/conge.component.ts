@@ -42,11 +42,11 @@ export class CongeComponent implements OnInit {
     this.geneFormUpdate();
     this.geneFormConge()
     
-    console.log("with out parse : ",localStorage.getItem("user"));
-    console.log("with parse : ",JSON.parse(localStorage.getItem("user")));
+    //console.log("with out parse : ",localStorage.getItem("user"));
+   // console.log("with parse : ",JSON.parse(localStorage.getItem("user")));
     
     
-    this.user_connect = JSON.parse(localStorage.getItem("user"))
+   // this.user_connect = JSON.parse(localStorage.getItem("user"))
   }
 
 
@@ -111,8 +111,8 @@ export class CongeComponent implements OnInit {
       console.log("invalid")
       console.table(this.formConge.value);
       return ;
-    }    
-    this.congesService.createCong(this.formConge.value,this.formConge.value.ID_Employe,this.user_connect.id).subscribe( data =>{
+    }    //this.user_connect.id
+    this.congesService.createCong(this.formConge.value,this.formConge.value.ID_Employe).subscribe( data =>{
       console.log(data);
       this.getConges();
       document.getElementById("add_cong_close").click();

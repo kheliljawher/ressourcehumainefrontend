@@ -16,8 +16,8 @@ export class CongeService {
     return this.http.get(`http://localhost:9190/api/conge/${id}`);
   }
 
-  createCong(conge:any, id_employe:any, id_chef_departement:any){
-    return this.http.post(`http://localhost:9190/api/conge/create/${id_employe}/${id_chef_departement}`,conge);
+  createCong(conge:any, id_employe:any){
+    return this.http.post(`http://localhost:9190/api/conge/create/${id_employe}`,conge);
   }
 
   updateCong(conge:any, id_conge:any, id_employe:any){

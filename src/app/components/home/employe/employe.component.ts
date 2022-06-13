@@ -4,6 +4,8 @@ import { Router } from '@angular/router';
 import { EmployeService } from 'src/app/services/employe.service';
 import { formatDate } from '@angular/common';
 import { ChefDepartementService } from 'src/app/services/chef-departement.service';
+import { PlanningService } from 'src/app/services/planning.service';
+//import { ConfirmedValidator } from './ConfirmedValidator';
 
 @Component({
   selector: 'app-employe',
@@ -31,8 +33,11 @@ export class EmployeComponent implements OnInit {
   idEmploye: string = "";
   p: number = 1;
   utilisateurs: any[] = []
+  planningID : any;
+  plannings:any;
 
   constructor(private employeesService: EmployeService,
+    private planningsService:PlanningService,
     private chefDepartementsService: ChefDepartementService,
     private router: Router,
     private formBuilder: FormBuilder,
@@ -43,15 +48,16 @@ export class EmployeComponent implements OnInit {
     this.getEmployees();
     this.getChefDepartements();
     this.geneFormUpdate();
+    this.getPlannings();
 
     this.formEmploye = this.formBuilder.group({
       nom: ['', Validators.required],
       prenom: ['', Validators.required],
       login: ['', Validators.required],
-      password: ['', Validators.minLength(4)],
-      cin: ['', Validators.minLength(8)],
-      telephone: ['', Validators.minLength(8)],
-      email: ['', Validators.email],
+      password: ['', Validators.required, Validators.minLength(4)],
+      cin: ['', Validators.required, Validators.minLength(8)],
+      telephone: ['', Validators.required, Validators.minLength(8)],
+      email: ['',  Validators.required, Validators.email],
       adresse: ['', Validators.required],
       poste: ['', Validators.required],
       date_Embauche: ['', Validators.required],
@@ -59,10 +65,12 @@ export class EmployeComponent implements OnInit {
       image: ['', Validators.required],
       role: ['', Validators.required],
       sexs: ['', Validators.required],
-      confirmPassword: ['', Validators.required]
+      confirmPassword: ['', Validators.required],
+      planningID:['',Validators.required]
 
-
-    })
+    },//{      validator: ConfirmedValidator('password', 'confirmPassword')  }
+    
+    )
   }
 
   getEmployees() {
@@ -95,28 +103,19 @@ export class EmployeComponent implements OnInit {
           this.utilisateurs.push(element)
         });
 
-
         //this.utilisateurs.push(this.employees[0])
 
       }
     )
   }
 
-  /* getEmployeesbyNom(nom:any){
-     this.employeesService.getEmpByNom(nom).subscribe(
-       (res:any) => {
-         console.log("employe is : ",res)
-       }
-     )
-   }
-
-   getEmployeesbyPrenom(prenom:any){
-     this.employeesService.getEmpByPrenom(prenom).subscribe(
-       (res:any) => {
-         console.log("employe is : ",res)
-       }
-     )
-   }*/
+  getPlannings(){
+    this.planningsService.getPlannings().subscribe(
+      (res:any) => {
+        this.plannings = res
+        console.log("plannings : ",this.plannings)}
+    )
+  }
 
   deleteEmp() {
 
@@ -132,8 +131,6 @@ export class EmployeComponent implements OnInit {
           console.log(data);
           this.getChefDepartements();
         })
-      } else {
-        // service RH to delete
       }
     }
 
@@ -159,11 +156,11 @@ export class EmployeComponent implements OnInit {
     })
   }
 
-  // changeUserUpdate(event:any){
-  //   this.formUpdateEmploye.patchValue({
-  //     role : event.target.value
-  //   })
-  // }
+  changeUserUpdate(event:any){
+    this.formUpdateEmploye.patchValue({
+      role : event.target.value
+    })
+  }
 
   saveEmployee() {
 
@@ -174,11 +171,9 @@ export class EmployeComponent implements OnInit {
       //return ;
     }
 
-
     console.log("role is : ", this.formEmploye.value.role);
 
     console.log('form is', this.formEmploye.value);
-
 
     let formData = new FormData();
     formData.append("nom", this.formEmploye.value.nom);
@@ -199,22 +194,23 @@ export class EmployeComponent implements OnInit {
 
     console.log("formulaire", this.formEmploye.value)
 
-
-
     if (this.formEmploye.value.role == "EMPLOYE") {
-      this.employeesService.createEmp(formData).subscribe(data => {
+      this.employeesService.createEmp(formData,this.formEmploye.value.planningID).subscribe(data => {
         console.log(data);
         this.getEmployees();
       })
 
-    } else {
+    } else {if (this.formEmploye.value.role == "CHEFDEPARTEMENT") {
+
       this.chefDepartementsService.createChefDept(formData).subscribe(data => {
         console.log(data);
         this.getChefDepartements();
       })
-    }
+    }}
 
     document.getElementById("add_emp_close").click();
+
+
 
   }
 
@@ -229,16 +225,9 @@ export class EmployeComponent implements OnInit {
     console.log('image : ', this.selectedFile)
   }
 
-  // updateEmployee(id: any){
-  //   console.log("updateEmployee")
-  //   this.employeesService.updateEmp(this.employeesService.updateEmp,this.id).subscribe( data =>{
-  //     console.log(data);
-  //     this.goToEmployeeList();
-  //   },
-  //   error => console.log(error));
-  // }
-
   updateEmploye() {
+
+
 
     let formData = new FormData();
     formData.append("nom", this.formUpdateEmploye.value.nom);
@@ -253,35 +242,27 @@ export class EmployeComponent implements OnInit {
     formData.append("date_Embauche", this.formUpdateEmploye.value.date_Embauche);
     formData.append("date_Naissance", this.formUpdateEmploye.value.date_Naissance);
     formData.append("file", this.selectedFile[0]);
-    //formData.append("role",this.formUpdateEmploye.value.role);
+    formData.append("role",this.formUpdateEmploye.value.role);
     formData.append("sexs", this.formUpdateEmploye.value.sexs);
-    //formData.append("confirmPassword",this.formUpdateEmploye.value.confirmPassword);
+    formData.append("confirmPassword",this.formUpdateEmploye.value.confirmPassword);
 
     console.log("onSubmit")
     console.log(this.formUpdateEmploye.value);
 
+    console.log(this.formEmploye.value.planningID);
+
     if (this.formEmploye.value.role == "EMPLOYE") {
-      this.employeesService.updateEmp(formData, this.id).subscribe(data => {
+      this.employeesService.updateEmp(formData, this.id, this.formEmploye.value.planningID).subscribe(data => {
         console.log(data);
         this.getEmployees();
       })
 
-    } else {
+    } else {if (this.formEmploye.value.role == "CHEFDEPARTEMENT"){
       this.chefDepartementsService.updateChefDept(formData, this.id).subscribe(data => {
         console.log(data);
         this.getChefDepartements();
       })
-    }
-
-    // this.employeesService.updateEmp(formData,this.id).subscribe(
-    //   (res:any) => {
-    //     console.log("employe",res);
-    //    // this.router.navigateByUrl("home/employe")
-    //     this.getEmployees();
-    //   }
-
-    // )
-
+    }}
 
     document.getElementById("edit_emp_close").click();
 
@@ -304,11 +285,12 @@ export class EmployeComponent implements OnInit {
       image: "",
       role: "",
       sexs: "",
-      confirmPassword: ""
+      confirmPassword: "",
+      planningID : ""
+
 
     })
   }
-
 
   geneFormUpdate() {
     this.formUpdateEmploye = this.formBuilder.group({
@@ -325,9 +307,10 @@ export class EmployeComponent implements OnInit {
       date_Embauche: "",
       date_Naissance: "",
       image: "",
-      //role:"",
+      role:"",
       sexs: "",
-      confirmPassword: ""
+      confirmPassword: "",
+      planningID : ""
 
     })
   }
@@ -353,7 +336,9 @@ export class EmployeComponent implements OnInit {
       image: res.image,
       role: res.role,
       sexs: res.sexs,
-      confirmPassword: res.confirmPassword
+      confirmPassword: res.confirmPassword,
+      planningID :res.planningID
+
     })
 
     this.test = true;
@@ -365,13 +350,8 @@ export class EmployeComponent implements OnInit {
     console.log("id to delete : ", utilisateur.id);
     console.log("utilisateur is  : ", utilisateur);
 
-
-
-    this.roleToDelete = utilisateur.role
-
+    this.roleToDelete = utilisateur.role;
 
   }
-
-
 
 }
