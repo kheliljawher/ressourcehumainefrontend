@@ -98,27 +98,27 @@ export class ChefDepartementComponent implements OnInit {
     //   return ;
     // }
 
-    let formData = new FormData();
-    formData.append("nom",this.formChefDepartement.value.nom);
-    formData.append("prenom",this.formChefDepartement.value.prenom);
-    formData.append("login",this.formChefDepartement.value.login);
-    formData.append("password",this.formChefDepartement.value.password);
-    formData.append("cin",this.formChefDepartement.value.cin);
-    formData.append("telephone",this.formChefDepartement.value.telephone);
-    formData.append("email",this.formChefDepartement.value.email);
-    formData.append("adresse",this.formChefDepartement.value.adresse);
-    formData.append("poste",this.formChefDepartement.value.poste);
-    formData.append("date_Embauche",this.formChefDepartement.value.date_Embauche);
-    formData.append("date_Naissance",this.formChefDepartement.value.date_Naissance);
-    formData.append("file",this.selectedFile[0]);
+    // let formData = new FormData();
+    // formData.append("nom",this.formChefDepartement.value.nom);
+    // formData.append("prenom",this.formChefDepartement.value.prenom);
+    // formData.append("login",this.formChefDepartement.value.login);
+    // formData.append("password",this.formChefDepartement.value.password);
+    // formData.append("cin",this.formChefDepartement.value.cin);
+    // formData.append("telephone",this.formChefDepartement.value.telephone);
+    // formData.append("email",this.formChefDepartement.value.email);
+    // formData.append("adresse",this.formChefDepartement.value.adresse);
+    // formData.append("poste",this.formChefDepartement.value.poste);
+    // formData.append("date_Embauche",this.formChefDepartement.value.date_Embauche);
+    // formData.append("date_Naissance",this.formChefDepartement.value.date_Naissance);
+    // formData.append("file",this.selectedFile[0]);
 
-    console.log("formulaire", this.formChefDepartement.value)
+    // console.log("formulaire", this.formChefDepartement.value)
 
-    this.chefDepartementsService.createChefDept(formData).subscribe( data =>{
-      console.log(data);
-      this.getChefDepartements();
-      document.getElementById("add_chef_close").click();
-    })
+    // this.chefDepartementsService.createChefDept(formData).subscribe( data =>{
+    //   console.log(data);
+    //   this.getChefDepartements();
+    //   document.getElementById("add_chef_close").click();
+    // })
 
   }
 

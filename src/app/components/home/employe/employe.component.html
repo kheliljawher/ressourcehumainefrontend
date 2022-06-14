@@ -81,7 +81,9 @@
                                 <th>Date embauche</th>
                                 <th>Date naissance</th>
                                 <th>Rôle</th>
+                                <th>Planning</th>
                                 <th>Departement</th>
+                                <!--<th>Contrat</th>-->
 
                                 <!--<th class="text-nowrap">Join Date</th>
                                 <th>Role</th>-->
@@ -113,6 +115,8 @@
                                 <td>{{employe?.date_Naissance | date: "dd-MM-yyyy"}}</td>
                                 <td>{{employe?.role}}</td>
                                 <td>{{employe?.planning?.nom}}</td>
+                                <td>{{employe?.departement?.nom}}</td>
+                                <!--<td>{{employe?.contrat?.type_contrat}}</td>-->
 
                                 <td class="text-right">
                                     <div class="dropdown dropdown-action">
@@ -178,10 +182,11 @@
                                     <label class="col-form-label">Mot de passe <span class="text-danger">*</span></label>
                                     <input class="form-control" type="password" formControlName="password" placeholder="Mot de passe">
                                     <span class="text-danger" *ngIf="formEmploye.get('password')?.hasError('minLength') && formEmploye.get('password')?.touched">
-                                        <p>Le mot de passe est obligatoire et de minimum longueur 4</p>
+                                        <p>Le mot de passe est obligatoire et de minimum longueur 4 caractéres</p>
                                        </span>
                                 </div>
                             </div>
+
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <label class="col-form-label">Confirmer mot de passe <span class="text-danger">*</span></label>
@@ -238,7 +243,7 @@
                                     <label class="col-form-label">Téléphone </label>
                                     <input class="form-control" type="text" formControlName="telephone" placeholder="Téléphone">
                                     <span class="text-danger" *ngIf="formEmploye.get('telephone')?.hasError('minLength') && formEmploye.get('telephone')?.touched">
-                                        <p>Le telephone est obligatoire et doit comporter 8 caractères</p>
+                                        <p>Le numéro de téléphone est obligatoire et doit comporter 8 caractères</p>
                                       </span>
                                 </div>
                             </div>
@@ -247,7 +252,7 @@
                                     <label class="col-form-label">Email </label>
                                     <input class="form-control" type="email" formControlName="email" placeholder="Email">
                                     <span class="text-danger" *ngIf="formEmploye.get('email')?.hasError('required') && formEmploye.get('email')?.touched">
-                                        <p>L'email est obligatoire </p>
+                                        <p>L'email est obligatoire</p>
                                       </span>
                                 </div>
                             </div>
@@ -257,7 +262,7 @@
                                     <label class="col-form-label">Poste </label>
                                     <input class="form-control" type="text" formControlName="poste" placeholder="Poste">
                                     <span class="text-danger" *ngIf="formEmploye.get('poste')?.hasError('required') && formEmploye.get('poste')?.touched">
-                                        <p>Le poste est obligatoire </p>
+                                        <p>Le poste est obligatoire</p>
                                       </span>
                                 </div>
                             </div>
@@ -266,7 +271,7 @@
                                     <label class="col-form-label">Date embauche </label>
                                     <input class="form-control" type="date" formControlName="date_Embauche">
                                     <span class="text-danger" *ngIf="formEmploye.get('date_Embauche')?.hasError('required') && formEmploye.get('date_debut')?.touched">
-                                        <p>La date d'embauche est obligatoire </p>
+                                        <p>La date d'embauche est obligatoire</p>
                                       </span>
                                 </div>
                             </div>
@@ -275,7 +280,7 @@
                                     <label class="col-form-label">Date naissance </label>
                                     <input class="form-control" type="date" formControlName="date_Naissance">
                                     <span class="text-danger" *ngIf="formEmploye.get('date_Naissance')?.hasError('required') && formEmploye.get('date_Naissance')?.touched">
-                                        <p>La date de naissance est obligatoire </p>
+                                        <p>La date de naissance est obligatoire</p>
                                       </span>
                                 </div>
                             </div>
@@ -285,7 +290,7 @@
                                     <label class="col-form-label">Adresse </label>
                                     <textarea class="form-control" formControlName="adresse" placeholder="Adresse"></textarea>
                                     <span class="text-danger" *ngIf="formEmploye.get('adresse')?.hasError('required') && formEmploye.get('adresse')?.touched">
-                                        <p>L'adresse est obligatoire </p>
+                                        <p>L'adresse est obligatoire</p>
                                       </span>
                                 </div>
                             </div>
@@ -295,9 +300,9 @@
                             <div class="form-group">
                                 <label class="col-form-label">Image</label>
                                   <input class="form-control" width="400"
-                                  height="341" formControlName="image" type="file" name="file" (change)="onFileChanged($event)">
+                                  height="341" type="file" name="file" (change)="onFileChanged($event)">
                                   <span class="text-danger" *ngIf="formEmploye.get('image')?.hasError('required') && formEmploye.get('image')?.touched">
-                                 <p> l'image est obligatoire</p>
+                                 <p>L'image est obligatoire</p>
                                     </span>
                             </div>
                               </div>
@@ -315,7 +320,7 @@
                                         </label>
                                     </div>
                                     <span class="text-danger" *ngIf="formEmploye.get('role')?.hasError('required') && formEmploye.get('role')?.touched">
-                                        <p> le rôle des employes est obligatoire</p>
+                                        <p>le rôle des employes est obligatoire</p>
                                            </span>
                                 </div>
                             </div>
@@ -323,14 +328,43 @@
 
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label>Planning <span class="text-danger">*</span></label>
+                                    <label class="col-form-label">Planning <span class="text-danger">*</span></label><br>
                                     <select class="select" formControlName="planningID">
                                         <option>Select Planning</option>
                                         <option *ngFor='let planning of plannings' value="{{planning.id}}">{{planning.nom}}</option>
-                                        
+                                        <span class="text-danger" *ngIf="formEmploye.get('planningID')?.hasError('required') && formEmploye.get('planningID')?.touched">
+                                            <p>Le planning est obligatoire</p>
+                                               </span>
                                     </select>
                                 </div>
                             </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="col-form-label">Département <span class="text-danger">*</span></label><br>
+                                    <select class="select" formControlName="departementID">
+                                        <option>Select Département</option>
+                                        <option *ngFor='let departement of departements' value="{{departement.id}}">{{departement.nom}}</option>
+                                        <span class="text-danger" *ngIf="formEmploye.get('departementID')?.hasError('required') && formEmploye.get('departementID')?.touched">
+                                            <p>Le département est obligatoire</p>
+                                               </span>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <!--<div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="col-form-label">Contrat <span class="text-danger">*</span></label><br>
+                                    <select class="select" formControlName="contratID">
+                                        <option>Select Contrat</option>
+                                        <option *ngFor='let contart of contrats' value="{{contrat.id}}">{{contrat.type_contrat}}</option>
+                                        <span class="text-danger" *ngIf="formEmploye.get('contratID')?.hasError('required') && formEmploye.get('contratID')?.touched">
+                                            <p>Le contrat est obligatoire</p>
+                                               </span>
+                                    </select>
+                                </div>
+                            </div>-->
+
                             <!--<div class="col-md-6">
                                 <div class="form-group">
                                     <label>Designation <span class="text-danger">*</span></label>
@@ -399,7 +433,7 @@
                                     <label class="col-form-label">Mot de passe <span class="text-danger">*</span></label>
                                     <input class="form-control" type="password" formControlName="password" placeholder="Mot de passe">
                                     <span class="text-danger" *ngIf="formEmploye.get('password')?.hasError('minLength') && formEmploye.get('password')?.touched">
-                                        <p>Veuillez entrer le mot de passe et de minimum longueur 4</p>
+                                        <p>Veuillez entrer le mot de passe et de minimum longueur 4 caractéres</p>
                                        </span>
                                 </div>
                             </div>
@@ -456,7 +490,7 @@
                             </div>
                             <div class="col-sm-6">
                                 <div class="form-group">
-                                    <label class="col-form-label">Téléphone </label>
+                                    <label class="col-form-label">Téléphone</label>
                                     <input class="form-control" type="text" formControlName="telephone" placeholder="Téléphone">
                                     <span class="text-danger" *ngIf="formEmploye.get('telephone')?.hasError('minLength') && formEmploye.get('telephone')?.touched">
                                         <p>Veuillez entrer le numéro de téléphone et doit comporter 8 caractères</p>
@@ -465,10 +499,10 @@
                             </div>
                             <div class="col-sm-6">
                                 <div class="form-group">
-                                    <label class="col-form-label">Email </label>
+                                    <label class="col-form-label">Email</label>
                                     <input class="form-control" type="email" formControlName="email" placeholder="Email">
                                     <span class="text-danger" *ngIf="formEmploye.get('email')?.hasError('required') && formEmploye.get('email')?.touched">
-                                        <p>Veuillez entrer l'email </p>
+                                        <p>Veuillez entrer l'email</p>
                                       </span>
                                 </div>
                             </div>
@@ -478,7 +512,7 @@
                                     <label class="col-form-label">Poste </label>
                                     <input class="form-control" type="text" formControlName="poste" placeholder="Poste">
                                     <span class="text-danger" *ngIf="formEmploye.get('poste')?.hasError('required') && formEmploye.get('poste')?.touched">
-                                        <p>Veuillez entrer le poste occupé </p>
+                                        <p>Veuillez entrer le poste occupé</p>
                                       </span>
                                 </div>
                             </div>
@@ -487,7 +521,7 @@
                                     <label class="col-form-label">Date embauche </label>
                                     <input class="form-control" type="date" formControlName="date_Embauche">
                                     <span class="text-danger" *ngIf="formEmploye.get('date_Embauche')?.hasError('required') && formEmploye.get('date_debut')?.touched">
-                                        <p>Veuillez entrer la date d'embauche </p>
+                                        <p>Veuillez entrer la date d'embauche</p>
                                       </span>
                                 </div>
                             </div>
@@ -496,7 +530,7 @@
                                     <label class="col-form-label">Date naissance </label>
                                     <input class="form-control" type="date" formControlName="date_Naissance">
                                     <span class="text-danger" *ngIf="formEmploye.get('date_Naissance')?.hasError('required') && formEmploye.get('date_Naissance')?.touched">
-                                        <p>Veuillez entrer la date de naissance </p>
+                                        <p>Veuillez entrer la date de naissance</p>
                                       </span>
                                 </div>
                             </div>
@@ -506,7 +540,7 @@
                                     <label class="col-form-label">Adresse </label>
                                     <textarea class="form-control" formControlName="adresse" placeholder="Adresse"></textarea>
                                     <span class="text-danger" *ngIf="formEmploye.get('adresse')?.hasError('required') && formEmploye.get('adresse')?.touched">
-                                        <p>Veuillez entrer l'adresse </p>
+                                        <p>Veuillez entrer l'adresse</p>
                                       </span>
                                 </div>
                             </div>
@@ -518,7 +552,7 @@
                                   <input class="form-control" width="400"
                                   height="341" formControlName="image" type="file" name="file" (change)="onFileChanged($event)">
                                   <span class="text-danger" *ngIf="formEmploye.get('image')?.hasError('required') && formEmploye.get('image')?.touched">
-                                 <p> Veuillez sélectionner une image</p>
+                                 <p>Veuillez sélectionner une image</p>
                                     </span>
                             </div>
                               </div>
@@ -536,7 +570,7 @@
                                         </label>
                                     </div>
                                     <span class="text-danger" *ngIf="formEmploye.get('role')?.hasError('required') && formEmploye.get('role')?.touched">
-                                        <p> Veuillez choisir un sex</p>
+                                        <p>Veuillez choisir un sex</p>
                                            </span>
                                 </div>
                             </div>
@@ -546,11 +580,40 @@
                                 <label>Planning <span class="text-danger">*</span></label><br>
                                 <select class="select" formControlName="planningID">
                                     <option>Select Planning</option>
-                                    <option *ngFor='let employe of employees' value="{{employe.planning.id}}">{{employe.planning.nom}}</option>
-                                    
+                                    <option *ngFor='let planning of plannings' value="{{planning.id}}">{{planning.nom}}</option>
+                                    <span class="text-danger" *ngIf="formEmploye.get('planningID')?.hasError('required') && formEmploye.get('planningID')?.touched">
+                                        <p>Veuillez sélectionner un planning</p>
+                                      </span>
                                 </select>
                             </div>
                         </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="col-form-label">Département <span class="text-danger">*</span></label><br>
+                                <select class="select" formControlName="departementID">
+                                    <option>Select Département</option>
+                                    <option *ngFor='let departement of departements' value="{{departement.id}}">{{departement.nom}}</option>
+                                    <span class="text-danger" *ngIf="formEmploye.get('departementID')?.hasError('required') && formEmploye.get('departementID')?.touched">
+                                        <p>Le département est obligatoire</p>
+                                           </span>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!--<div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="col-form-label">Contrat <span class="text-danger">*</span></label><br>
+                                    <select class="select" formControlName="contratID">
+                                        <option>Select Contrat</option>
+                                        <option *ngFor='let contart of contrats' value="{{contrat.id}}">{{contrat.type_contrat}}</option>
+                                        <span class="text-danger" *ngIf="formEmploye.get('contratID')?.hasError('required') && formEmploye.get('contratID')?.touched">
+                                            <p>Le contrat est obligatoire</p>
+                                               </span>
+                                    </select>
+                                </div>
+                            </div>-->
+
                             <!--<div class="col-md-6">
                                 <div class="form-group">
                                     <label>Department <span class="text-danger">*</span></label>

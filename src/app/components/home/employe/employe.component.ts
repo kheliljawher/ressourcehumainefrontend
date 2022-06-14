@@ -5,6 +5,8 @@ import { EmployeService } from 'src/app/services/employe.service';
 import { formatDate } from '@angular/common';
 import { ChefDepartementService } from 'src/app/services/chef-departement.service';
 import { PlanningService } from 'src/app/services/planning.service';
+import { DepartementService } from 'src/app/services/departement.service';
+import { ContratService } from 'src/app/services/contrat.service';
 //import { ConfirmedValidator } from './ConfirmedValidator';
 
 @Component({
@@ -35,10 +37,16 @@ export class EmployeComponent implements OnInit {
   utilisateurs: any[] = []
   planningID : any;
   plannings:any;
+  departementID:any;
+  departements:any;
+  //contrattID:any;
+  //contrats:any;
 
   constructor(private employeesService: EmployeService,
     private planningsService:PlanningService,
+    private departementsService:DepartementService,
     private chefDepartementsService: ChefDepartementService,
+    //private contratService: ContratService,
     private router: Router,
     private formBuilder: FormBuilder,
   ) { }
@@ -49,6 +57,8 @@ export class EmployeComponent implements OnInit {
     this.getChefDepartements();
     this.geneFormUpdate();
     this.getPlannings();
+    this.getDepartements();
+    //this.getContrats();
 
     this.formEmploye = this.formBuilder.group({
       nom: ['', Validators.required],
@@ -66,7 +76,9 @@ export class EmployeComponent implements OnInit {
       role: ['', Validators.required],
       sexs: ['', Validators.required],
       confirmPassword: ['', Validators.required],
-      planningID:['',Validators.required]
+      planningID:['',Validators.required],
+      departementID:['',Validators.required],
+      //contratID:['',Validators.required]
 
     },//{      validator: ConfirmedValidator('password', 'confirmPassword')  }
     
@@ -116,6 +128,22 @@ export class EmployeComponent implements OnInit {
         console.log("plannings : ",this.plannings)}
     )
   }
+
+  getDepartements(){
+    this.departementsService.getDepartements().subscribe(
+      (res:any) => {
+        this.departements = res
+        console.log("departements : ",this.departements)}
+    )
+  }
+
+  // getContrats(){
+  //   this.contratsService.getContrats().subscribe(
+  //     (res:any) => {
+  //       this.contrats = res
+  //       console.log("contrats : ",this.contrats)}
+  //   )
+  // }
 
   deleteEmp() {
 
@@ -195,14 +223,14 @@ export class EmployeComponent implements OnInit {
     console.log("formulaire", this.formEmploye.value)
 
     if (this.formEmploye.value.role == "EMPLOYE") {
-      this.employeesService.createEmp(formData,this.formEmploye.value.planningID).subscribe(data => {
+      this.employeesService.createEmp(formData, this.formEmploye.value.planningID, this.formEmploye.value.departementID).subscribe(data => {
         console.log(data);
         this.getEmployees();
       })
 
     } else {if (this.formEmploye.value.role == "CHEFDEPARTEMENT") {
 
-      this.chefDepartementsService.createChefDept(formData).subscribe(data => {
+      this.chefDepartementsService.createChefDept(formData, this.formEmploye.value.planningID, this.formEmploye.value.departementID).subscribe(data => {
         console.log(data);
         this.getChefDepartements();
       })
@@ -242,7 +270,7 @@ export class EmployeComponent implements OnInit {
     formData.append("date_Embauche", this.formUpdateEmploye.value.date_Embauche);
     formData.append("date_Naissance", this.formUpdateEmploye.value.date_Naissance);
     formData.append("file", this.selectedFile[0]);
-    formData.append("role",this.formUpdateEmploye.value.role);
+    formData.append("role", this.formUpdateEmploye.value.role);
     formData.append("sexs", this.formUpdateEmploye.value.sexs);
     formData.append("confirmPassword",this.formUpdateEmploye.value.confirmPassword);
 
@@ -251,14 +279,14 @@ export class EmployeComponent implements OnInit {
 
     console.log(this.formEmploye.value.planningID);
 
-    if (this.formEmploye.value.role == "EMPLOYE") {
-      this.employeesService.updateEmp(formData, this.id, this.formEmploye.value.planningID).subscribe(data => {
-        console.log(data);
+    if (this.formUpdateEmploye.value.role == "EMPLOYE") {
+      this.employeesService.updateEmp(formData, this.id, this.formUpdateEmploye.value.planningID, this.formUpdateEmploye.value.departementID).subscribe(data => {
+        console.log("employe after update ",data);
         this.getEmployees();
       })
 
-    } else {if (this.formEmploye.value.role == "CHEFDEPARTEMENT"){
-      this.chefDepartementsService.updateChefDept(formData, this.id).subscribe(data => {
+    } else {if (this.formUpdateEmploye.value.role == "CHEFDEPARTEMENT"){
+      this.chefDepartementsService.updateChefDept(formData, this.id, this.formUpdateEmploye.value.planningID, this.formUpdateEmploye.value.departementID).subscribe(data => {
         console.log(data);
         this.getChefDepartements();
       })
@@ -286,8 +314,9 @@ export class EmployeComponent implements OnInit {
       role: "",
       sexs: "",
       confirmPassword: "",
-      planningID : ""
-
+      planningID : "",
+      departementID : ""
+      //contratID : ""
 
     })
   }
@@ -306,11 +335,13 @@ export class EmployeComponent implements OnInit {
       poste: "",
       date_Embauche: "",
       date_Naissance: "",
-      image: "",
+      //image: "",
       role:"",
       sexs: "",
       confirmPassword: "",
-      planningID : ""
+      planningID : "",
+      departementID : ""
+      //contratID : ""
 
     })
   }
@@ -333,15 +364,19 @@ export class EmployeComponent implements OnInit {
       poste: res.poste,
       date_Embauche: res.date_Embauche,
       date_Naissance: res.date_Naissance,
-      image: res.image,
+     // image: res.image,
       role: res.role,
       sexs: res.sexs,
       confirmPassword: res.confirmPassword,
-      planningID :res.planningID
+      planningID :res.planning.id,
+      departementID :res.departement.id
+      //contratID :res.contratID
 
     })
 
     this.test = true;
+    console.log("form after patch : ",this.formUpdateEmploye.value);
+    
   }
 
   sendIdToDelete(utilisateur: any) {

@@ -23,13 +23,13 @@ export class EmployeService {
   getEmpByPrenom(prenom:any){
     return this.http.get(`http://localhost:9190/api/employe/${prenom}`);
   }*/
-
-  createEmp(employe:any, id_planning:any){
-    return this.http.post(`http://localhost:9190/api/employe/create/${id_planning}`,employe);
+//id_contrat:any
+  createEmp(employe:any, id_planning:any, id_departement:any){//${id_contrat}
+    return this.http.post(`http://localhost:9190/api/employe/create/${id_planning}/${id_departement}`,employe);
   }
-
-  updateEmp(employee:any, id_employe:any, id_planning:any){
-    return this.http.put(`http://localhost:9190/api/employe/${id_employe}/${id_planning}`,employee);
+//id_contrat:any
+  updateEmp(employee:any, id_employe:any, id_planning:any, id_departement:any){//${id_contrat}
+    return this.http.put(`http://localhost:9190/api/employe/${id_employe}/${id_planning}/${id_departement}`,employee);
   }
 
   deleteEmp(id:any) {
