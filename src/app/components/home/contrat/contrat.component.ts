@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { ContratService } from 'src/app/services/contrat.service';
 import {formatDate} from '@angular/common';
 import { EmployeService } from 'src/app/services/employe.service';
+import { ChefDepartementService } from 'src/app/services/chef-departement.service';
 
 @Component({
   selector: 'app-contrat',
@@ -28,9 +29,12 @@ export class ContratComponent implements OnInit {
   submitted = false;
   test:boolean=false
   p:number=1;
+  utilisateurs: any[] = []
+  chefDepartements: any[] = []
 
   constructor(private contratsService:ContratService,
     private employeesService:EmployeService,
+    private chefDepartementsService: ChefDepartementService,
     private router: Router,
     private formBuilder:FormBuilder) { }
 
@@ -38,6 +42,8 @@ export class ContratComponent implements OnInit {
     this.getContrats();
     this.getEmployees();
     this.geneFormUpdate();
+    this.getChefDepartements();
+
 
     this.formContrat = this.formBuilder.group({
       type_contrat:['',Validators.required],
@@ -57,14 +63,54 @@ export class ContratComponent implements OnInit {
     )
   }
 
-  getEmployees(){
+  getEmployees() {
     this.employeesService.getEmployees().subscribe(
-      (res:any) => {
-        this.employees = res;
-        this.testEmploye=res;
-        console.log("employes get : ",this.employees)}
+      (res: any) => {
+        this.employees = res
+        console.log("employees : ", this.employees)
+        this.utilisateurs = [];
+
+        this.chefDepartements.forEach(element => {
+          this.utilisateurs.push(element)
+        });
+        this.employees.forEach(element => {
+          this.utilisateurs.push(element)
+        });
+        console.log("Liste utilisateur from employe",this.utilisateurs);
+      }
     )
   }
+
+  getChefDepartements() {
+    this.chefDepartementsService.getChefDepartements().subscribe(
+      (res: any) => {
+        this.chefDepartements = res
+        console.log("chef departements : ", this.chefDepartements)
+        this.utilisateurs = [];
+        this.chefDepartements.forEach(element => {
+          this.utilisateurs.push(element)
+        });
+        this.employees.forEach(element => {
+          this.utilisateurs.push(element)
+        });
+
+        console.log("Liste utilisateur from chef",this.utilisateurs);
+
+
+        //this.utilisateurs.push(this.employees[0])
+
+      }
+    )
+  }
+
+  // getEmployees(){
+  //   this.employeesService.getEmployees().subscribe(
+  //     (res:any) => {
+  //       this.employees = res;
+  //       this.testEmploye=res;
+  //       console.log("employes get : ",this.employees)}
+  //   )
+  // }
 
   deleteCont(){
     this.contratsService.deleteCont(this.idToDelete).subscribe( data => {

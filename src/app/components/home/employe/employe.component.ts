@@ -39,6 +39,7 @@ export class EmployeComponent implements OnInit {
   plannings:any;
   departementID:any;
   departements:any;
+  utilisateurToUpdate: any;
   //contrattID:any;
   //contrats:any;
 
@@ -255,6 +256,8 @@ export class EmployeComponent implements OnInit {
 
   updateEmploye() {
 
+    if(this.formUpdateEmploye.value.role == this.utilisateurToUpdate.role){
+
 
 
     let formData = new FormData();
@@ -291,6 +294,12 @@ export class EmployeComponent implements OnInit {
         this.getChefDepartements();
       })
     }}
+  } else {
+    
+//console.log("here to update active to no active and create new utilisateu (employe ou chef )");
+
+
+  }
 
     document.getElementById("edit_emp_close").click();
 
@@ -348,7 +357,7 @@ export class EmployeComponent implements OnInit {
 
   patchValue(res: any) {
     console.log("utilisateur is : ", res)
-
+    this.utilisateurToUpdate = res ;
     this.id = res.id;
 
     this.formUpdateEmploye.patchValue({

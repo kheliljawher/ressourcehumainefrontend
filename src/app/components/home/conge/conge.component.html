@@ -20,25 +20,25 @@
 <div class="row">
     <div class="col-md-3">
         <div class="stats-info">
-            <h6>Annual Leave</h6>
+            <h6>Congé annuel</h6>
             <h4></h4>
         </div>
     </div>
     <div class="col-md-3">
         <div class="stats-info">
-            <h6>Medical Leave</h6>
+            <h6>Congé de maladie</h6>
             <h4></h4>
         </div>
     </div>
     <div class="col-md-3">
         <div class="stats-info">
-            <h6>Other Leave</h6>
+            <h6>Autre congé</h6>
             <h4></h4>
         </div>
     </div>
     <div class="col-md-3">
         <div class="stats-info">
-            <h6>Remaining Leave</h6>
+            <h6>Congé restant</h6>
             <h4></h4>
         </div>
     </div>
@@ -56,6 +56,7 @@
                         <th>Leave Type</th>
                         <th>Date Debut</th>
                         <th>Date Fin</th>
+                        <th>Status</th>
                         <th>Approuvé Par</th>
                         <th class="text-right">Actions</th>
                     </tr>
@@ -67,7 +68,7 @@
                         <td>{{conge.date_debut | date: "dd-MM-yyyy"}}</td>
                         <td>{{conge.date_fin | date: "dd-MM-yyyy"}}</td>
                         <td>{{conge?.chef_departement?.login}}</td>
-
+                        <td>{{conge?.status}}</td>
                         <!--<td>{{chefDepartement.nom}}</td>-->
                         <!-- <td>
                             <h2 class="table-avatar">
@@ -138,7 +139,34 @@
                             <input class="form-control" value="" type="date" formControlName="date_fin">
                         </div>
                     </div>
-                    <div class="col-sm-6">
+
+                    <td class="text-center">
+                        <div class="dropdown action-label show">
+                            <a class="btn btn-white btn-sm btn-rounded dropdown-toggle" href="#" data-toggle="dropdown" aria-expanded="true">
+                                <i class="fa fa-dot-circle-o text-success"></i> Approved
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right show" x-placement="bottom-end" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(-17px, 26px, 0px);">
+                                <a class="dropdown-item" href="#"><i class="fa fa-dot-circle-o text-purple"></i> New</a>
+                                <a class="dropdown-item" href="#"><i class="fa fa-dot-circle-o text-info"></i> Pending</a>
+                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#approve_leave"><i class="fa fa-dot-circle-o text-success"></i> Approved</a>
+                                <a class="dropdown-item" href="#"><i class="fa fa-dot-circle-o text-danger"></i> Declined</a>
+                            </div>
+                        </div>
+                    </td>
+
+                        <div class="col-sm-6">
+                            <div class="form-group">
+
+                            <label>Status <span class="text-danger">*</span></label>
+                            <select class="select" formControlName="status">
+                                <option value=""></option>
+                           
+                            </select>
+                        </div>
+
+                        </div>
+
+                        <div class="col-sm-6">
                         <label>Aprouve par <span class="text-danger">*</span></label>
                         
                     </div>
