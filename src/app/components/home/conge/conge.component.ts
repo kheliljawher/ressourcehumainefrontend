@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { ChefDepartementService } from 'src/app/services/chef-departement.service';
 import { CongeService } from 'src/app/services/conge.service';
 import { EmployeService } from 'src/app/services/employe.service';
 
@@ -27,9 +28,12 @@ export class CongeComponent implements OnInit {
   test:boolean=false;
   p:number=1;
   user:any;
+  utilisateurs: any[] = []
+  chefDepartements: any[] = []
 
   constructor(private congesService:CongeService,
     private employeesService:EmployeService,
+    private chefDepartementsService: ChefDepartementService,
     private router: Router,
     private formBuilder:FormBuilder) { }
 
@@ -37,16 +41,19 @@ export class CongeComponent implements OnInit {
 
     this.user=JSON.parse(localStorage.getItem('user'))
 
-    this.getConges();
+    this.geneFormConge();
     this.getEmployees();
     this.geneFormUpdate();
-    this.geneFormConge()
     
-    //console.log("with out parse : ",localStorage.getItem("user"));
-   // console.log("with parse : ",JSON.parse(localStorage.getItem("user")));
+    this.getChefDepartements();
+    
+    console.log("with out parse : ",localStorage.getItem("user"));
+    console.log("with parse : ",JSON.parse(localStorage.getItem("user")));
     
     
-   // this.user_connect = JSON.parse(localStorage.getItem("user"))
+    this.user_connect = JSON.parse(localStorage.getItem("user"))
+    this.getCongess();
+
   }
 
 
@@ -66,7 +73,7 @@ export class CongeComponent implements OnInit {
 
   
 
-  getConges(){
+  getCongess(){
     this.congesService.getConges().subscribe(
       (res:any) => {
         this.conges = res
@@ -74,18 +81,18 @@ export class CongeComponent implements OnInit {
     )
   }
 
-  getEmployees(){
-    this.employeesService.getEmployees().subscribe(
-      (res:any) => {
-        this.employees = res
-        this.testEmploye=res;
-        console.log("employes get okkk : ",this.employees)}
-    )
-  }
-  console(event:any){
-    console.log("event here is : ",event.target.value);
+  // getEmployees(){
+  //   this.employeesService.getEmployees().subscribe(
+  //     (res:any) => {
+  //       this.employees = res
+  //       this.testEmploye=res;
+  //       console.log("employes get okkk : ",this.employees)}
+  //   )
+  // }
+  // console(event:any){
+  //   console.log("event here is : ",event.target.value);
     
-  }
+  // }
 
 
   // getChefDepartements(){
@@ -96,16 +103,58 @@ export class CongeComponent implements OnInit {
   //   )
   // }
 
+  getEmployees() {
+    this.employeesService.getEmployees().subscribe(
+      (res: any) => {
+        this.employees = res
+        console.log("employees : ", this.employees)
+        this.utilisateurs = [];
+
+        this.chefDepartements.forEach(element => {
+          this.utilisateurs.push(element)
+        });
+        this.employees.forEach(element => {
+          this.utilisateurs.push(element)
+        });
+        console.log("Liste utilisateur from employe",this.utilisateurs);
+      }
+    )
+  }
+
+  getChefDepartements() {
+    this.chefDepartementsService.getChefDepartements().subscribe(
+      (res: any) => {
+        this.chefDepartements = res
+        console.log("chef departements : ", this.chefDepartements)
+        this.utilisateurs = [];
+        this.chefDepartements.forEach(element => {
+          this.utilisateurs.push(element)
+        });
+        this.employees.forEach(element => {
+          this.utilisateurs.push(element)
+        });
+
+        console.log("Liste utilisateur from chef",this.utilisateurs);
+
+
+        //this.utilisateurs.push(this.employees[0])
+
+      }
+    )
+  }
+
   deleteCong(){
     this.congesService.deleteCong(this.idToDelete).subscribe( data => {
       console.log(data);
-      this.getConges();
+      this.getCongess();
       document.getElementById("del_cong_close").click();
 
     })
   }
 
   saveConge(){
+    console.log("here form gourp ",this.formConge.value)
+    
     if(this.formConge.invalid){
       this.submitted=true;
       console.log("invalid")
@@ -113,8 +162,8 @@ export class CongeComponent implements OnInit {
       return ;
     }    //this.user_connect.id
     this.congesService.createCong(this.formConge.value,this.formConge.value.ID_Employe).subscribe( data =>{
-      console.log(data);
-      this.getConges();
+      console.log("here conge value :",data);
+      this.getCongess();
       document.getElementById("add_cong_close").click();
     })
   }
@@ -130,7 +179,7 @@ export class CongeComponent implements OnInit {
       (res:any) => {
         console.log("conge",res);
         this.router.navigateByUrl("home/conge")
-        this.getConges();
+        this.getCongess();
 
       }
     )

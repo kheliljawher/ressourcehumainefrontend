@@ -30,7 +30,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let candidat of candidats">
+                    <tr *ngFor="let candidat of candidats | paginate: { itemsPerPage: 5, currentPage: p}">
                         <td>{{candidat.id}}</td>
                         <td>{{candidat.nom}}</td>
                         <td>{{candidat.prenom}}</td>
@@ -62,6 +62,8 @@
                     </tr>
                    
                 </tbody>
+                <pagination-controls class="my-pagination" (pageChange)="p = $event"   previousLabel="Précédent"
+                    nextLabel="Suivant " ></pagination-controls>
             </table>
         </div>
     </div>

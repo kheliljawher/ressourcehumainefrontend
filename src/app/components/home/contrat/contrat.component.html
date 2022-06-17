@@ -35,7 +35,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let contrat of contrats | paginate: { itemsPerPage: 2, currentPage: p}">
+                    <tr *ngFor="let contrat of contrats | paginate: { itemsPerPage: 5, currentPage: p}">
                         <td>{{contrat.id}}</td>
                         <td>{{contrat.utilisateur?.nom}}</td>
 
@@ -151,7 +151,7 @@
                         <div class="form-group col-sm-6">
                             <label>Employe <span class="text-danger">*</span></label>
                             <select class="select" formControlName="ID_Employe">
-                                <option *ngFor='let employe of employees' value="{{employe.id}}">{{employe.nom}}</option>
+                                <option *ngFor='let employe of utilisateurs' value="{{employe.id}}">{{employe.nom}}</option>
                            
                             </select>
                         </div>

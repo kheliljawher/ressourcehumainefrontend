@@ -32,6 +32,10 @@ export class EmployeService {
     return this.http.put(`http://localhost:9190/api/employe/${id_employe}/${id_planning}/${id_departement}`,employee);
   }
 
+  setStatusNoActive(id_employe:any){
+    return this.http.get(`http://localhost:9190/api/employe/setStatusNoActive/${id_employe}`);
+  }
+
   deleteEmp(id:any) {
     return this.http.delete(`http://localhost:9190/api/employe/${id}`);
   }

@@ -92,7 +92,7 @@
                         </thead>
                         <tbody>
                             <!-- <tr *ngFor="let employe of "> -->
-                            <tr *ngFor="let employe of  utilisateurs | rechercheEmployeName: nomEmploye | rechercheEmployePrenom: prenomEmploye | paginate: { itemsPerPage: 4, currentPage: p}">
+                            <tr *ngFor="let employe of  utilisateurs | rechercheEmployeName: nomEmploye | rechercheEmployePrenom: prenomEmploye | paginate: { itemsPerPage: 5, currentPage: p}">
                             
                                 <td>
                                     <h2 class="table-avatar">
@@ -113,9 +113,9 @@
                                 <td>{{employe?.poste}}</td>
                                 <td>{{employe?.date_Embauche | date: "dd-MM-yyyy"}}</td>
                                 <td>{{employe?.date_Naissance | date: "dd-MM-yyyy"}}</td>
-                                <td>{{employe?.role}}</td>
                                 <td>{{employe?.planning?.nom}}</td>
                                 <td>{{employe?.departement?.nom}}</td>
+                                <td>{{employe?.role}}</td>
                                 <!--<td>{{employe?.contrat?.type_contrat}}</td>-->
 
                                 <td class="text-right">
@@ -209,17 +209,48 @@
                                     <input type="text" class="form-control" readonly formControlName="id">
                                 </div>
                             </div>-->
+<!-- 
+                            <div class="form-group">
+										<label class="d-block">Assignee</label>
+										<div class="form-check form-check-inline">
+											<input class="form-check-input" type="radio" name="addition_assignee" id="addition_no_emp" value="option1" checked="">
+											<label class="form-check-label" for="addition_no_emp">
+											No assignee
+											</label>
+										</div>
+										<div class="form-check form-check-inline">
+											<input class="form-check-input" type="radio" name="addition_assignee" id="addition_all_emp" value="option2">
+											<label class="form-check-label" for="addition_all_emp">
+											All employees
+											</label>
+										</div>
+										<div class="form-check form-check-inline">
+											<input class="form-check-input" type="radio" name="addition_assignee" id="addition_single_emp" value="option3">
+											<label class="form-check-label" for="addition_single_emp">
+											Select Employee
+											</label>
+										</div>
+										<div class="form-group" data-select2-id="26">
+											<select class="select select2-hidden-accessible" data-select2-id="4" tabindex="-1" aria-hidden="true">
+												<option data-select2-id="6">-</option>
+												<option data-select2-id="33">Select All</option>
+												<option data-select2-id="34">John Doe</option>
+												<option data-select2-id="35">Richard Miles</option>
+											</select><span class="select2 select2-container select2-container--default select2-container--below" dir="ltr" data-select2-id="5" style="width: 100%;"><span class="selection"><span class="select2-selection select2-selection--single" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0" aria-labelledby="select2-2pmj-container"><span class="select2-selection__rendered" id="select2-2pmj-container" role="textbox" aria-readonly="true" title="-">-</span><span class="select2-selection__arrow" role="presentation"><b role="presentation"></b></span></span></span><span class="dropdown-wrapper" aria-hidden="true"></span></span>
+										</div>
+									</div> -->
+
                             <div class="col-sm-6">
 
                             <div class="form-group">
                                 <label class="col-form-label">Sex<span class="text-danger">*</span></label>
                                 <div class="col-md-6" >
-                                    <div class="radio">
+                                    <div class="">
                                         <label>
-                                            <input type="radio" name="radiogender" value='male' (click)="changeSex($event)">&nbsp;Male
+                                            <input type="radio" class="form-check-input" name="radiogender" value='male' (click)="changeSex($event)">&nbsp;Male
                                         </label><br>
                                         <label>
-                                            <input type="radio" name="radiogender" value="female" (click)="changeSex($event)">&nbsp;Female
+                                            <input type="radio" class="form-check-input" name="radiogender" value="female" (click)="changeSex($event)">&nbsp;Female
                                         </label>
                                     </div>
                                     <span class="text-danger" *ngIf="formEmploye.get('sexs')?.hasError('required') && formEmploye.get('sexs')?.touched">
@@ -306,25 +337,6 @@
                                     </span>
                             </div>
                               </div>
-                              
-                              <div class="col-sm-6">
-                              <div class="form-group">
-                                <label class="col-form-label">Rôle</label>
-                                <div class="col-md-10">
-                                    <div class="radio">
-                                        <label>
-                                            <input type="radio" name="radiorole" value="EMPLOYE" (click)="changeUser($event)"> Employe&nbsp;
-                                        </label>
-                                        <label>
-                                            <input type="radio" name="radiorole" value="CHEFDEPARTEMENT" (click)="changeUser($event)"> Chef Departement
-                                        </label>
-                                    </div>
-                                    <span class="text-danger" *ngIf="formEmploye.get('role')?.hasError('required') && formEmploye.get('role')?.touched">
-                                        <p>le rôle des employes est obligatoire</p>
-                                           </span>
-                                </div>
-                            </div>
-                        </div>
 
                             <div class="col-md-6">
                                 <div class="form-group">
@@ -351,6 +363,25 @@
                                     </select>
                                 </div>
                             </div>
+
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                  <label class="col-form-label">Rôle</label>
+                                  <div class="col-md-10">
+                                      <div class="radio">
+                                          <label>
+                                              <input type="radio" name="radiorole" value="EMPLOYE" (click)="changeUser($event)"> Employe&nbsp;
+                                          </label>
+                                          <label>
+                                              <input type="radio" name="radiorole" value="CHEFDEPARTEMENT" (click)="changeUser($event)"> Chef Departement
+                                          </label>
+                                      </div>
+                                      <span class="text-danger" *ngIf="formEmploye.get('role')?.hasError('required') && formEmploye.get('role')?.touched">
+                                          <p>le rôle des employes est obligatoire</p>
+                                             </span>
+                                  </div>
+                              </div>
+                          </div>
 
                             <!--<div class="col-md-6">
                                 <div class="form-group">
@@ -557,24 +588,6 @@
                             </div>
                               </div>
                               
-                              <div class="col-sm-6">
-                              <div class="form-group">
-                                <label class="col-form-label">Rôle</label>
-                                <div class="col-md-10">
-                                    <div class="radio">
-                                        <label>
-                                            <input type="radio" name="radiorole" value="EMPLOYE" (click)="changeUserUpdate($event)"> Employe&nbsp;
-                                        </label>
-                                        <label>
-                                            <input type="radio" name="radiorole" value="CHEFDEPARTEMENT" (click)="changeUserUpdate($event)"> Chef Departement
-                                        </label>
-                                    </div>
-                                    <span class="text-danger" *ngIf="formEmploye.get('role')?.hasError('required') && formEmploye.get('role')?.touched">
-                                        <p>Veuillez choisir un sex</p>
-                                           </span>
-                                </div>
-                            </div>
-                        </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Planning <span class="text-danger">*</span></label><br>
@@ -600,6 +613,25 @@
                                 </select>
                             </div>
                         </div>
+
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                              <label class="col-form-label">Rôle</label>
+                              <div class="col-md-10">
+                                  <div class="radio">
+                                      <label>
+                                          <input type="radio" name="radiorole" value="EMPLOYE" (click)="changeUserUpdate($event)"> Employe&nbsp;
+                                      </label>
+                                      <label>
+                                          <input type="radio" name="radiorole" value="CHEFDEPARTEMENT" (click)="changeUserUpdate($event)"> Chef Departement
+                                      </label>
+                                  </div>
+                                  <span class="text-danger" *ngIf="formEmploye.get('role')?.hasError('required') && formEmploye.get('role')?.touched">
+                                      <p>Veuillez choisir un rôle</p>
+                                         </span>
+                              </div>
+                          </div>
+                      </div>
 
                         <!--<div class="col-md-6">
                                 <div class="form-group">

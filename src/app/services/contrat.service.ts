@@ -16,12 +16,12 @@ export class ContratService {
     return this.http.get(`http://localhost:9190/api/contrat/${id}`);
   }
 
-  createCont(contrat:any, id_employe:any){
-    return this.http.post(`http://localhost:9190/api/contrat/create/${id_employe}`,contrat);
+  createCont(contrat:any, id_utilisateur:any){
+    return this.http.post(`http://localhost:9190/api/contrat/create/${id_utilisateur}`,contrat);
   }
 
-  updateCont(contrat:any, id_contrat:any, id_employe:any){
-    return this.http.put(`http://localhost:9190/api/contrat/${id_contrat}/${id_employe}`,contrat);
+  updateCont(contrat:any, id_contrat:any, id_utilisateur:any){
+    return this.http.put(`http://localhost:9190/api/contrat/${id_contrat}/${id_utilisateur}`,contrat);
   }
 
   deleteCont(id:any) {

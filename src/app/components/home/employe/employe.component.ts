@@ -35,17 +35,17 @@ export class EmployeComponent implements OnInit {
   idEmploye: string = "";
   p: number = 1;
   utilisateurs: any[] = []
-  planningID : any;
-  plannings:any;
-  departementID:any;
-  departements:any;
+  planningID: any;
+  plannings: any;
+  departementID: any;
+  departements: any;
   utilisateurToUpdate: any;
   //contrattID:any;
   //contrats:any;
 
   constructor(private employeesService: EmployeService,
-    private planningsService:PlanningService,
-    private departementsService:DepartementService,
+    private planningsService: PlanningService,
+    private departementsService: DepartementService,
     private chefDepartementsService: ChefDepartementService,
     //private contratService: ContratService,
     private router: Router,
@@ -68,7 +68,7 @@ export class EmployeComponent implements OnInit {
       password: ['', Validators.required, Validators.minLength(4)],
       cin: ['', Validators.required, Validators.minLength(8)],
       telephone: ['', Validators.required, Validators.minLength(8)],
-      email: ['',  Validators.required, Validators.email],
+      email: ['', Validators.required, Validators.email],
       adresse: ['', Validators.required],
       poste: ['', Validators.required],
       date_Embauche: ['', Validators.required],
@@ -77,12 +77,12 @@ export class EmployeComponent implements OnInit {
       role: ['', Validators.required],
       sexs: ['', Validators.required],
       confirmPassword: ['', Validators.required],
-      planningID:['',Validators.required],
-      departementID:['',Validators.required],
+      planningID: ['', Validators.required],
+      departementID: ['', Validators.required],
       //contratID:['',Validators.required]
 
     },//{      validator: ConfirmedValidator('password', 'confirmPassword')  }
-    
+
     )
   }
 
@@ -122,19 +122,21 @@ export class EmployeComponent implements OnInit {
     )
   }
 
-  getPlannings(){
+  getPlannings() {
     this.planningsService.getPlannings().subscribe(
-      (res:any) => {
+      (res: any) => {
         this.plannings = res
-        console.log("plannings : ",this.plannings)}
+        console.log("plannings : ", this.plannings)
+      }
     )
   }
 
-  getDepartements(){
+  getDepartements() {
     this.departementsService.getDepartements().subscribe(
-      (res:any) => {
+      (res: any) => {
         this.departements = res
-        console.log("departements : ",this.departements)}
+        console.log("departements : ", this.departements)
+      }
     )
   }
 
@@ -185,9 +187,9 @@ export class EmployeComponent implements OnInit {
     })
   }
 
-  changeUserUpdate(event:any){
+  changeUserUpdate(event: any) {
     this.formUpdateEmploye.patchValue({
-      role : event.target.value
+      role: event.target.value
     })
   }
 
@@ -229,13 +231,15 @@ export class EmployeComponent implements OnInit {
         this.getEmployees();
       })
 
-    } else {if (this.formEmploye.value.role == "CHEFDEPARTEMENT") {
+    } else {
+      if (this.formEmploye.value.role == "CHEFDEPARTEMENT") {
 
-      this.chefDepartementsService.createChefDept(formData, this.formEmploye.value.planningID, this.formEmploye.value.departementID).subscribe(data => {
-        console.log(data);
-        this.getChefDepartements();
-      })
-    }}
+        this.chefDepartementsService.createChefDept(formData, this.formEmploye.value.planningID, this.formEmploye.value.departementID).subscribe(data => {
+          console.log(data);
+          this.getChefDepartements();
+        })
+      }
+    }
 
     document.getElementById("add_emp_close").click();
 
@@ -256,10 +260,6 @@ export class EmployeComponent implements OnInit {
 
   updateEmploye() {
 
-    if(this.formUpdateEmploye.value.role == this.utilisateurToUpdate.role){
-
-
-
     let formData = new FormData();
     formData.append("nom", this.formUpdateEmploye.value.nom);
     formData.append("prenom", this.formUpdateEmploye.value.prenom);
@@ -275,31 +275,99 @@ export class EmployeComponent implements OnInit {
     formData.append("file", this.selectedFile[0]);
     formData.append("role", this.formUpdateEmploye.value.role);
     formData.append("sexs", this.formUpdateEmploye.value.sexs);
-    formData.append("confirmPassword",this.formUpdateEmploye.value.confirmPassword);
+    formData.append("confirmPassword", this.formUpdateEmploye.value.confirmPassword);
+   
 
     console.log("onSubmit")
     console.log(this.formUpdateEmploye.value);
 
     console.log(this.formEmploye.value.planningID);
 
-    if (this.formUpdateEmploye.value.role == "EMPLOYE") {
-      this.employeesService.updateEmp(formData, this.id, this.formUpdateEmploye.value.planningID, this.formUpdateEmploye.value.departementID).subscribe(data => {
-        console.log("employe after update ",data);
-        this.getEmployees();
-      })
+    if (this.formUpdateEmploye.value.role == this.utilisateurToUpdate.role) {
 
-    } else {if (this.formUpdateEmploye.value.role == "CHEFDEPARTEMENT"){
-      this.chefDepartementsService.updateChefDept(formData, this.id, this.formUpdateEmploye.value.planningID, this.formUpdateEmploye.value.departementID).subscribe(data => {
-        console.log(data);
-        this.getChefDepartements();
-      })
-    }}
-  } else {
-    
-//console.log("here to update active to no active and create new utilisateu (employe ou chef )");
+      if (this.formUpdateEmploye.value.role == "EMPLOYE") {
+
+        console.log("here employe to employe");
+        
+        this.employeesService.updateEmp(formData, this.id, this.formUpdateEmploye.value.planningID, this.formUpdateEmploye.value.departementID).subscribe(data => {
+          console.log("employe after update role ", data);
+          this.getEmployees();
+        })
+
+      } else {
+        if (this.formUpdateEmploye.value.role == "CHEFDEPARTEMENT") {
+        console.log("here chef to chef");
+
+          this.chefDepartementsService.updateChefDept(formData, this.id, this.formUpdateEmploye.value.planningID, this.formUpdateEmploye.value.departementID).subscribe(data => {
+            console.log(data);
+            this.getChefDepartements();
+          })
+        }
+      }
+     
+    } else {
+
+      if (this.formUpdateEmploye.value.role == "EMPLOYE") {
+        console.log("here chef to employe");
+
+        
+        this.chefDepartementsService.setStatusNoActive(this.id).subscribe(data => {
+          console.log(data);
+          this.getChefDepartements();
+
+        })
+
+        this.employeesService.createEmp(formData,this.formUpdateEmploye.value.planningID, this.formUpdateEmploye.value.departementID).subscribe(data=>{
+          this.getEmployees();
+        })
+
+        
+
+        
+
+      } else {
+        if (this.formUpdateEmploye.value.role == "CHEFDEPARTEMENT") {
+        console.log("here employe to chef");
 
 
-  }
+          this.employeesService.setStatusNoActive(this.id).subscribe(data => {
+            console.log(data);
+            this.getEmployees();
+          })
+
+          this.chefDepartementsService.createChefDept(formData,this.formUpdateEmploye.value.planningID, this.formUpdateEmploye.value.departementID).subscribe((res:any)=>{
+            console.log("here new chef departement ",res);
+            this.getChefDepartements();
+            
+          })
+        }
+      }
+
+
+
+
+
+
+      // console.log("here to update active to no active and create new utilisateu (employe ou chef )");
+
+      // this.formEmploye.value.setStatusNoActive
+
+      // if (this.formEmploye.value.role == "EMPLOYE") {
+      //   this.employeesService.createEmp(formData, this.formEmploye.value.planningID, this.formEmploye.value.departementID).subscribe(data => {
+      //     console.log(data);
+      //     this.getEmployees();
+      //   })
+      // } else {
+      //   if (this.formEmploye.value.role == "CHEFDEPARTEMENT") {
+
+      //     this.chefDepartementsService.createChefDept(formData, this.formEmploye.value.planningID, this.formEmploye.value.departementID).subscribe(data => {
+      //       console.log(data);
+      //       this.getChefDepartements();
+      //     })
+      //   }
+      // }
+
+    }
 
     document.getElementById("edit_emp_close").click();
 
@@ -323,8 +391,8 @@ export class EmployeComponent implements OnInit {
       role: "",
       sexs: "",
       confirmPassword: "",
-      planningID : "",
-      departementID : ""
+      planningID: "",
+      departementID: ""
       //contratID : ""
 
     })
@@ -345,11 +413,12 @@ export class EmployeComponent implements OnInit {
       date_Embauche: "",
       date_Naissance: "",
       //image: "",
-      role:"",
+      role: "",
       sexs: "",
       confirmPassword: "",
-      planningID : "",
-      departementID : ""
+      planningID: "",
+      departementID: "",
+      actif: ""
       //contratID : ""
 
     })
@@ -357,7 +426,7 @@ export class EmployeComponent implements OnInit {
 
   patchValue(res: any) {
     console.log("utilisateur is : ", res)
-    this.utilisateurToUpdate = res ;
+    this.utilisateurToUpdate = res;
     this.id = res.id;
 
     this.formUpdateEmploye.patchValue({
@@ -373,19 +442,20 @@ export class EmployeComponent implements OnInit {
       poste: res.poste,
       date_Embauche: res.date_Embauche,
       date_Naissance: res.date_Naissance,
-     // image: res.image,
+      // image: res.image,
       role: res.role,
       sexs: res.sexs,
       confirmPassword: res.confirmPassword,
-      planningID :res.planning.id,
-      departementID :res.departement.id
+      planningID: res.planning.id,
+      departementID: res.departement.id,
+      actif: res.actif.id
       //contratID :res.contratID
 
     })
 
     this.test = true;
-    console.log("form after patch : ",this.formUpdateEmploye.value);
-    
+    console.log("form after patch : ", this.formUpdateEmploye.value);
+
   }
 
   sendIdToDelete(utilisateur: any) {

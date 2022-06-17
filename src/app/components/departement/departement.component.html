@@ -27,7 +27,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr *ngFor="let departement of departements">
+                            <tr *ngFor="let departement of departements | paginate: { itemsPerPage: 5, currentPage: p}">
                                 <td>{{departement.id}}</td>
                                 <td>{{departement.nom}}</td>
                                 <td class="text-right">
@@ -43,6 +43,8 @@
                             
                         </tbody>
                     </table>
+                    <pagination-controls class="my-pagination" (pageChange)="p = $event"   previousLabel="Précédent"
+                    nextLabel="Suivant " ></pagination-controls>
                 </div>
             </div>
         </div>

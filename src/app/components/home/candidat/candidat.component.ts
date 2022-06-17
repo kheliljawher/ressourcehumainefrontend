@@ -21,6 +21,7 @@ export class CandidatComponent implements OnInit {
   imageName: any;
   submitted = false;
   test:boolean=false
+  p: number = 1;
 
   constructor(private candidatsService:CandidatService,
     private router: Router,

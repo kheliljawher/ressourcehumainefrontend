@@ -20,6 +20,7 @@ export class DepartementComponent implements OnInit {
   submitted = false;
   test:boolean=false
   p:number=1;
+  
   constructor(private departementsService:DepartementService,
     private router: Router,
     private formBuilder:FormBuilder) { }

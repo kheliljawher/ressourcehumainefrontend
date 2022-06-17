@@ -21,11 +21,11 @@
             <table class="table table-striped custom-table mb-0 datatable">
                 <thead>
                     <tr>
-                        <th>Employee</th>
+                        <!--<th>Employee</th>-->
                         <th>Nom poste de travail</th>
                         <th>De</th>
                         <th>À</th>
-                        <th>Ajouter Par</th>
+                        <!--<th>Ajouter Par</th>-->
 
                         <!--<th class="text-center">Hours</th>
                         <th class="d-none d-sm-table-cell">Description</th>-->
@@ -33,18 +33,18 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let planning of plannings | paginate: { itemsPerPage: 2, currentPage: p}">
-                        <td >
+                    <tr *ngFor="let planning of plannings | paginate: { itemsPerPage: 5, currentPage: p}">
+                        <!--<td >
                             <h2 class="table-avatar">
-                                <!--<a href="#" class="avatar"><img alt="" src="http://localhost:9190/api/employe/files/{{employe.image}}"></a>
+                               <a href="#" class="avatar"><img alt="" src="http://localhost:9190/api/employe/files/{{employe.image}}"></a>
                                 <a href="#">{{employe.nom}} <span>Web Designer</span></a>-->
-                               <!-- {{planning.employe.nom}}-->
+                               <!-- {{planning.employe.nom}}
                             </h2>
-                        </td>
+                        </td>-->
                         <td>{{planning.nom}}</td>
                         <td>{{planning.date_debut | date: "HH:mm"}}</td>
                         <td>{{planning.date_fin | date: "HH:mm"}}</td>
-                        <td>{{planning?.chef_departement?.login}}</td>
+                        <!--<td>{{planning?.chef_departement?.login}}</td>-->
                         <!--<td class="text-center"></td>
                         <td class="d-none d-sm-table-cell col-md-4">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vel elit neque.</td>-->
                         <td class="text-right">

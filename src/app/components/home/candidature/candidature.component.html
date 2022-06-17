@@ -35,7 +35,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let candidature of candidatures | paginate: { itemsPerPage: 2, currentPage: p}">
+                    <tr *ngFor="let candidature of candidatures | paginate: { itemsPerPage: 5, currentPage: p}">
                         <td>{{candidature.id}}</td>
 						<td>{{candidature.titre}}</td>
 						<td>{{candidature.date_debut}}</td>
