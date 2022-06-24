@@ -20,12 +20,12 @@ export class CandidatureService {
     return this.http.get(`http://localhost:9191/api/candidature/${nom}`);
   }*/
 
-  createCandidature(candidature:any){
-    return this.http.post(`http://localhost:9190/api/candidature/create`,candidature);
+  createCandidature(candidature:any, id_departement:any){
+    return this.http.post(`http://localhost:9190/api/candidature/create/${id_departement}`,candidature);
   }
-
-  updateCandidature(candidature:any, id:any){
-    return this.http.put(`http://localhost:9190/api/candidature/${id}`,candidature);
+//
+  updateCandidature(candidature:any, id_candidature:any, id_departement:any){
+    return this.http.put(`http://localhost:9190/api/candidature/${id_candidature}/${id_departement}`,candidature);
   }
 
   deleteCandidature(id:any) {

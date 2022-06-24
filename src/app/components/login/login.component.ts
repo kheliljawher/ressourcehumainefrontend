@@ -28,7 +28,7 @@ export class LoginComponent implements OnInit {
     console.log("login is :",this.formLogin.value);
     
     this.loginService.login(this.formLogin.value).subscribe((res:any)=> {
-      if(res != null)
+      if(res != null)// && res.role == 'condidat'
       {
         localStorage.setItem('state','1');
         localStorage.setItem('user',JSON.stringify(res))

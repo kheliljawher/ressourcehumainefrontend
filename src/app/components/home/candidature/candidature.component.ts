@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CandidatService } from 'src/app/services/candidat.service';
 import { CandidatureService } from 'src/app/services/candidature.service';
+import { DepartementService } from 'src/app/services/departement.service';
 
 @Component({
   selector: 'app-candidature',
@@ -25,8 +26,11 @@ export class CandidatureComponent implements OnInit {
   submitted = false;
   test:boolean=false
   p:number=1;
+  departementID: any;
+  departements: any;
   
   constructor(private candidaturesService:CandidatureService,
+    private departementsService: DepartementService,
     /*private candidatsService:CandidatService,*/
     private router: Router,
     private formBuilder:FormBuilder) { }
@@ -36,6 +40,8 @@ export class CandidatureComponent implements OnInit {
     /*this.getCandidats();*/
     this.geneFormUpdate();
     this.geneFormCandidature();
+    this.getDepartements();
+
   }
 
     geneFormCandidature(){
@@ -49,8 +55,8 @@ export class CandidatureComponent implements OnInit {
       type:['',Validators.required],
       experience:['',Validators.required],
       salaire:['',Validators.required],
-      description:['',Validators.required]
-
+      description:['',Validators.required],
+      departementID: ['', Validators.required]
 
     })
   
@@ -60,6 +66,15 @@ export class CandidatureComponent implements OnInit {
       (res:any) => {
         this.candidatures = res
         console.log("candidatures : ",this.candidatures)}
+    )
+  }
+
+  getDepartements() {
+    this.departementsService.getDepartements().subscribe(
+      (res: any) => {
+        this.departements = res
+        console.log("departements : ", this.departements)
+      }
     )
   }
 
@@ -92,10 +107,10 @@ export class CandidatureComponent implements OnInit {
       console.table(this.formCandidature.value);
       console.log(this.formCandidature.value);
 
-      return ;
+      //return ;
     }
 
-    this.candidaturesService.createCandidature(this.formCandidature.value).subscribe( data =>{
+    this.candidaturesService.createCandidature(this.formCandidature.value, this.formCandidature.value.departementID).subscribe( data =>{
       console.log(data);
       this.getCandidatures();
 
@@ -111,7 +126,7 @@ export class CandidatureComponent implements OnInit {
   updateCandidature(){
     console.log("onSubmit")
     console.log(this.formUpdateCandidature.value);
-    this.candidaturesService.updateCandidature(this.formUpdateCandidature.value,this.id).subscribe(
+    this.candidaturesService.updateCandidature(this.formUpdateCandidature.value,this.id, this.formUpdateCandidature.value.departementID).subscribe(
       (res:any) => {
         console.log("candidature",res);
         this.router.navigateByUrl("home/candidature")
@@ -134,8 +149,8 @@ export class CandidatureComponent implements OnInit {
       type:"",
       experience:"",
       salaire:"",
-      description:""
-
+      description:"",
+      departementID: ""
 
     })
   }
@@ -151,7 +166,9 @@ export class CandidatureComponent implements OnInit {
       type:"",
       experience:"",
       salaire:"",
-      description:""
+      description:"",
+      departementID: ""
+
     })
   }
 
@@ -172,7 +189,9 @@ export class CandidatureComponent implements OnInit {
       type:res.type,
       experience:res.experience,
       salaire:res.salaire,
-      description:res.description
+      description:res.description,
+      departementID: res.departement.id,
+
     })
 
       }

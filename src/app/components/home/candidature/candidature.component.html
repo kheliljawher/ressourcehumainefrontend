@@ -23,13 +23,14 @@
                     <tr >
                         <th>#</th>
                         <th>Titre</th>
+						<th>Departement</th>
                         <th>Date Debut</th>
                         <th>Date Fin</th>
 						<th>Salaire</th>
-                        <th class="text-center">Job Type</th>
-						<th class="text-center">Expérience</th>
-                        <th class="text-center">Description</th>
-                        <th class="text-center">Status</th>
+                        <th>Job Type</th>
+						<th>Expérience</th>
+                        <th>Description</th>
+                        <th>Status</th>
                         <th>Applicants</th>
                         <th class="text-right">Actions</th>
                     </tr>
@@ -38,6 +39,7 @@
                     <tr *ngFor="let candidature of candidatures | paginate: { itemsPerPage: 5, currentPage: p}">
                         <td>{{candidature.id}}</td>
 						<td>{{candidature.titre}}</td>
+						<td>{{candidature?.departement?.nom}}</td>
 						<td>{{candidature.date_debut}}</td>
 						<td>{{candidature.date_fin}}</td>
 						<td>{{candidature.salaire}}</td>
@@ -47,7 +49,7 @@
 						<td>{{candidature.status}}</td>
 
                         
-                        <td><a class="btn btn-sm btn-primary">3 Candidates</a></td>
+                        <td><a class="btn btn-sm btn-primary">{{candidature.id}} Candidates</a></td>
                         <td class="text-right">
                             <div class="dropdown dropdown-action">
                                 <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
@@ -89,6 +91,22 @@
 										</div>
 										
 									</div>
+
+									<div class="row">
+									<div class="col-md-6">
+										<div class="form-group">
+											<label class="col-form-label">Département <span class="text-danger">*</span></label><br>
+											<select class="select" formControlName="departementID">
+												<option>Select Département</option>
+												<option *ngFor='let departement of departements' value="{{departement.id}}">{{departement.nom}}</option>
+												<span class="text-danger" *ngIf="formCandidature.get('departementID')?.hasError('required') && formCandidature.get('departementID')?.touched">
+													<p>Le département est obligatoire</p>
+													   </span>
+											</select>
+										</div>
+									</div>
+								</div>
+
 									<div class="row">
 										<div class="col-md-6">
 											<div class="form-group">
@@ -195,6 +213,22 @@
 										</div>
 										
 									</div>
+
+									<div class="row">
+									<div class="col-md-6">
+										<div class="form-group">
+											<label class="col-form-label">Département <span class="text-danger">*</span></label><br>
+											<select class="select" formControlName="departementID">
+												<option>Select Département</option>
+												<option *ngFor='let departement of departements' value="{{departement.id}}">{{departement.nom}}</option>
+												<span class="text-danger" *ngIf="formCandidature.get('departementID')?.hasError('required') && formCandidature.get('departementID')?.touched">
+													<p>Le département est obligatoire</p>
+													   </span>
+											</select>
+										</div>
+									</div>
+								</div>
+
 									<div class="row">
 										<div class="col-md-6">
 											<div class="form-group">
