@@ -86,6 +86,34 @@ export class EmployeComponent implements OnInit {
     )
   }
 
+  detailEmploye(emp:any){
+    console.log("here détail employe " ,emp);
+    localStorage.setItem('id',JSON.stringify(emp)); 
+    //this.router.navigateByUrl("/home/candidature-details")
+  }
+
+  changePlanning(utilisateur:any,id_planning:any){
+    console.log("here emp id ", utilisateur.id," here planning id ",id_planning);
+    if(utilisateur.role=="EMPLOYE"){
+    this.employeesService.updatePlanning(utilisateur.id, id_planning).subscribe(
+      (res:any) => 
+      {
+        console.log("employees  ");
+        this.getEmployees();
+      }
+    )}else{
+      this.chefDepartementsService.updatePlanning(utilisateur.id, id_planning).subscribe(
+        (res:any) => 
+        {
+          console.log("Chef de departement ");
+          this.getChefDepartements();
+        }
+      )
+    }
+    //localStorage.setItem('id_planning',JSON.stringify(emp)); 
+   /// this.router.navigateByUrl("/home/employe")
+  }
+
   getEmployees() {
     this.employeesService.getEmployees().subscribe(
       (res: any) => {

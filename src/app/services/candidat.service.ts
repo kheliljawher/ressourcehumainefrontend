@@ -1,35 +1,43 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CandidatService {
 
+  token:string=localStorage.getItem('token');
+  httpOptions = {
+    headers:new HttpHeaders({
+      'Authorization':`bearer `+this.token
+    })
+  };
+
   constructor(private http:HttpClient) { }
 
   getCandidats(){
-    return this.http.get(`http://localhost:9190/api/candidat/getAll`);
+    return this.http.get(`${environment.BASE_URL}/candidat/getAll`,this.httpOptions);
   }
 
   getCandidatById(id:any){
-    return this.http.get(`http://localhost:9190/api/candidat/${id}`);
+    return this.http.get(`${environment.BASE_URL}/candidat/${id}`,this.httpOptions);
   }
 
   /*getCandidatByCompetance(competance:any){
-    return this.http.get(`http://localhost:9190/api/candidat/${competance}`);
+    return this.http.get(`${environment.BASE_URL}/candidat/${competance}`);
   }*/
 
   createCandidat(candidat:any){
-    return this.http.post(`http://localhost:9190/api/candidat/create`,candidat);
+    return this.http.post(`${environment.BASE_URL}/candidat/create`,candidat,this.httpOptions);
   }
 
   updateCandidat(candidat:any, id:any){
-    return this.http.put(`http://localhost:9190/api/candidat/${id}`,candidat);
+    return this.http.put(`${environment.BASE_URL}/candidat/${id}`,candidat,this.httpOptions);
   }
 
   deleteCandidat(id:any) {
-    return this.http.delete(`http://localhost:9190/v1/candidat/${id}`);
+    return this.http.delete(`${environment.BASE_URL}/candidat/${id}`,this.httpOptions);
   }
 
 }

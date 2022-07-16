@@ -35,7 +35,8 @@
                     <span>Administration</span>
                 </li>
                 <li class="submenu">
-                    <a href="#" class="noti-dot" routerLink="employe" *ngIf="role == 'RESPONSABLERH'"><i class="la la-user" ></i> <span> Employees</span> <span class="menu-arrow"></span></a>
+                    <!-- *ngIf="role == 'RESPONSABLERH'" -->
+                    <a href="#" class="noti-dot" routerLink="employe" ><i class="la la-user" ></i> <span> Employees</span> <span class="menu-arrow"></span></a>
                     <ul style="display: none;">
                         <li><a >All Employees</a></li>
                         <li><a href="holidays.html">Holidays</a></li>
@@ -60,7 +61,8 @@
                     <a routerLink="conge" ><i class="la la-user-secret"></i> <span>Congé</span></a>
                 </li>
                 <li> 
-                    <a routerLink="contrat" *ngIf="role == 'RESPONSABLERH'"><i class="la la-ticket" ></i> <span>Contrat</span></a>
+                    <!-- *ngIf="role == 'RESPONSABLERH'" -->
+                    <a routerLink="contrat" ><i class="la la-ticket" ></i> <span>Contrat</span></a>
                 </li>
                 <!--<li class="menu-title"> 
                     <span>HR</span>
@@ -129,8 +131,9 @@
                 <li> 
                     <a href="assets.html"><i class="la la-object-ungroup"></i> <span>Assets</span></a>
                 </li>-->
+                <!-- *ngIf="role == 'RESPONSABLERH'" -->
                 <li class="submenu">
-                    <a href="#" *ngIf="role == 'RESPONSABLERH'"><i class="la la-briefcase"></i> <span> Candidatures </span> <span class="menu-arrow"></span></a>
+                    <a routerLink="candidature"><i class="la la-briefcase"></i> <span> Candidatures </span> <span class="menu-arrow"></span></a>
                     <ul style="display: none;">
                         <li><a routerLink="candidature"> Manage Jobs </a></li>
                         <li><a routerLink="candidat"> Applied Candidates </a></li>

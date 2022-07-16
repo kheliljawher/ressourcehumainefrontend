@@ -63,7 +63,7 @@
                     
                 </tbody>
             </table>
-			<pagination-controls class="my-pagination" (pageChange)="p = $event"   previousLabel="Précédent"
+			<pagination-controls class="my-pagination" (pageChange)="p = $event" previousLabel="Précédent"
                     nextLabel="Suivant " ></pagination-controls>
         </div>
     </div>
@@ -89,23 +89,35 @@
 												<input class="form-control" type="text" formControlName="titre">
 											</div>
 										</div>
-										
-									</div>
+										<div class="col-md-6">
+											<!-- <div class="form-group">
+												<label class="col-form-label">Département <span class="text-danger">*</span></label><br>
+												<select class="select" (click)="selectDepartement($event)" >
+													<option>Select Département</option>
+													<option *ngFor='let departement of departements'  value="{{departement.id}}"   >{{departement.id+' '+departement.nom}}</option>
+													<span class="text-danger" *ngIf="formCandidature.get('departementID')?.hasError('required') && formCandidature.get('departementID')?.touched">
+														<p>Le département est obligatoire</p>
+														   </span>
+												</select>
+											</div> -->
 
-									<div class="row">
-									<div class="col-md-6">
-										<div class="form-group">
-											<label class="col-form-label">Département <span class="text-danger">*</span></label><br>
-											<select class="select" formControlName="departementID">
-												<option>Select Département</option>
-												<option *ngFor='let departement of departements' value="{{departement.id}}">{{departement.nom}}</option>
-												<span class="text-danger" *ngIf="formCandidature.get('departementID')?.hasError('required') && formCandidature.get('departementID')?.touched">
-													<p>Le département est obligatoire</p>
-													   </span>
-											</select>
+
+											<div class="form-group">
+												<!-- <label class="col-form-label">Département <span class="text-danger">*</span></label><br> -->
+												<select class="select" formControlName="departementID">
+													<option>Select Département</option>
+													<option *ngFor='let departement of departements' value="{{departement.id}}">{{departement.nom}}</option>
+													<span class="text-danger" *ngIf="formCandidature.get('departementID')?.hasError('required') && formCandidature.get('departementID')?.touched">
+														<p>Le département est obligatoire</p>
+														   </span>
+												</select>
+											</div>
 										</div>
 									</div>
-								</div>
+
+									
+									
+								
 
 									<div class="row">
 										<div class="col-md-6">
@@ -129,9 +141,6 @@
 												<input type="text" class="form-control" formControlName="salaire">
 											</div>
 										</div>
-									</div>
-
-									<div class="row">
 										<div class="col-md-6">
 											<div class="form-group">
 												<label>Job Type</label>
@@ -145,7 +154,11 @@
 												</select>
 											</div>
 										</div>
-										</div>
+									</div>
+
+								
+										
+									
 									<div class="row">
 										<div class="col-md-6">
 											<div class="form-group">
@@ -153,20 +166,7 @@
 												<input class="form-control" type="text" formControlName="experience">
 											</div>
 										</div>
-										
-									</div>
-									<div class="row">
-										<div class="col-md-6">
-											<div class="form-group">
-												<label>Description</label>
-												<textarea class="form-control" type="text" formControlName="description"></textarea>
-											</div>
-										</div>
-										
-									</div>
-									<div class="row">
-
-										<div class="col-md-6">
+											<div class="col-md-6">
 											<div class="form-group">
 												<label>Status</label>
 												<select class="select" formControlName="status">
@@ -177,6 +177,19 @@
 											</div>
 										</div>
 									</div>
+									<div class="row">
+										<div class="col-md-12">
+											<div class="form-group">
+												<label>Description</label>
+												<textarea class="form-control" type="text" formControlName="description"></textarea>
+											</div>
+										</div>
+										
+									</div>
+									
+
+									
+									
 
 									
 									
@@ -218,9 +231,9 @@
 									<div class="col-md-6">
 										<div class="form-group">
 											<label class="col-form-label">Département <span class="text-danger">*</span></label><br>
-											<select class="select" formControlName="departementID">
+											<select class="select" formControlName="departementID" (change)="selectDepartement($event)">
 												<option>Select Département</option>
-												<option *ngFor='let departement of departements' value="{{departement.id}}">{{departement.nom}}</option>
+												<option *ngFor='let departement of departements' value="{{departement.id}}" >{{departement.id }}</option>
 												<span class="text-danger" *ngIf="formCandidature.get('departementID')?.hasError('required') && formCandidature.get('departementID')?.touched">
 													<p>Le département est obligatoire</p>
 													   </span>

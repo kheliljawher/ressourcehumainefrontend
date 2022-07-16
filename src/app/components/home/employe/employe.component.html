@@ -67,24 +67,24 @@
                         <thead>
                             <tr>
                                 <th>Nom</th>
-                                <th>ID Employee </th>
+                                <!-- <th>ID Employee </th> -->
                                 <th>Prénom</th>
-                                <th>Login</th>
-                                <th>Mot de passe</th>
+                                <!-- <th>Login</th> -->
+                                <!-- <th>Mot de passe</th> -->
                                 <!--<th>Confirmer Mot de passe</th>-->
-                                <th>Sex</th>
-                                <th>Cin</th>
+                                <!-- <th>Sex</th> -->
+                                <!-- <th>Cin</th> -->
                                 <th>Téléphone</th>
                                 <th>Email</th>
-                                <th>Adresse</th>
-                                <th>Poste</th>
+                                <!-- <th>Adresse</th> -->
+                                <!-- <th>Poste</th>
                                 <th>Date embauche</th>
-                                <th>Date naissance</th>
-                                <th>Rôle</th>
-                                <th>Planning</th>
+                                <th>Date naissance</th> -->
+                               
+                                <th class="text-center">Planning</th>
                                 <th>Departement</th>
                                 <!--<th>Contrat</th>-->
-
+                                <th>Rôle</th>
                                 <!--<th class="text-nowrap">Join Date</th>
                                 <th>Role</th>-->
                                 <th class="text-right no-sort">Action</th>
@@ -100,20 +100,30 @@
                                         <a>{{employe?.nom}} <span></span></a>
                                     </h2>
                                 </td>       
-                                <td>{{employe?.id}}</td>
+                                <!-- <td>{{employe?.id}}</td> -->
                                 <td>{{employe?.prenom}}</td>
-                                <td>{{employe?.login}}</td>
-                                <td>{{employe?.password}}</td>
+                                <!-- <td>{{employe?.login}}</td> -->
+                                <!-- <td>{{employe?.password}}</td> -->
                                 <!--<td>{{employe.confirmPassword}}</td>-->
-                                <td>{{employe?.sexs}}</td>
-                                <td>{{employe?.cin}}</td>
+                                <!-- <td>{{employe?.sexs}}</td> -->
+                                <!-- <td>{{employe?.cin}}</td> -->
                                 <td>{{employe?.telephone}}</td>
                                 <td>{{employe?.email}}</td>
-                                <td>{{employe?.adresse}}</td>
-                                <td>{{employe?.poste}}</td>
+                                <!-- <td>{{employe?.adresse}}</td> -->
+                                <!-- <td>{{employe?.poste}}</td>
                                 <td>{{employe?.date_Embauche | date: "dd-MM-yyyy"}}</td>
-                                <td>{{employe?.date_Naissance | date: "dd-MM-yyyy"}}</td>
-                                <td>{{employe?.planning?.nom}}</td>
+                                <td>{{employe?.date_Naissance | date: "dd-MM-yyyy"}}</td> -->
+                                <!-- <td>{{employe?.planning?.nom}}</td> -->
+                                <td align="center">
+                                    <div class="dropdown action-label">
+                                        <a class="btn btn-white btn-sm btn-rounded dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                            <i class="fa fa-dot-circle-o text-danger"></i> {{employe?.planning?.nom}}
+                                        </a>
+                                        <div class="dropdown-menu dropdown-menu-right" >
+                                            <a class="dropdown-item" *ngFor="let planning of plannings" (click)="changePlanning(employe,planning?.id)" ><i class="fa fa-dot-circle-o text-danger"></i> {{ planning?.nom }}</a>
+                                        </div>
+                                    </div>
+                                </td>
                                 <td>{{employe?.departement?.nom}}</td>
                                 <td>{{employe?.role}}</td>
                                 <!--<td>{{employe?.contrat?.type_contrat}}</td>-->
@@ -339,10 +349,11 @@
                             </div>
                               </div>
 
-                            <div class="col-md-6">
+                            <div class="col-sm-6">
                                 <div class="form-group">
+                                <div class="form-group form-focus select-focus">
                                     <label class="col-form-label">Planning <span class="text-danger">*</span></label><br>
-                                    <select class="select" formControlName="planningID">
+                                    <select class="select floating" formControlName="planningID">
                                         <option>Select Planning</option>
                                         <option *ngFor='let planning of plannings' value="{{planning.id}}">{{planning.nom}}</option>
                                         <span class="text-danger" *ngIf="formEmploye.get('planningID')?.hasError('required') && formEmploye.get('planningID')?.touched">
@@ -351,11 +362,13 @@
                                     </select>
                                 </div>
                             </div>
+                            </div>
 
-                            <div class="col-md-6">
+                            <div class="col-sm-6">
                                 <div class="form-group">
+                                <div class="form-group form-focus select-focus">
                                     <label class="col-form-label">Département <span class="text-danger">*</span></label><br>
-                                    <select class="select" formControlName="departementID">
+                                    <select class="select floating" formControlName="departementID">
                                         <option>Select Département</option>
                                         <option *ngFor='let departement of departements' value="{{departement.id}}">{{departement.nom}}</option>
                                         <span class="text-danger" *ngIf="formEmploye.get('departementID')?.hasError('required') && formEmploye.get('departementID')?.touched">
@@ -364,6 +377,8 @@
                                     </select>
                                 </div>
                             </div>
+                            </div>
+                            
 
                             <div class="col-sm-6">
                                 <div class="form-group">
@@ -680,13 +695,13 @@
         </div>
     </div>
     <!-- /Edit Employee Modal -->
-    
-    <!-- Profile Modal -->
-    <div id="#detail_employee" class="modal custom-modal fade" role="dialog">
+
+    <!-- Detail Employee Modal -->
+    <div id="detail_employee" class="modal custom-modal fade" role="dialog" *ngFor="let employe of  utilisateurs" (click)="detailEmploye(employe)">
         <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-            <div class="modal-content">
+            <div class="modal-content" >
                 <div class="modal-header">
-                    <h5 class="modal-title">Profile Information</h5>
+                    <h5 class="modal-title">Employe Information</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -696,23 +711,23 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="profile-img-wrap edit-img">
-                                    <img class="inline-block" src="assets/img/profiles/avatar-02.jpg" alt="user">
+                                    <img alt="" src="http://localhost:9190/api/employe/files/{{employe?.image}}">
                                     <div class="fileupload btn">
-                                        <span class="btn-text">edit</span>
+                                        <span class="btn-text"></span>
                                         <input class="upload" type="file">
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label>First Name</label>
-                                            <input type="text" class="form-control" value="John">
+                                            <label>Nom</label>
+                                            <input type="text" class="form-control" readonly value="{{employe.nom}}">
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Last Name</label>
-                                            <input type="text" class="form-control" value="Doe">
+                                            <input type="text" class="form-control" readonly value="{{employe.prenom}}">
                                         </div>
                                     </div>
                                     <div class="col-md-6">
@@ -800,15 +815,13 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="submit-section">
-                            <button class="btn btn-primary submit-btn">Submit</button>
-                        </div>
+                        
                     </form>
                 </div>
             </div>
         </div>
     </div>
-    <!-- /Profile Modal -->
+    <!-- /Detail Employee Modal -->
 
     <!-- Delete Employee Modal -->
     <div  class="modal custom-modal fade" id="delete_employee" role="dialog">

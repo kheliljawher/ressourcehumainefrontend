@@ -19,7 +19,7 @@ export class LoginComponent implements OnInit {
 
   geneFormLogin(){
     this.formLogin = this.fb.group({
-      login : '',
+      username : '',
       password : ''
     })
   }
@@ -28,10 +28,13 @@ export class LoginComponent implements OnInit {
     console.log("login is :",this.formLogin.value);
     
     this.loginService.login(this.formLogin.value).subscribe((res:any)=> {
-      if(res != null)// && res.role == 'condidat'
+      if(res != null)
       {
+        console.log("my data : ",res);
+        
         localStorage.setItem('state','1');
-        localStorage.setItem('user',JSON.stringify(res))
+        localStorage.setItem('token',res.token);
+        localStorage.setItem('user',JSON.stringify(res.utilisateur));
         console.log("user in local storage is like :",JSON.stringify(res));        
         this.router.navigateByUrl('home');
       }
@@ -40,7 +43,7 @@ export class LoginComponent implements OnInit {
   }
 
   logout(){
-    localStorage.removeItem("id_token");
+    localStorage.removeItem("token");
         localStorage.removeItem("expires_at");
 
         this.router.navigate(["/login"]);

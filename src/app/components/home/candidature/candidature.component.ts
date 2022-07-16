@@ -44,6 +44,14 @@ export class CandidatureComponent implements OnInit {
 
   }
 
+  selectDepartement(event:any){
+    console.log("here departement",event.target.value);
+    
+    // this.formCandidature.patchValue({
+    //   departementID : departement.id
+    // })
+  }
+
     geneFormCandidature(){
     this.formCandidature = this.formBuilder.group({
       /*offre:['',Validators.required],*/
@@ -109,7 +117,8 @@ export class CandidatureComponent implements OnInit {
 
       //return ;
     }
-
+    console.log("departement id ", this.formCandidature.value.departementID);
+    
     this.candidaturesService.createCandidature(this.formCandidature.value, this.formCandidature.value.departementID).subscribe( data =>{
       console.log(data);
       this.getCandidatures();
