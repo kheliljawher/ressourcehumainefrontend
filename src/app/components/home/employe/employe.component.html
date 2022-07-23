@@ -25,12 +25,12 @@
                     <label class="focus-label"><b>Recherche Par :</b></label>
                 </div>
             </div>
-            <div class="col-sm-6 col-md-3">  
+            <!-- <div class="col-sm-6 col-md-3">  
                 <div class="form-group form-focus">
                     <input type="text" class="form-control floating">
                     <label class="focus-label">ID Employé</label>
                 </div>
-            </div>
+            </div> -->
            
             <div class="col-sm-6 col-md-3">  
                 <div class="form-group form-focus">
@@ -172,7 +172,7 @@
                             </div>
                             <div class="col-sm-6">
                                 <div class="form-group">
-                                    <label class="col-form-label">Prénom</label>
+                                    <label class="col-form-label">Prénom <span class="text-danger">*</span></label>
                                     <input class="form-control" type="text" formControlName="prenom" placeholder="Prénom">
                                     <span class="text-danger" *ngIf="formEmploye.get('prenom')?.hasError('required') && formEmploye.get('prenom')?.touched">
                                         <p>Le prénom est obligatoire</p>
@@ -254,7 +254,7 @@
                             <div class="col-sm-6">
 
                             <div class="form-group">
-                                <label class="col-form-label">Sex<span class="text-danger">*</span></label>
+                                <label class="col-form-label">Sex <span class="text-danger">*</span></label>
                                 <div class="col-md-6" >
                                     <div class="">
                                         <label>
@@ -282,7 +282,7 @@
                             </div>
                             <div class="col-sm-6">
                                 <div class="form-group">
-                                    <label class="col-form-label">Téléphone </label>
+                                    <label class="col-form-label">Téléphone <span class="text-danger">*</span></label>
                                     <input class="form-control" type="text" formControlName="telephone" placeholder="Téléphone">
                                     <span class="text-danger" *ngIf="formEmploye.get('telephone')?.hasError('minLength') && formEmploye.get('telephone')?.touched">
                                         <p>Le numéro de téléphone est obligatoire et doit comporter 8 caractères</p>
@@ -291,7 +291,7 @@
                             </div>
                             <div class="col-sm-6">
                                 <div class="form-group">
-                                    <label class="col-form-label">Email </label>
+                                    <label class="col-form-label">Email <span class="text-danger">*</span></label>
                                     <input class="form-control" type="email" formControlName="email" placeholder="Email">
                                     <span class="text-danger" *ngIf="formEmploye.get('email')?.hasError('required') && formEmploye.get('email')?.touched">
                                         <p>L'email est obligatoire</p>
@@ -301,7 +301,7 @@
                             
                             <div class="col-sm-6">
                                 <div class="form-group">
-                                    <label class="col-form-label">Poste </label>
+                                    <label class="col-form-label">Poste <span class="text-danger">*</span></label>
                                     <input class="form-control" type="text" formControlName="poste" placeholder="Poste">
                                     <span class="text-danger" *ngIf="formEmploye.get('poste')?.hasError('required') && formEmploye.get('poste')?.touched">
                                         <p>Le poste est obligatoire</p>
@@ -310,7 +310,7 @@
                             </div>
                             <div class="col-sm-6">
                                 <div class="form-group">
-                                    <label class="col-form-label">Date embauche </label>
+                                    <label class="col-form-label">Date embauche <span class="text-danger">*</span></label>
                                     <input class="form-control" type="date" formControlName="date_Embauche">
                                     <span class="text-danger" *ngIf="formEmploye.get('date_Embauche')?.hasError('required') && formEmploye.get('date_debut')?.touched">
                                         <p>La date d'embauche est obligatoire</p>
@@ -319,7 +319,7 @@
                             </div>
                             <div class="col-sm-6">
                                 <div class="form-group">
-                                    <label class="col-form-label">Date naissance </label>
+                                    <label class="col-form-label">Date naissance <span class="text-danger">*</span></label>
                                     <input class="form-control" type="date" formControlName="date_Naissance">
                                     <span class="text-danger" *ngIf="formEmploye.get('date_Naissance')?.hasError('required') && formEmploye.get('date_Naissance')?.touched">
                                         <p>La date de naissance est obligatoire</p>
@@ -329,7 +329,7 @@
 
                             <div class="col-sm-6">
                                 <div class="form-group">
-                                    <label class="col-form-label">Adresse </label>
+                                    <label class="col-form-label">Adresse <span class="text-danger">*</span></label>
                                     <textarea class="form-control" formControlName="adresse" placeholder="Adresse"></textarea>
                                     <span class="text-danger" *ngIf="formEmploye.get('adresse')?.hasError('required') && formEmploye.get('adresse')?.touched">
                                         <p>L'adresse est obligatoire</p>
@@ -340,12 +340,12 @@
                             <div class="col-sm-6">
 
                             <div class="form-group">
-                                <label class="col-form-label">Image</label>
+                                <label class="col-form-label">Image <span class="text-danger">*</span></label>
                                   <input class="form-control" width="400"
                                   height="341" type="file" name="file" (change)="onFileChanged($event)">
-                                  <span class="text-danger" *ngIf="formEmploye.get('image')?.hasError('required') && formEmploye.get('image')?.touched">
-                                 <p>L'image est obligatoire</p>
-                                    </span>
+                                  <!-- <span class="text-danger" *ngIf="formEmploye.get('image')?.hasError('required') && formEmploye.get('image')?.touched"> -->
+                                 <!-- <p>L'image est obligatoire</p> -->
+                                    <!-- </span> -->
                             </div>
                               </div>
 
@@ -355,7 +355,7 @@
                                     <label class="col-form-label">Planning <span class="text-danger">*</span></label><br>
                                     <select class="select floating" formControlName="planningID">
                                         <option>Select Planning</option>
-                                        <option *ngFor='let planning of plannings' value="{{planning.id}}">{{planning.nom}}</option>
+                                        <option *ngFor='let planning of plannings' value="{{planning?.id}}">{{planning?.nom}}</option>
                                         <span class="text-danger" *ngIf="formEmploye.get('planningID')?.hasError('required') && formEmploye.get('planningID')?.touched">
                                             <p>Le planning est obligatoire</p>
                                                </span>
@@ -382,7 +382,7 @@
 
                             <div class="col-sm-6">
                                 <div class="form-group">
-                                  <label class="col-form-label">Rôle</label>
+                                  <label class="col-form-label">Rôle <span class="text-danger">*</span></label>
                                   <div class="col-md-10">
                                       <div class="radio">
                                           <label>
@@ -450,7 +450,7 @@
                         <div class="row">
                             <div class="col-sm-6">
                                 <div class="form-group">
-                                    <label class="col-form-label">Nom <span class="text-danger">*</span></label>
+                                    <label class="col-form-label">Nom</label>
                                     <input class="form-control" type="text" formControlName="nom" placeholder="Nom">
                                     <span class="text-danger" *ngIf="formEmploye.get('nom')?.hasError('required') && formEmploye.get('nom')?.touched">
                                         <p>Veuillez entrer le nom</p>
@@ -468,7 +468,7 @@
                             </div>
                             <div class="col-sm-6">
                                 <div class="form-group">
-                                    <label class="col-form-label">Login <span class="text-danger">*</span></label>
+                                    <label class="col-form-label">Login </label>
                                     <input class="form-control" type="text" formControlName="login" placeholder="Login">
                                     <span class="text-danger" *ngIf="formEmploye.get('login')?.hasError('required') && formEmploye.get('login')?.touched">
                                         <p>Veuillez entrer le login</p>
@@ -477,7 +477,7 @@
                             </div>
                             <div class="col-sm-6">
                                 <div class="form-group">
-                                    <label class="col-form-label">Mot de passe <span class="text-danger">*</span></label>
+                                    <label class="col-form-label">Mot de passe </label>
                                     <input class="form-control" type="password" formControlName="password" placeholder="Mot de passe">
                                     <span class="text-danger" *ngIf="formEmploye.get('password')?.hasError('minLength') && formEmploye.get('password')?.touched">
                                         <p>Veuillez entrer le mot de passe et de minimum longueur 4 caractéres</p>
@@ -486,7 +486,7 @@
                             </div>
                             <div class="col-sm-6">
                                 <div class="form-group">
-                                    <label class="col-form-label">Confirmer mot de passe <span class="text-danger">*</span></label>
+                                    <label class="col-form-label">Confirmer mot de passe </label>
                                     <input class="form-control" type="password" formControlName="confirmPassword" placeholder="Confirmer mot de passe">
                                     <span class="text-danger" *ngIf="formEmploye.get('confirmPassword')?.hasError('minLength') && formEmploye.get('confirmPassword')?.touched">
                                         <p>Veuillez entrer le mot de passe et doit etre identique</p>
@@ -509,7 +509,7 @@
                             <div class="col-sm-6">
 
                             <div class="form-group">
-                                <label class="col-form-label">Sex<span class="text-danger">*</span></label>
+                                <label class="col-form-label">Sex</label>
                                 <div class="col-md-6" >
                                     <div class="radio">
                                         <label>
@@ -528,7 +528,7 @@
 
                             <div class="col-sm-6">  
                                 <div class="form-group">
-                                    <label class="col-form-label">Cin <span class="text-danger">*</span></label>
+                                    <label class="col-form-label">Cin </label>
                                     <input class="form-control" type="text" formControlName="cin" placeholder="Cin">
                                     <span class="text-danger" *ngIf="formEmploye.get('cin')?.hasError('minLength') && formEmploye.get('cin')?.touched">
                                         <p>Veuillez entrer le cin et doit comporter 8 caractères</p>
@@ -597,16 +597,16 @@
                             <div class="form-group">
                                 <label class="col-form-label">Image</label>
                                   <input class="form-control" width="400"
-                                  height="341" formControlName="image" type="file" name="file" (change)="onFileChanged($event)">
-                                  <span class="text-danger" *ngIf="formEmploye.get('image')?.hasError('required') && formEmploye.get('image')?.touched">
-                                 <p>Veuillez sélectionner une image</p>
-                                    </span>
+                                  height="341"  type="file" name="file" (change)="onFileChanged($event)">
+                                  <!-- <span class="text-danger" *ngIf="formEmploye.get('image')?.hasError('required') && formEmploye.get('image')?.touched"> -->
+                                 <!-- <p>Veuillez sélectionner une image</p> -->
+                                    <!-- </span> -->
                             </div>
                               </div>
                               
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label>Planning <span class="text-danger">*</span></label><br>
+                                <label>Planning </label><br>
                                 <select class="select" formControlName="planningID">
                                     <option>Select Planning</option>
                                     <option *ngFor='let planning of plannings' value="{{planning.id}}">{{planning.nom}}</option>
@@ -619,7 +619,7 @@
 
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label class="col-form-label">Département <span class="text-danger">*</span></label><br>
+                                <label class="col-form-label">Département </label><br>
                                 <select class="select" formControlName="departementID">
                                     <option>Select Département</option>
                                     <option *ngFor='let departement of departements' value="{{departement.id}}">{{departement.nom}}</option>
@@ -697,7 +697,7 @@
     <!-- /Edit Employee Modal -->
 
     <!-- Detail Employee Modal -->
-    <div id="detail_employee" class="modal custom-modal fade" role="dialog" *ngFor="let employe of  utilisateurs" (click)="detailEmploye(employe)">
+    <div id="detail_employee" class="modal custom-modal fade" role="dialog">
         <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
             <div class="modal-content" >
                 <div class="modal-header">
@@ -711,7 +711,7 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="profile-img-wrap edit-img">
-                                    <img alt="" src="http://localhost:9190/api/employe/files/{{employe?.image}}">
+                                    <img alt="" src="http://localhost:9190/api/employe/files/{{utilisateurToUpdate?.image}}">
                                     <div class="fileupload btn">
                                         <span class="btn-text"></span>
                                         <input class="upload" type="file">
@@ -721,100 +721,144 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Nom</label>
-                                            <input type="text" class="form-control" readonly value="{{employe.nom}}">
+                                            <input type="text" class="form-control" readonly value="{{utilisateurToUpdate?.nom}}">
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Last Name</label>
-                                            <input type="text" class="form-control" readonly value="{{employe.prenom}}">
+                                            <input type="text" class="form-control" readonly value="{{utilisateurToUpdate?.prenom}}">
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label>Birth Date</label>
-                                            <div class="cal-icon">
-                                                <input class="form-control datetimepicker" type="text" value="05/06/1985">
-                                            </div>
+                                            <label>Login</label>
+                                            <!-- <div class="cal-icon"> -->
+                                                <input class="form-control" type="text" readonly value="{{utilisateurToUpdate?.login}}">
+                                            <!-- </div> -->
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label>Gender</label>
-                                            <select class="select form-control">
-                                                <option value="male selected">Male</option>
-                                                <option value="female">Female</option>
-                                            </select>
+                                            <label>Mot de passe</label>
+                                                <input class="form-control" type="text" readonly value="{{utilisateurToUpdate?.password}}">
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-12">
+                            <!-- <div class="col-md-12">
                                 <div class="form-group">
                                     <label>Address</label>
                                     <input type="text" class="form-control" value="4487 Snowbird Lane">
                                 </div>
-                            </div>
+                            </div> -->
+
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label>State</label>
-                                    <input type="text" class="form-control" value="New York">
+                                    <label>Sex</label>
+                                    <input type="text" class="form-control" readonly value="{{utilisateurToUpdate?.sexs}}">
+                                </div>
+                            </div>
+
+                                    <!-- <div class="col-sm-6">
+
+                                        <div class="form-group">
+                                            <label class="col-form-label">Sex<span class="text-danger">*</span></label>
+                                            <div class="col-md-6" >
+                                                <div class="radio">
+                                                    <label>
+                                                        <input type="radio" name="radiogender" value='male'>&nbsp;Male
+                                                    </label><br>
+                                                    <label>
+                                                        <input type="radio" name="radiogender" value="female">&nbsp;Female
+                                                    </label>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div> -->
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Cin</label>
+                                    <input type="text" class="form-control" readonly value="{{utilisateurToUpdate?.cin}}">
+                                </div>
+                            </div>
+                            </div>
+                            <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Téléphone</label>
+                                    <input type="text" class="form-control" readonly value="{{utilisateurToUpdate?.telephone}}">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label>Country</label>
-                                    <input type="text" class="form-control" value="United States">
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label>Pin Code</label>
-                                    <input type="text" class="form-control" value="10523">
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label>Phone Number</label>
-                                    <input type="text" class="form-control" value="631-889-3206">
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label>Department <span class="text-danger">*</span></label>
-                                    <select class="select">
-                                        <option>Select Department</option>
-                                        <option>Web Development</option>
-                                        <option>IT Management</option>
-                                        <option>Marketing</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label>Designation <span class="text-danger">*</span></label>
-                                    <select class="select">
-                                        <option>Select Designation</option>
-                                        <option>Web Designer</option>
-                                        <option>Web Developer</option>
-                                        <option>Android Developer</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label>Reports To <span class="text-danger">*</span></label>
-                                    <select class="select">
-                                        <option>-</option>
-                                        <option>Wilmer Deluna</option>
-                                        <option>Lesley Grauer</option>
-                                        <option>Jeffery Lalor</option>
-                                    </select>
+                                    <label>Email</label>
+                                    <input type="text" class="form-control" readonly value="{{utilisateurToUpdate?.email}}">
                                 </div>
                             </div>
                         </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Poste</label>
+                                    <input type="text" class="form-control" readonly value="{{utilisateurToUpdate?.poste}}">
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Date Embauche</label>
+                                    <div class="cal-icon">
+                                        <input class="form-control" type="text" readonly value="{{utilisateurToUpdate?.date_Embauche}}">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                          <div class="row">  
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Date Naissance</label>
+                                    <div class="cal-icon">
+                                        <input class="form-control" type="text" readonly value="{{utilisateurToUpdate?.date_Naissance}}">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Address</label>
+                                    <input type="text" class="form-control" readonly value="{{utilisateurToUpdate?.adresse}}">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Planning</label>
+                                    <input type="text" class="form-control" readonly value="{{utilisateurToUpdate?.planning.nom}}">
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Planning</label>
+                                    <input type="text" class="form-control" readonly value="{{utilisateurToUpdate?.departement.nom}}">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label>Rôle</label>
+                                <input type="text" class="form-control" readonly value="{{utilisateurToUpdate?.role}}">
+                            </div>
+                        </div>
+                    </div>
+                        
                         
                     </form>
                 </div>

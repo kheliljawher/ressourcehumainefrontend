@@ -43,6 +43,11 @@ export class EmployeService {
   createEmp(employe:any, id_planning:any, id_departement:any){//${id_contrat}
     return this.http.post(`${environment.BASE_URL}/employe/create/${id_planning}/${id_departement}`,employe,this.httpOptions);
   }
+
+  createEmpWithoutImage(employe:any, id_planning:any, id_departement:any){//${id_contrat}
+    return this.http.post(`${environment.BASE_URL}/employe/create/${id_planning}/${id_departement}`,employe,this.httpOptions);
+  }
+
 //id_contrat:any
   updateEmp(employee:any, id_employe:any, id_planning:any, id_departement:any){//${id_contrat}
     return this.http.put(`${environment.BASE_URL}/employe/${id_employe}/${id_planning}/${id_departement}`,employee,this.httpOptions);

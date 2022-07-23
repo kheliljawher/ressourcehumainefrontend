@@ -26,6 +26,7 @@ export class DepartementComponent implements OnInit {
     private formBuilder:FormBuilder) { }
 
   ngOnInit(): void {
+    
     this.getDepartements();
     this.geneFormUpdate();
     this.geneFormDepartement();

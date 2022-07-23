@@ -56,7 +56,7 @@
                         <th>Leave Type</th>
                         <th>Date Debut</th>
                         <th>Date Fin</th>
-                        <th>Status</th>
+                        <th >Status</th>
                         <th>Approuvé Par</th>
                         <th class="text-right">Actions</th>
                     </tr>
@@ -67,16 +67,16 @@
                         <td>{{conge.type_conge}}</td>
                         <td>{{conge.date_debut | date: "dd-MM-yyyy"}}</td>
                         <td>{{conge.date_fin | date: "dd-MM-yyyy"}}</td>
-                        <td class="text-center" formControlName="status">
+                        <td>
                             <div class="dropdown action-label">
-                                <a class="btn btn-white btn-sm btn-rounded dropdown-toggle" href="#" data-toggle="dropdown" aria-expanded="false">
-                                    <i class="fa fa-dot-circle-o text-info"></i> New
+                                <a class="btn btn-white btn-sm btn-rounded dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                    <i class="fa fa-dot-circle-o text-info"></i> Nouveau
                                 </a>
-                                <div class="dropdown-menu dropdown-menu-right">
-                                    <a class="dropdown-item" href="#" value="New"><i class="fa fa-dot-circle-o text-info"></i> New</a>
-                                    <a class="dropdown-item" href="#" value="Hired"><i class="fa fa-dot-circle-o text-success"></i> Hired</a>
-                                    <a class="dropdown-item" href="#" value="Rejected"><i class="fa fa-dot-circle-o text-danger"></i> Rejected</a>
-                                    <a class="dropdown-item" href="#" value="Interviewed"><i class="fa fa-dot-circle-o text-danger"></i> Interviewed</a>
+                                <div class="dropdown-menu dropdown-menu-right" (click)="changeConge(conge)">
+
+                                    <a class="dropdown-item" value="NOUVEAU"><i class="fa fa-dot-circle-o text-info"></i> Nouveau</a>
+                                    <a class="dropdown-item" value="DIMINUE"><i class="fa fa-dot-circle-o text-success"></i> Diminué</a>
+                                    <a class="dropdown-item" value="APPROUVE"><i class="fa fa-dot-circle-o text-danger"></i> Approuvé</a>
                                 </div>
                             </div>
                         </td>
@@ -244,8 +244,8 @@
             </div>
         </div>
     </div>
-</div> -->
-<!-- /Edit Leave Modal
+</div>
+<!-- /Edit Leave Modal -->
 
 <!-- Delete Leave Modal -->
 <div *ngFor="let conge of conges" class="modal custom-modal fade" id="delete_approve" role="dialog">

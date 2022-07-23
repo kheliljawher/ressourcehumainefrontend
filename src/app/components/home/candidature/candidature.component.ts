@@ -213,4 +213,9 @@ export class CandidatureComponent implements OnInit {
     console.log("id to delete : ",id);
   }
 
+  sendToCandidat(candidature:any){
+    localStorage.setItem("detailCandidature",JSON.stringify(candidature));
+    this.router.navigateByUrl("/home/candidat");
+  }
+
 }

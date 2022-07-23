@@ -56,7 +56,10 @@ export class CongeComponent implements OnInit {
 
   }
 
-
+  changeConge(conge: any){
+    console.log("here conge id ", conge.id);
+    console.log("here conge status ", conge?.status);
+  }
 
   geneFormConge(){
     this.formConge = this.formBuilder.group({

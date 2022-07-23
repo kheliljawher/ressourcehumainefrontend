@@ -20,6 +20,10 @@ export class CandidatService {
     return this.http.get(`${environment.BASE_URL}/candidat/getAll`,this.httpOptions);
   }
 
+  sendEmail(){
+  return this.http.get(`${environment.BASE_URL}/candidat/sendEmail`,this.httpOptions);
+}
+
   getCandidatById(id:any){
     return this.http.get(`${environment.BASE_URL}/candidat/${id}`,this.httpOptions);
   }

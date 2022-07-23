@@ -30,23 +30,24 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let candidat of candidats | paginate: { itemsPerPage: 5, currentPage: p}">
-                        <td>{{candidat.id}}</td>
-                        <td>{{candidat.nom}}</td>
-                        <td>{{candidat.prenom}}</td>
-                        <td>{{candidat.telephone}}</td>
-                        <td>{{candidat.email}}</td>
-                        <td>{{candidat.date_Embauche}}</td>
-                        <td class="text-center" formControlName="status">
+                    <tr *ngFor="let demandeCandidature of demandeCandidatures | paginate: { itemsPerPage: 5, currentPage: p}">
+                        <td>{{demandeCandidature.candidat?.id}}</td>
+                        <td>{{demandeCandidature.candidat?.nom}}</td>
+                        <td>{{demandeCandidature.candidat?.prenom}}</td>
+                        <td>{{demandeCandidature.candidat?.telephone}}</td>
+                        <td>{{demandeCandidature.candidat?.email}}</td>
+                        <td>{{demandeCandidature.candidat?.date_Embauche}}</td>
+                        <td class="text-center">
                             <div class="dropdown action-label">
                                 <a class="btn btn-white btn-sm btn-rounded dropdown-toggle" href="#" data-toggle="dropdown" aria-expanded="false">
-                                    <i class="fa fa-dot-circle-o text-info"></i> New
+                                    <!-- <i class="fa fa-dot-circle-o text-info"></i> -->
+                                      {{demandeCandidature.etat}}
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-right">
-                                    <a class="dropdown-item" href="#" value="New"><i class="fa fa-dot-circle-o text-info"></i> New</a>
-                                    <a class="dropdown-item" href="#" value="Hired"><i class="fa fa-dot-circle-o text-success"></i> Hired</a>
-                                    <a class="dropdown-item" href="#" value="Rejected"><i class="fa fa-dot-circle-o text-danger"></i> Rejected</a>
-                                    <a class="dropdown-item" href="#" value="Interviewed"><i class="fa fa-dot-circle-o text-danger"></i> Interviewed</a>
+                                    <a class="dropdown-item" value="EN ATTEND" (click)="updateEtatToEnAttent()"><i class="fa fa-dot-circle-o text-info"></i> En Attend</a>
+                                    <a class="dropdown-item" value="CLÔTURER" selected><i class="fa fa-dot-circle-o text-success"  ></i> Clôturer</a>
+                                    <a class="dropdown-item" value="DISQUALIFIER"><i class="fa fa-dot-circle-o text-danger"></i> Discalifier</a>
+                                    <a class="dropdown-item" data-toggle="modal" data-target="#add_employee" (click)="setCandidatAndCandidature(demandeCandidature)"><i class="fa fa-dot-circle-o text-danger"  ></i> Interviewer</a>
                                 </div>
                             </div>
                         </td>
@@ -55,7 +56,7 @@
                             <div class="dropdown dropdown-action">
                                 <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
                                 <div class="dropdown-menu dropdown-menu-right">
-                                    <a class="dropdown-item" href="#"><i class="fa fa-clock-o m-r-5"></i> Schedule Interview</a>
+                                    <a class="dropdown-item"><i class="fa fa-clock-o m-r-5"></i> Schedule Interview</a>
                                 </div>
                             </div>
                         </td>
@@ -68,3 +69,39 @@
         </div>
     </div>
 </div>
+
+				<!-- Add Employee Modal -->
+				<div id="add_employee" class="modal custom-modal fade" role="dialog">
+					<div class="modal-dialog modal-dialog-centered modal-lg">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title">Add Employee</h5>
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
+							<div class="modal-body">
+								<form [formGroup] = "formCandidatInterviwer" (ngSubmit)="sendEmail()">
+                                    <div class="row">
+                                        <div class="col-sm-6">  
+											<div class="form-group">
+												<label class="col-form-label">Employee ID <span class="text-danger">*</span></label>
+												<input type="text" class="form-control" formControlName="lien">
+											</div>
+										</div>
+										<div class="col-sm-6">  
+											<div class="form-group">
+												<label class="col-form-label">Joining Date <span class="text-danger">*</span></label>
+												<div class="cal-icon"><input class="form-control datetimepicker" type="date" formControlName="date"></div>
+											</div>
+										</div>
+                                    </div>
+									<div class="submit-section">
+										<button class="btn btn-primary submit-btn" type="submit">Submit</button>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- /Add Employee Modal -->

@@ -7,6 +7,7 @@ import { ChefDepartementService } from 'src/app/services/chef-departement.servic
 import { PlanningService } from 'src/app/services/planning.service';
 import { DepartementService } from 'src/app/services/departement.service';
 import { ContratService } from 'src/app/services/contrat.service';
+import { CandidatService } from 'src/app/services/candidat.service';
 //import { ConfirmedValidator } from './ConfirmedValidator';
 
 @Component({
@@ -15,6 +16,9 @@ import { ContratService } from 'src/app/services/contrat.service';
   styleUrls: ['./employe.component.css']
 })
 export class EmployeComponent implements OnInit {
+
+
+  testSelectImage:boolean=false
 
   roleToDelete: any;
   employees: any[] = []
@@ -50,10 +54,16 @@ export class EmployeComponent implements OnInit {
     //private contratService: ContratService,
     private router: Router,
     private formBuilder: FormBuilder,
+    private candidatsService:CandidatService,
   ) { }
 
 
   ngOnInit(): void {
+
+    this.candidatsService.sendEmail().subscribe((res:any)=>{
+      console.log('email done')
+    })
+
     this.getEmployees();
     this.getChefDepartements();
     this.geneFormUpdate();
@@ -73,7 +83,7 @@ export class EmployeComponent implements OnInit {
       poste: ['', Validators.required],
       date_Embauche: ['', Validators.required],
       date_Naissance: ['', Validators.required],
-      image: ['', Validators.required],
+      //image: ['', Validators.required],
       role: ['', Validators.required],
       sexs: ['', Validators.required],
       confirmPassword: ['', Validators.required],
@@ -223,11 +233,33 @@ export class EmployeComponent implements OnInit {
 
   saveEmployee() {
 
+    if(this.testSelectImage){
+      console.log("service image");
+      this.employeesService.createEmp(this.employees, this.formEmploye.value.planningID,this.formEmploye.value.departementID).subscribe(data => {
+        console.log(data);
+        this.getEmployees();})
+    } else {
+      console.log("service without image");
+       this.employeesService.createEmpWithoutImage(this.employees, this.formEmploye.value.planningID,this.formEmploye.value.departementID).subscribe(data => {
+        console.log(data);
+        this.getEmployees();})
+    }
+
     if (this.formEmploye.invalid) {
       this.submitted = true;
       console.log("invalid")
       console.table(this.formEmploye.value);
-      //return ;
+      return ;
+    }
+
+    console.log("password :",this.formEmploye.value);
+    
+
+    if(this.formEmploye.value.password != this.formEmploye.value.confirmPassword){
+      console.log("here mot de pass non confirme");
+      // alert('password non confirme')
+      return;
+      
     }
 
     console.log("role is : ", this.formEmploye.value.role);
@@ -247,6 +279,7 @@ export class EmployeComponent implements OnInit {
     formData.append("date_Embauche", this.formEmploye.value.date_Embauche);
     formData.append("date_Naissance", this.formEmploye.value.date_Naissance);
     formData.append("file", this.selectedFile[0]);
+    this.selectedFile=[]
     formData.append("role", this.formEmploye.value.role);
     formData.append("sexs", this.formEmploye.value.sexs);
     formData.append("confirmPassword", this.formEmploye.value.confirmPassword);
@@ -268,11 +301,9 @@ export class EmployeComponent implements OnInit {
         })
       }
     }
-
+    this.selectedFile = []
     document.getElementById("add_emp_close").click();
-
-
-
+    
   }
 
   goToEmployeeList() {
@@ -284,6 +315,7 @@ export class EmployeComponent implements OnInit {
     //        console.log("formGroup : ",this.formEmploye.value)
     this.selectedFile = <Array<File>>event.target.files
     console.log('image : ', this.selectedFile)
+    this.testSelectImage = true
   }
 
   updateEmploye() {
@@ -301,6 +333,7 @@ export class EmployeComponent implements OnInit {
     formData.append("date_Embauche", this.formUpdateEmploye.value.date_Embauche);
     formData.append("date_Naissance", this.formUpdateEmploye.value.date_Naissance);
     formData.append("file", this.selectedFile[0]);
+    this.selectedFile=[]
     formData.append("role", this.formUpdateEmploye.value.role);
     formData.append("sexs", this.formUpdateEmploye.value.sexs);
     formData.append("confirmPassword", this.formUpdateEmploye.value.confirmPassword);
@@ -310,6 +343,16 @@ export class EmployeComponent implements OnInit {
     console.log(this.formUpdateEmploye.value);
 
     console.log(this.formEmploye.value.planningID);
+
+    console.log("password :",this.formEmploye.value);
+    
+
+    if(this.formEmploye.value.password != this.formEmploye.value.confirmPassword){
+      console.log("here mot de pass non confirme");
+      // alert('password non confirme')
+      return;
+      
+    }
 
     if (this.formUpdateEmploye.value.role == this.utilisateurToUpdate.role) {
 
@@ -415,7 +458,7 @@ export class EmployeComponent implements OnInit {
       poste: "",
       date_Embauche: "",
       date_Naissance: "",
-      image: "",
+      //image: "",
       role: "",
       sexs: "",
       confirmPassword: "",
