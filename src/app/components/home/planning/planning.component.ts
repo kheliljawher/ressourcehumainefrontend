@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { EmployeService } from 'src/app/services/employe.service';
 import { PlanningService } from 'src/app/services/planning.service';
 import {formatDate} from '@angular/common';
-
+// import Swal from 'sweetalert2'
 
 @Component({
   selector: 'app-planning',
@@ -98,10 +98,17 @@ export class PlanningComponent implements OnInit {
       console.log(data);
       this.getPlannings();
       document.getElementById("add_plan_close").click();
+      
 
     })
   }
-
+  sweetAlert(){
+    // Swal({
+    //   title:'Err',
+    //   text:'test',
+    //   type:'error'
+    // })
+  }
   goToPlanningList(){
     this.router.navigateByUrl('/home/planning');
   }

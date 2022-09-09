@@ -8,6 +8,7 @@ import { PlanningService } from 'src/app/services/planning.service';
 import { DepartementService } from 'src/app/services/departement.service';
 import { ContratService } from 'src/app/services/contrat.service';
 import { CandidatService } from 'src/app/services/candidat.service';
+import Swal from 'sweetalert2';
 //import { ConfirmedValidator } from './ConfirmedValidator';
 
 @Component({
@@ -20,6 +21,7 @@ export class EmployeComponent implements OnInit {
 
   testSelectImage:boolean=false
 
+  testConfirmationPassword:boolean = false;
   roleToDelete: any;
   employees: any[] = []
   chefDepartements: any[] = []
@@ -75,7 +77,7 @@ export class EmployeComponent implements OnInit {
       nom: ['', Validators.required],
       prenom: ['', Validators.required],
       login: ['', Validators.required],
-      password: ['', Validators.required, Validators.minLength(4)],
+      password: ['', [Validators.required, Validators.minLength(4)]],
       cin: ['', Validators.required, Validators.minLength(8)],
       telephone: ['', Validators.required, Validators.minLength(8)],
       email: ['', Validators.required, Validators.email],
@@ -86,7 +88,7 @@ export class EmployeComponent implements OnInit {
       //image: ['', Validators.required],
       role: ['', Validators.required],
       sexs: ['', Validators.required],
-      confirmPassword: ['', Validators.required],
+      confirmPassword: ['', [Validators.required, Validators.minLength(4)]],
       planningID: ['', Validators.required],
       departementID: ['', Validators.required],
       //contratID:['',Validators.required]
@@ -233,22 +235,29 @@ export class EmployeComponent implements OnInit {
 
   saveEmployee() {
 
-    if(this.testSelectImage){
-      console.log("service image");
-      this.employeesService.createEmp(this.employees, this.formEmploye.value.planningID,this.formEmploye.value.departementID).subscribe(data => {
-        console.log(data);
-        this.getEmployees();})
-    } else {
-      console.log("service without image");
-       this.employeesService.createEmpWithoutImage(this.employees, this.formEmploye.value.planningID,this.formEmploye.value.departementID).subscribe(data => {
-        console.log(data);
-        this.getEmployees();})
-    }
+    // if(this.testSelectImage){
+    //   this.employeesService.createEmp(this.employees, this.formEmploye.value.planningID,this.formEmploye.value.departementID).subscribe(data => {
+    //     console.log("service image");
+
+    //     console.log(data);
+    //     this.getEmployees();})
+    // } else {
+    //    this.employeesService.createEmpWithoutImage(this.employees, this.formEmploye.value.planningID,this.formEmploye.value.departementID).subscribe(data => {
+    //     console.log("service without image");
+
+    //     console.log(data);
+    //     this.getEmployees();})
+    // }
 
     if (this.formEmploye.invalid) {
       this.submitted = true;
       console.log("invalid")
       console.table(this.formEmploye.value);
+      if(this.formEmploye.value.password != this.formEmploye.value.confirmPassword){
+        console.log("here mot de pass non confirme");
+        // alert('password non confirme')
+        this.testConfirmationPassword=true
+      }
       return ;
     }
 
@@ -258,8 +267,9 @@ export class EmployeComponent implements OnInit {
     if(this.formEmploye.value.password != this.formEmploye.value.confirmPassword){
       console.log("here mot de pass non confirme");
       // alert('password non confirme')
-      return;
-      
+      this.testConfirmationPassword=true;
+      this.submitted = true;
+      return;      
     }
 
     console.log("role is : ", this.formEmploye.value.role);
@@ -290,6 +300,7 @@ export class EmployeComponent implements OnInit {
       this.employeesService.createEmp(formData, this.formEmploye.value.planningID, this.formEmploye.value.departementID).subscribe(data => {
         console.log(data);
         this.getEmployees();
+
       })
 
     } else {
@@ -301,6 +312,9 @@ export class EmployeComponent implements OnInit {
         })
       }
     }
+    this.patchValueVide();
+    this.submitted = false
+    this.testConfirmationPassword = false
     this.selectedFile = []
     document.getElementById("add_emp_close").click();
     
@@ -521,6 +535,37 @@ export class EmployeComponent implements OnInit {
       departementID: res.departement.id,
       actif: res.actif.id
       //contratID :res.contratID
+
+    })
+
+    this.test = true;
+    console.log("form after patch : ", this.formUpdateEmploye.value);
+
+  }
+
+  patchValueVide() {
+
+    this.formEmploye.patchValue({
+      id: "",
+      nom: "",
+      prenom: "",
+      login: "",
+      password: "",
+      cin: "",
+      telephone: "",
+      email: "",
+      adresse: "",
+      poste: "",
+      date_Embauche: "",
+      date_Naissance: "",
+      // image: "",
+      role: "",
+      sexs: "",
+      confirmPassword: "",
+      planningID: "",
+      departementID: "",
+      actif: ""
+      //contratID :""
 
     })
 

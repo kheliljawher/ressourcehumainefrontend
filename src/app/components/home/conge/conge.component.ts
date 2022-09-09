@@ -29,7 +29,8 @@ export class CongeComponent implements OnInit {
   p:number=1;
   user:any;
   utilisateurs: any[] = []
-  chefDepartements: any[] = []
+  chefDepartements: any[] = [];
+  congeDeMaladie:any;
 
   constructor(private congesService:CongeService,
     private employeesService:EmployeService,
@@ -54,6 +55,12 @@ export class CongeComponent implements OnInit {
     this.user_connect = JSON.parse(localStorage.getItem("user"))
     this.getCongess();
 
+    this.congesService.gerCongeByType(this.user_connect.id,'Congé de Maladie').subscribe((res:any) => {
+      console.log("here conge by type :",res);
+      this.congeDeMaladie = res
+      
+    })
+
   }
 
   changeConge(conge: any){
@@ -77,11 +84,17 @@ export class CongeComponent implements OnInit {
   
 
   getCongess(){
+    // if user.role == responsable RH or admin 
     this.congesService.getConges().subscribe(
       (res:any) => {
         this.conges = res
         console.log("conges : ",this.conges)}
     )
+    
+
+    // else service getAllCongeByIdUserConnecte ()
+    // this.conge = res
+
   }
 
   // getEmployees(){
@@ -222,7 +235,7 @@ export class CongeComponent implements OnInit {
       date_debut:res.date_debut,
       date_fin:res.date_fin,
       type_conge:res.type_conge,
-      ID_Employe : res.ID_Employe
+      ID_Employe : res.utilisateur.id
       
     })
 

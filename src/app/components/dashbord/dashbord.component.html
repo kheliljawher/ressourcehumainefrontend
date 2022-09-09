@@ -1,0 +1,91 @@
+<div class="row">
+    <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
+        <div class="card dash-widget">
+            <div class="card-body">
+                <span class="dash-widget-icon"><i class="fa fa-cubes"></i></span>
+                <div class="dash-widget-info">
+                    <h3>112</h3>
+                    <span>Projects</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
+        <div class="card dash-widget">
+            <div class="card-body">
+                <span class="dash-widget-icon"><i class="fa fa-usd"></i></span>
+                <div class="dash-widget-info">
+                    <h3>44</h3>
+                    <span>Clients</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
+        <div class="card dash-widget">
+            <div class="card-body">
+                <span class="dash-widget-icon"><i class="fa fa-diamond"></i></span>
+                <div class="dash-widget-info">
+                    <h3>37</h3>
+                    <span>Tasks</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
+        <div class="card dash-widget">
+            <div class="card-body">
+                <span class="dash-widget-icon"><i class="fa fa-user"></i></span>
+                <div class="dash-widget-info">
+                    <h3>218</h3>
+                    <span>Employees</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="row">
+
+    <div class="col-md-12 col-lg-12 col-xl-12 d-flex">
+        <div class="card flex-fill dash-statistics">
+            <div class="card-body">
+                <h5 class="card-title">Statistics</h5>
+                <div class="stats-list">
+                    <div class="stats-info">
+                        <p>Electrique <strong>{{ pourcentageDepElec }} <small>/ {{employeTotal}}</small></strong></p>
+                        <div class="progress">
+                            <div class="progress-bar bg-primary" role="progressbar" [style]="styleDepElec" aria-valuenow="31" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                    </div>
+                    <div class="stats-info">
+                        <p>Informatique <strong>{{ pourcentageDepInfo }} <small>/ {{employeTotal}}</small></strong></p>
+                        <div class="progress">
+                            <div class="progress-bar bg-warning" role="progressbar" [style]="styleDepInfo" aria-valuenow="31" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                    </div>
+                    <div class="stats-info">
+                        <p>Completed Projects <strong>85 <small>/ {{employeTotal}}</small></strong></p>
+                        <div class="progress">
+                            <div class="progress-bar bg-success" role="progressbar" style="width: 62%" aria-valuenow="62" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                    </div>
+                    <div class="stats-info">
+                        <p>Open Tickets <strong>190 <small>/ 212</small></strong></p>
+                        <div class="progress">
+                            <div class="progress-bar bg-danger" role="progressbar" style="width: 62%" aria-valuenow="62" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                    </div>
+                    <div class="stats-info">
+                        <p>Closed Tickets <strong>22 <small>/ 212</small></strong></p>
+                        <div class="progress">
+                            <div class="progress-bar bg-info" role="progressbar" style="width: 22%" aria-valuenow="22" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

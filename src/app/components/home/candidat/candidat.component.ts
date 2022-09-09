@@ -81,6 +81,8 @@ export class CandidatComponent implements OnInit {
       
     })
 
+
+    
     //service update etat demande candidature to interview
 
   }

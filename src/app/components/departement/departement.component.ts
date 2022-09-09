@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { DepartementService } from 'src/app/services/departement.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-departement',
@@ -40,11 +41,22 @@ export class DepartementComponent implements OnInit {
   
 }
 
+detailDepartement(departement:any){
+console.log("departement selectionne : ",departement);
+
+}
+
 getDepartements(){
   this.departementsService.getDepartements().subscribe(
     (res:any) => {
       this.departements = res
-      console.log("departements : ",this.departements)}
+      console.log("departements : ",this.departements);
+      this.departements.forEach(element => {
+      console.log("department : ",element?.nom," nombre d'employe : ",element?.utilisateurs?.length);
+      
+    });
+    
+    }
   )
 }
 
@@ -58,6 +70,23 @@ deleteDepartement(){
     console.log(data);
     this.getDepartements();
     document.getElementById("del_dept_close").click();
+
+    const Toast = Swal.mixin({
+      toast: true,
+      position: 'top-end',
+      showConfirmButton: false,
+      timer: 3000,
+      timerProgressBar: true,
+      didOpen: (toast) => {
+        toast.addEventListener('mouseenter', Swal.stopTimer)
+        toast.addEventListener('mouseleave', Swal.resumeTimer)
+      }
+    })
+    
+    Toast.fire({
+      icon: 'success',
+      title: 'Departement deleted successfully'
+    })
 
   })
 }
@@ -74,11 +103,32 @@ saveDepartement(){
 
   this.departementsService.createDepartement(this.formDepartement.value).subscribe( data =>{
     console.log(data);
+    
     this.getDepartements();
 
   })
+
+  const Toast = Swal.mixin({
+    toast: true,
+    position: 'top-end',
+    showConfirmButton: false,
+    timer: 3000,
+    timerProgressBar: true,
+    didOpen: (toast) => {
+      toast.addEventListener('mouseenter', Swal.stopTimer)
+      toast.addEventListener('mouseleave', Swal.resumeTimer)
+    }
+  })
+  
+  Toast.fire({
+    icon: 'success',
+    title: 'Departement created successfully'
+  })
+
+
   document.getElementById("add_dept_close").click();
 
+  
 }
 
 goToDepartementList(){
@@ -97,6 +147,23 @@ updateDepartement(){
     }
   )
   document.getElementById("edit_dept_close").click();
+
+  const Toast = Swal.mixin({
+    toast: true,
+    position: 'top-end',
+    showConfirmButton: false,
+    timer: 3000,
+    timerProgressBar: true,
+    didOpen: (toast) => {
+      toast.addEventListener('mouseenter', Swal.stopTimer)
+      toast.addEventListener('mouseleave', Swal.resumeTimer)
+    }
+  })
+  
+  Toast.fire({
+    icon: 'success',
+    title: 'Departement update successfully'
+  })
 
 }
 

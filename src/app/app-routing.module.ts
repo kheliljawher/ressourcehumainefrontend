@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { DashbordComponent } from './components/dashbord/dashbord.component';
 import { DepartementComponent } from './components/departement/departement.component';
 import { CandidatComponent } from './components/home/candidat/candidat.component';
 import { CandidatureComponent } from './components/home/candidature/candidature.component';
@@ -35,10 +36,12 @@ const routes: Routes = [
     {path:"responsableRH",component:ResponableRHComponent},
     {path:"chefDepartement",component:ChefDepartementComponent},
     {path:"profile",component:ProfileComponent},
-    {path:"departement",component:DepartementComponent}
+    {path:"departement",component:DepartementComponent},
+    {path:"",component:DashbordComponent}
 
   ]},
-  {path:"login",component:LoginComponent, canActivate:[LogoutGuard]},
+  
+  {path:"",component:LoginComponent, canActivate:[LogoutGuard]},
   {path:"register",component:RegisterComponent}
 
 

@@ -15,6 +15,7 @@ export class SidebarComponent implements OnInit {
 
   ngOnInit(): void {
     this.user_connect = JSON.parse(localStorage.getItem("user"))
+    console.log("user from side bar :",this.user_connect);
     this.role=this.user_connect.role;
   }
 

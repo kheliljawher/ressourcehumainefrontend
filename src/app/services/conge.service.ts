@@ -36,5 +36,9 @@ export class CongeService {
     return this.http.delete(`${environment.BASE_URL}/conge/${id}`,this.httpOptions);
   }
 
+  gerCongeByType(id : any, type_conge:any){
+    return this.http.get(`${environment.BASE_URL}/conge/findByType/${id}/${type_conge}`,this.httpOptions);
+  }
+
 
 }

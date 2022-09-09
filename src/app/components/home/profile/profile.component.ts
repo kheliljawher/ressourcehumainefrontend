@@ -19,7 +19,7 @@ export class ProfileComponent implements OnInit {
    }
 
   ngOnInit(): void {
-    this.getUtilisateurs();
+    this.utilisateurs=JSON.parse(localStorage.getItem("user"))
 
     this.formUtilisateur = this.formBuilder.group({
       nom:['',Validators.required],
@@ -32,12 +32,13 @@ export class ProfileComponent implements OnInit {
     })
   }
 
-  getUtilisateurs(){
-    this.utilisateursService.getUtilisateurs().subscribe(
-      (res:any) => {
-        this.utilisateurs = res
-        console.log("utilisateurs : ",this.utilisateurs)}
-    )
-  }
+  // getUtilisateurs(){
+  //   this.utilisateursService.getUtilisateurs().subscribe(
+  //     (res:any) => {
+  //       this.utilisateurs = res
+
+  //       console.log("utilisateurs : ",this.utilisateurs)}
+  //   )
+  // }
 
 }

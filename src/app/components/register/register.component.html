@@ -16,19 +16,52 @@
                     <p class="account-subtitle">Access to our dashboard</p>
                     
                     <!-- Account Form -->
-                    <form action="index.html">
+                    <!-- Account Form -->
+                    <form [formGroup]="formEmploye" (ngSubmit)="saveEmploye()">
                         <div class="form-group">
-                            <label>Email</label>
-                            <input class="form-control" type="text">
+                            <label>Nom</label>
+                            <input class="form-control" type="text" formControlName="nom">
+                            <span class="text-danger" *ngIf="formLogin.get('nom')?.hasError('required') && formLogin.get('nom')?.touched">
+                                <p>Veuillez entrer votre nom</p>
+                              </span>
+                        </div>
+                        <div class="form-group">
+                            <label>Prenom</label>
+                            <input class="form-control" type="text" formControlName="prenom">
+                            <span class="text-danger" *ngIf="formLogin.get('prenom')?.hasError('required') && formLogin.get('prenom')?.touched">
+                                <p>Veuillez entrer votre prenom</p>
+                              </span>
+                        </div>
+                        <div class="form-group">
+                            <label>Username</label>
+                            <input class="form-control" type="text" formControlName="username">
+                            <span class="text-danger" *ngIf="formLogin.get('username')?.hasError('required') && formLogin.get('username')?.touched">
+                                <p>Veuillez entrer votre login</p>
+                              </span>
                         </div>
                         <div class="form-group">
                             <label>Password</label>
-                            <input class="form-control" type="password">
+                            <input class="form-control" type="password" formControlName="password">
+                            <span class="text-danger" *ngIf="formLogin.get('password')?.hasError('required') && formLogin.get('password')?.touched">
+                                <p>Veuillez entrer votre password</p>
+                              </span>
                         </div>
                         <div class="form-group">
-                            <label>Repeat Password</label>
-                            <input class="form-control" type="password">
+                            <label>Email</label>
+                            <input class="form-control" type="email" formControlName="email">
+                            <span class="text-danger" *ngIf="formLogin.get('email')?.hasError('required') && formLogin.get('email')?.touched">
+                                <p>Veuillez entrer votre email</p>
+                              </span>
                         </div>
+                        <div class="form-group">
+                            <label>Téléphone</label>
+                            <input class="form-control" type="number" formControlName="telephone">
+                            <span class="text-danger" *ngIf="formLogin.get('telephone')?.hasError('required') && formLogin.get('telephone')?.touched">
+                                <p>Veuillez entrer votre telephone</p>
+                              </span>
+                        </div>
+                        
+                       
                         <div class="form-group text-center">
                             <button class="btn btn-primary account-btn" type="submit">Register</button>
                         </div>

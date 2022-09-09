@@ -18,7 +18,7 @@ export class HeaderComponent implements OnInit {
 
   logout(){
     localStorage.setItem('state',"0");
-    this.router.navigateByUrl('login');
+    this.router.navigateByUrl('');
   }
 
 }

@@ -27,7 +27,8 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.css"
+              "src/styles.css",
+              "node_modules/sweetalert2/src/sweetalert2.scss"
             ],
             "scripts": []
           },
@@ -71,7 +72,8 @@
               "browserTarget": "rhms-angular-frontend:build:production"
             },
             "development": {
-              "browserTarget": "rhms-angular-frontend:build:development"
+              "browserTarget": "rhms-angular-frontend:build:development",
+              "port" : 4201
             }
           },
           "defaultConfiguration": "development"

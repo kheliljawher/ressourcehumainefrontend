@@ -31,6 +31,8 @@ import { RechercheChefDeptNomPipe } from './pipes/recherche-chef-dept-nom.pipe';
 import { RechercheChefDeptPrenomPipe } from './pipes/recherche-chef-dept-prenom.pipe';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { DepartementComponent } from './components/departement/departement.component';
+import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
+import { DashbordComponent } from './components/dashbord/dashbord.component';
 
 @NgModule({
   declarations: [
@@ -57,7 +59,9 @@ import { DepartementComponent } from './components/departement/departement.compo
     RechercheChefDeptIdPipe,
     RechercheChefDeptNomPipe,
     RechercheChefDeptPrenomPipe,
-    DepartementComponent
+    DepartementComponent,
+    PageNotFoundComponent,
+    DashbordComponent
   ],
   imports: [
     BrowserModule,

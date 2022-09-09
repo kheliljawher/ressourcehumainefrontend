@@ -96,7 +96,7 @@
                             
                                 <td>
                                     <h2 class="table-avatar">
-                                        <a class="avatar"><img alt="" src="http://localhost:9190/api/employe/files/{{employe?.image}}"></a>
+                                        <a class="avatar" href="#" data-toggle="modal" data-target="#detail_employee" (click)= "patchValue(employe)"><img alt="" src="http://localhost:9190/api/employe/files/{{employe?.image}}"></a>
                                         <a>{{employe?.nom}} <span></span></a>
                                     </h2>
                                 </td>       
@@ -165,7 +165,7 @@
                                 <div class="form-group">
                                     <label class="col-form-label">Nom <span class="text-danger">*</span></label>
                                     <input class="form-control" type="text" formControlName="nom" placeholder="Nom">
-                                    <span class="text-danger" *ngIf="formEmploye.get('nom')?.hasError('required') && formEmploye.get('nom')?.touched">
+                                    <span class="text-danger" *ngIf="formEmploye.get('nom')?.hasError('required') && submitted">
                                         <p>Le nom est obligatoire</p>
                                       </span>
                                 </div>
@@ -198,12 +198,16 @@
                                 </div>
                             </div>
 
-                            <div class="col-sm-6">
+                            <div class="col-sm-6"> 
                                 <div class="form-group">
                                     <label class="col-form-label">Confirmer mot de passe <span class="text-danger">*</span></label>
                                     <input class="form-control" type="password" formControlName="confirmPassword" placeholder="Confirmer mot de passe">
-                                    <span class="text-danger" *ngIf="formEmploye.get('confirmPassword')?.hasError('minLength') && formEmploye.get('confirmPassword')?.touched">
-                                        <p>Le mot de passe est obligatoire et doit etre identique</p>
+                                    <span class="text-danger" *ngIf="formEmploye.get('confirmPassword')?.hasError('minlength') && formEmploye.get('confirmPassword')?.touched">
+                                        <p>Le mot de passe est obligatoire </p>
+                                       </span>
+
+                                       <span class="text-danger" *ngIf="testConfirmationPassword">
+                                        <p>Le mot de passe doit etre identique</p>
                                        </span>
                                 </div>
                             </div>
@@ -351,9 +355,9 @@
 
                             <div class="col-sm-6">
                                 <div class="form-group">
-                                <div class="form-group form-focus select-focus">
+                                <div class="toprow us-form us-form-select-wrap">
                                     <label class="col-form-label">Planning <span class="text-danger">*</span></label><br>
-                                    <select class="select floating" formControlName="planningID">
+                                    <select class="" formControlName="planningID" style="width: 353px; height: 44px;">
                                         <option>Select Planning</option>
                                         <option *ngFor='let planning of plannings' value="{{planning?.id}}">{{planning?.nom}}</option>
                                         <span class="text-danger" *ngIf="formEmploye.get('planningID')?.hasError('required') && formEmploye.get('planningID')?.touched">

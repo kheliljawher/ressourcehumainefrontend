@@ -18,6 +18,6 @@ export class DemandeCandidatureInterviewServiceService {
   constructor(private http:HttpClient) { }
 
   getDemandeCandidatureInterview(DemandeCandidatureInterview:any,id_candidat:any){
-    return this.http.post(`${environment.BASE_URL}/api/candidat/sendEmailInterview/${id_candidat}`,DemandeCandidatureInterview,this.httpOptions);
+    return this.http.post(`${environment.BASE_URL}/candidat/sendEmailInterview/${id_candidat}`,DemandeCandidatureInterview,this.httpOptions);
   }
 }

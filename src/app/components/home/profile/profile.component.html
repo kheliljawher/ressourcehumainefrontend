@@ -19,19 +19,19 @@
                         <div class="profile-view">
                             <div class="profile-img-wrap">
                                 <div class="profile-img">
-                                    <a href="#"><img alt="" src="assets/img/profiles/avatar-02.jpg"></a>
+                                    <a ><img alt="" src="assets/img/profiles/avatar-02.jpg"></a>
                                 </div>
                             </div>
                             <div class="profile-basic">
                                 <div class="row">
                                     <div class="col-md-5">
                                         <div class="profile-info-left">
-                                            <h3 class="user-name m-t-0 mb-0">{{utilisateurs.nom}}dz</h3>
-                                            <h6 class="text-muted">UI/UX Design Team</h6>
-                                            <small class="text-muted">Web Designer</small>
-                                            <div class="staff-id">Employee ID : FT-0001</div>
-                                            <div class="small doj text-muted">Date of Join : 1st Jan 2013</div>
-                                            <div class="staff-msg"><a class="btn btn-custom" href="chat.html">Send Message</a></div>
+                                            <h3 class="user-name m-t-0 mb-0">{{utilisateurs.nom}}</h3>
+                                            <h6 class="text-muted">{{utilisateurs.prenom}}UI/UX Design Team</h6>
+                                            <small class="text-muted">{{utilisateurs.poste}}Web Designer</small>
+                                            <div class="staff-id">{{utilisateurs.id}}Employee ID : FT-0001</div>
+                                            <div class="small doj text-muted">{{utilisateurs.date_Embauche}}Date d'embauche : 1st Jan 2013</div>
+                                            <!-- <div class="staff-msg"><a class="btn btn-custom" href="chat.html">Send Message</a></div> -->
                                         </div>
                                     </div>
                                     <div class="col-md-7">
@@ -45,7 +45,7 @@
                                                 <div class="text"><a href="">johndoe@example.com</a></div>
                                             </li>
                                             <li>
-                                                <div class="title">Birthday:</div>
+                                                <div class="title">Date Naissance:</div>
                                                 <div class="text">24th July</div>
                                             </li>
                                             <li>
@@ -56,7 +56,7 @@
                                                 <div class="title">Gender:</div>
                                                 <div class="text">Male</div>
                                             </li>
-                                            <li>
+                                            <!-- <li>
                                                 <div class="title">Reports to:</div>
                                                 <div class="text">
                                                    <div class="avatar-box">
@@ -68,7 +68,7 @@
                                                         Jeffery Lalor
                                                     </a>
                                                 </div>
-                                            </li>
+                                            </li> -->
                                         </ul>
                                     </div>
                                 </div>
